@@ -15,9 +15,9 @@ const LoginForm = ({ getUserInfo }) => {
         email: email,
         password: password,
       });
-
+      const token = res.data.token;
       const user = res.data.user;
-      await getUserInfo(user);
+      await getUserInfo({ ...user, token });
       //this programmatically sends user to profile
       history.push("/users/profile");
     } catch (e) {
