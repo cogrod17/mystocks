@@ -1,0 +1,40 @@
+.navbar {
+  -webkit-transition-property: all;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-timing-function: cubic-bezier(100, 50, 21, 6);
+  -moz-transition-property: all;
+  -moz-transition-timing-function: cubic-bezier(100, 50, 21, 6);
+}
+
+.navbar {
+  margin: 30px;
+  padding: 15px;
+}
+
+body {
+  margin-top: 100px;
+  text-align: center;
+  font-family: "Oswald", sans-serif;
+}
+
+h1 {
+  color: #c0c0c0;
+  font-weight: 100;
+}
+
+.btn {
+  color: #999;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  font-size: 12px;
+  text-decoration: none;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.btn:hover {
+  border: none;
+  background: rgba(0, 0, 0, 0.4);
+  background: #fff;
+  padding: 20px 20px;
+}
