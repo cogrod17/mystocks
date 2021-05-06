@@ -7,24 +7,44 @@ import UserProfile from "./UserProfile";
 import LandingPage from "./LandingPage";
 import UpdateUser from "./UpdateUser";
 import "../styles/App.css";
+// import axios from "axios";
 
 class App extends React.Component {
   state = {};
 
-  async componentDidMount() {
+  componentDidMount() {
     //check local storage to see if user is already signed in
-    const data = await localStorage.getItem("state");
-    if (data) this.setState(JSON.parse(data));
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
+    if (!user) history.push("/");
+    if (user) {
+      this.setState(user);
+      history.push("/users/profile");
+    }
 
-    if (this.state) history.push("/users/profile");
+    /*
+    if (token) {
+      axios
+        .get("https://localhost:3001/users/profile", {
+          token,
+        })
+        .then((res) => {
+          this.setState(res);
+          console.log(this.state);
+          history.push("/users/profile");
+        })
+        .catch(() => {
+          window.location.pathname = "/";
+        });
+    }
+    */
   }
 
   getUserInfo = (userObject) => {
-    //localStorage.setItem("state", JSON.stringify(this.state));
     this.setState(userObject);
     console.log(this.state);
     //set user object to local storage
-    localStorage.setItem("state", JSON.stringify(this.state));
+    localStorage.setItem("user", JSON.stringify(this.state));
   };
 
   render() {
