@@ -18,8 +18,6 @@ const NewUserForm = ({ getUserInfo }) => {
         password: password,
       });
 
-      console.log(res.data);
-
       const { user, token } = res.data;
       await getUserInfo({ ...user, token });
       history.push("/users/profile");

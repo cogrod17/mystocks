@@ -18,38 +18,23 @@ class App extends React.Component {
 
   componentDidMount() {
     //check local storage to see if user is already signed in
-    const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
+    const user = JSON.parse(localStorage.getItem("token"));
     if (!user) history.push("/");
     if (user) {
-      this.setState(user);
+      this.getUserInfo(user);
       //exposes _id: maybe not so smart
       history.push("/home");
     }
-
-    /*
-    if (token) {
-      axios
-        .get("https://localhost:3001/users/profile", {
-          token,
-        })
-        .then((res) => {
-          this.setState(res);
-          console.log(this.state);
-          history.push("/users/profile");
-        })
-        .catch(() => {
-          window.location.pathname = "/";
-        });
-    }
-    */
   }
+
+  ///PUT AXIOS GET REQUEST IN APP SO YOU
+  /// CAN STORE THE JSUT TOKEN IN local storage
 
   getUserInfo = (userObject) => {
     this.setState(userObject);
     console.log(this.state);
     //set user object to local storage
-    localStorage.setItem("user", JSON.stringify(this.state));
+    if (userObject) localStorage.setItem("user", JSON.stringify(this.state));
   };
 
   render() {
