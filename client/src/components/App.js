@@ -9,7 +9,7 @@ import Home from "./Home";
 import WatchList from "./WatchList";
 import UpdateUser from "./UpdateUser";
 import "../styles/App.css";
-// import axios from "axios";
+import axios from "axios";
 
 //When refreshing from any page it sends the user to home
 
@@ -18,12 +18,18 @@ class App extends React.Component {
 
   componentDidMount() {
     //check local storage to see if user is already signed in
-    const user = JSON.parse(localStorage.getItem("token"));
-    if (!user) history.push("/");
-    if (user) {
-      this.getUserInfo(user);
-      //exposes _id: maybe not so smart
-      history.push("/home");
+    const token = JSON.parse(localStorage.getItem("token"));
+    if (!token) history.push("/");
+    if (token) {
+      axios
+        .get("http://localhost:3001/users/profile", {
+          headers: { Authorization: "Bearer " + token },
+        })
+        .then((res) => {
+          res.data.token = token;
+          this.setState(res.data);
+        })
+        .catch((e) => console.log(e));
     }
   }
 
@@ -32,9 +38,9 @@ class App extends React.Component {
 
   getUserInfo = (userObject) => {
     this.setState(userObject);
-    console.log(this.state);
-    //set user object to local storage
-    if (userObject) localStorage.setItem("user", JSON.stringify(this.state));
+    //set token to local storage
+    if (userObject)
+      localStorage.setItem("token", JSON.stringify(this.state.token));
   };
 
   render() {

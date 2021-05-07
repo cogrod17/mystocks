@@ -18,8 +18,9 @@ const NewUserForm = ({ getUserInfo }) => {
         password: password,
       });
 
-      const { user, token } = res.data;
-      await getUserInfo({ ...user, token });
+      const { user } = res.data;
+      user.token = res.data.token;
+      getUserInfo(user);
       history.push("/users/profile");
     } catch (e) {
       console.log(e);
