@@ -11,7 +11,6 @@ const auth = async (req, res, next) => {
       "tokens.token": token,
     });
 
-    console.log(user);
     if (!user) throw new Error();
 
     //attach token and user to the request for authentication

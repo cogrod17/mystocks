@@ -30,12 +30,13 @@ li:last-child {
 /* below is just for demo styling */
 
 .footer {
-  position: fixed;
+  margin-top: 3.5rem;
+  position: absolute;
   display: flex;
-  height: 10%;
+  height: 3rem;
   width: 100%;
   background: rgba(0, 0, 0, 0.5);
   font-size: 15px;
   font-family: "Oswald", sans-serif;
-  bottom: 0px;
+  bottom: 0;
 }
