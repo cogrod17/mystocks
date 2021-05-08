@@ -18,7 +18,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Oswald", sans-serif;
-  background: linear-gradient(#141e30, #243b55);
+  background: #141e30;
   padding-bottom: 2.5rem;
 }
 
@@ -27,6 +27,10 @@ body {
   min-height: 100vh;
 }
 .user-profile {
+  padding-bottom: 3rem;
+}
+
+.home {
   padding-bottom: 3rem;
 }
 
@@ -64,5 +68,34 @@ body {
   border-radius: 10px;
   border: 1px solid black;
   height: 100%;
+  padding: 10px 0px;
+}
+
+.article {
+  text-align: left;
+  width: 100%;
+  border-top: white 1px solid;
   padding: 10px;
+}
+
+.article-header {
+  display: flex;
+}
+
+.article-title {
+  flex: 1;
+  text-align: left;
+}
+
+.article-author {
+  flex: 1;
+  text-align: left;
+}
+
+.article-img {
+  flex: 1;
+  height: 10%;
+  width: 10%;
+  padding-left: 5px;
+  padding-bottom: 5px;
 }
