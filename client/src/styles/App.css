@@ -72,6 +72,7 @@ body {
 }
 
 .article {
+  display: flex;
   text-align: left;
   width: 100%;
   border-top: white 1px solid;
@@ -79,16 +80,25 @@ body {
 }
 
 .article-header {
-  display: flex;
-}
-
-.article-title {
   flex: 1;
   text-align: left;
 }
 
-.article-author {
+.article-title {
   flex: 1;
+  font-size: 25px;
+}
+
+.article-break {
+  width: 100%;
+  border: solid 1px yellowgreen;
+  margin-bottom: 5%;
+  margin-top: 10%;
+}
+
+.article-summary {
+  flex: 1;
+  font-size: 20px;
   text-align: left;
 }
 
@@ -98,4 +108,9 @@ body {
   width: 10%;
   padding-left: 5px;
   padding-bottom: 5px;
+}
+
+.article-link {
+  flex: 1;
+  text-align: left;
 }

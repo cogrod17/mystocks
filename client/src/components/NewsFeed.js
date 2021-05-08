@@ -2,24 +2,25 @@ import React, { useState, useEffect } from "react";
 import Article from "./Article";
 import axios from "axios";
 
+//CAN ADD A NEWS CATAGORY OPTION HERE
+
 const NewsFeed = () => {
   const [articleList, setArticleList] = useState([]);
 
-  ///news api.org KEY
-  //https://newsapi.org/
-  const API_KEY = "1dd10770c7944d70aff43d9ab5c463e9";
+  const API_KEY = "c2b9odaad3i8k5kfml40";
 
   const getNews = async () => {
     try {
-      const news = await axios.get("https://newsapi.org/v2/top-headlines", {
-        params: {
-          country: "us",
-          category: "business",
-          apiKey: API_KEY,
-        },
-      });
-      console.log(news.data.articles);
-      setArticleList(news.data.articles);
+      const news = await axios.get(
+        `https://finnhub.io/api/v1/news?category=general&token=${API_KEY}`,
+        {
+          params: {
+            category: "general",
+          },
+        }
+      );
+      console.log(news.data);
+      setArticleList(news.data);
     } catch (e) {
       console.log("could not get news");
     }
@@ -32,7 +33,7 @@ const NewsFeed = () => {
   const renderFeed = (articleList) => {
     if (!articleList) return <div>Could not get news</div>;
 
-    return articleList.map((item, i) => {
+    return articleList.slice(0, 17).map((item, i) => {
       return <Article key={i} article={item} />;
     });
   };

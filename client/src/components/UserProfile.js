@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import Modal from "./Modal";
 import NavBar from "./NavBar";
-import Footer from "./Footer";
 import history from "../history";
 import axios from "axios";
 

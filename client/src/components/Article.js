@@ -4,25 +4,20 @@ import React from "react";
 
 const Article = ({ article }) => {
   //clean up the name at end of title
-  const i = article.title.indexOf(" - ");
-  const title = article.title.slice(0, i);
+  //const i = article.title.indexOf(" - ");
+  //const title = article.title.slice(0, i);
 
   return (
     <div className="article">
       <div className="article-header">
-        <div className="article-title">
-          <h3>{title}</h3>
-          <p className="article-author">{article.author}</p>
-        </div>
-        <img
-          className="article-img"
-          src={`${article.urlToImage}`}
-          alt="news-pic"
-        />
+        <h3 className="article-title">{article.headline}</h3>
+        <div className="article-break"></div>
+        <p className="article-summary">{article.summary}</p>
+        <a className="article-link" href={`${article.url}`}>
+          {article.source}
+        </a>
       </div>
-
-      <p>{article.description}</p>
-      <a href={`${article.url}`}>{sourceName}</a>
+      <img className="article-img" src={`${article.image}`} alt="news-pic" />
     </div>
   );
 };
