@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./NavBar";
 import NewsFeed from "./NewsFeed";
 import Gainers from "./Gainers";
-import Losers from "./Losers";
+import MarketInfo from "./MarketInfo";
 
 const Home = () => {
   return (
@@ -11,7 +11,7 @@ const Home = () => {
 
       <div className="movers-container">
         <Gainers />
-        <Losers />
+        <MarketInfo />
       </div>
       <NewsFeed />
     </div>

@@ -50,16 +50,23 @@ body {
   padding: 10px 0px;
 }
 
-.movers-down {
+.movers-header {
+  display: flex;
+  margin-right: 5%;
+  margin-bottom: 0px;
+}
+
+.movers-ticker {
   flex: 1;
-  border: 1px red solid;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  margin-right: 20px;
-  margin-left: 5px;
-  margin-top: 20px;
-  height: 100%;
-  padding: 10px 0px;
+}
+
+.movers-price {
+  flex: 1;
+  margin-right: 5%;
+}
+
+.movers-change {
+  flex: 1;
 }
 
 .news {
@@ -113,4 +120,100 @@ body {
 .article-link {
   flex: 1;
   text-align: left;
+}
+
+.gainer-item {
+  display: flex;
+  border-top: 1px white solid;
+  padding-top: 5%;
+  padding-right: 5%;
+  margin-bottom: 0px;
+  padding-left: 5%;
+
+  padding-bottom: 0px;
+}
+
+.gainer-item:hover {
+  background: grey;
+}
+
+.gainer-ticker {
+  flex: 1;
+
+  font-size: 150%;
+}
+
+.gainer-price {
+  flex: 1;
+  margin: 0% 15%;
+  color: greenyellow;
+}
+
+.gainer-percent-change {
+  flex: 1;
+  border-radius: 10px;
+  height: 100%;
+  background: rgba(3, 243, 3, 0.5);
+}
+
+.index-item {
+  display: flex;
+  border-top: 1px white solid;
+  padding-top: 5%;
+  padding-right: 5%;
+  margin-bottom: 0px;
+  padding-left: 5%;
+
+  padding-bottom: 0px;
+}
+
+.index-item:hover {
+  background: grey;
+}
+
+.index-ticker {
+  flex: 1;
+  font-size: 150%;
+}
+
+.index-price {
+  flex: 1;
+  margin: 0% 15%;
+}
+
+.index-percent-change {
+  flex: 1;
+  border-radius: 10px;
+  height: 100%;
+}
+
+.index-header {
+  display: flex;
+  margin-right: 5%;
+  margin-bottom: 0px;
+}
+
+.index-ticker {
+  flex: 1;
+}
+
+.index-price-head {
+  flex: 1;
+  margin-right: 5%;
+}
+
+.index-change {
+  flex: 1;
+}
+
+.index {
+  flex: 1;
+  border: 1px blue solid;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  margin-right: 20px;
+  margin-left: 5px;
+  margin-top: 20px;
+  height: 100%;
+  padding: 10px 0px;
 }
