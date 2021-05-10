@@ -3,17 +3,21 @@ import NavBar from "./NavBar";
 import NewsFeed from "./NewsFeed";
 import Gainers from "./Gainers";
 import MarketInfo from "./MarketInfo";
+import "../styles/Home.css";
+
+//ADD SPINNERS TO THE COMPONENTS
 
 const Home = () => {
   return (
-    <div className="home">
+    <div>
       <NavBar />
-
-      <div className="movers-container">
-        <Gainers />
-        <MarketInfo />
+      <div className="home">
+        <NewsFeed />
+        <div className="gainer-and-index">
+          <Gainers />
+          <MarketInfo />
+        </div>
       </div>
-      <NewsFeed />
     </div>
   );
 };

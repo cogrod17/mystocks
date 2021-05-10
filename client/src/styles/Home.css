@@ -1,0 +1,188 @@
+.home {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding-bottom: 3rem;
+}
+
+.gainer-and-index {
+  flex: 2;
+  display: flex;
+  margin-right: 5px;
+}
+
+.news {
+  flex: 2;
+  margin: 5px;
+
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  border: 2px solid whitesmoke;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+@media (max-width: 800px) {
+  .home {
+    flex-direction: column;
+    padding: 10px;
+    padding-bottom: 3rem;
+  }
+}
+
+.index {
+  flex: 1;
+  border: white 2px solid;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  margin: 5px;
+  height: 80vh;
+  padding: 10px 0px;
+  overflow: auto;
+}
+
+.gainers {
+  flex: 1;
+  border: 2px greenyellow solid;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  margin: 5px;
+  height: 80vh;
+  padding: 10px 0px;
+  overflow: auto;
+}
+
+.list-header {
+  display: flex;
+  margin-right: 5%;
+  margin-bottom: 0px;
+}
+
+.list-ticker {
+  flex: 1;
+}
+
+.list-price {
+  flex: 1;
+  margin-right: 5%;
+}
+
+.list-change {
+  flex: 1;
+}
+
+.article {
+  text-align: left;
+  width: 100%;
+  border-top: blue 10px solid;
+  padding: 10px;
+}
+
+.article-header {
+  display: flex;
+  flex: 1;
+}
+
+.article-title {
+  flex: 1;
+  font-size: 25px;
+}
+
+.article-break {
+  width: 100%;
+  border: solid 1px yellowgreen;
+  margin: 2%;
+}
+
+.article-summary {
+  flex: 1;
+  font-size: 20px;
+  text-align: left;
+}
+
+.article-img {
+  flex: 1;
+
+  height: 50%;
+  width: 50%;
+  padding-left: 5px;
+  padding-bottom: 5px;
+}
+
+.article-link {
+  flex: 1;
+  text-align: left;
+}
+
+.gainer-item {
+  display: flex;
+  border-top: 1px white solid;
+  padding-top: 5%;
+  padding-right: 5%;
+  margin-bottom: 0px;
+  padding-left: 5%;
+
+  padding-bottom: 0px;
+}
+
+.gainer-item:hover {
+  background: grey;
+}
+
+.gainer-ticker {
+  flex: 1;
+
+  font-size: 150%;
+}
+
+.gainer-price {
+  flex: 1;
+  margin: 0% 15%;
+  color: greenyellow;
+}
+
+.gainer-percent-change {
+  flex: 1;
+  border-radius: 10px;
+  height: 100%;
+  background: rgba(3, 243, 3, 0.5);
+}
+
+.index-item {
+  display: flex;
+  border-top: 1px white solid;
+  padding-top: 5%;
+  padding-right: 5%;
+  margin-bottom: 0px;
+  padding-left: 5%;
+  padding-bottom: 0px;
+}
+
+.index-item:hover {
+  background: grey;
+}
+
+.index-ticker {
+  flex: 1;
+  font-size: 150%;
+}
+
+.index-percent-change {
+  flex: 1;
+  border-radius: 10px;
+  height: 100%;
+}
+
+.index-header {
+  display: flex;
+}
+
+.index-price-head {
+  flex: 1;
+  margin-right: 5%;
+}
+
+.index-change {
+  flex: 1;
+}

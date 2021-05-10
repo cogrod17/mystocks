@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import GainerItem from "./GainerItem";
+import Loader from "./Loader";
+import ListHeader from "./ListHeader";
 import axios from "axios";
+
+//index.js:1 Warning: Can't perform a React state update on an
+//unmounted component. This is a no-op, but it indicates a memory leak
+//in your application. To fix, cancel all subscriptions and asynchronous
+//tasks in a useEffect cleanup function.
 
 //https://financialmodelingprep.com/
 
@@ -14,10 +21,11 @@ const Gainers = () => {
       const res = await axios.get(
         `https://financialmodelingprep.com/api/v3/gainers?apikey=${API_KEY}`
       );
-      console.log(res.data);
+
       setGainers(res.data);
     } catch (e) {
       console.log("could not get gainers");
+      setGainers(["error"]);
     }
   };
 
@@ -26,22 +34,18 @@ const Gainers = () => {
   }, []);
 
   const renderGainers = (gainers) => {
-    console.log("get gainers");
-    return gainers.slice(0, 5).map((gainer, i) => {
-      console.log(`${i} maps`);
+    if (gainers[0] === "error")
+      return <div className="loader">Could not render content</div>;
+
+    return gainers.slice(0, 10).map((gainer, i) => {
       return <GainerItem key={i} gainer={gainer} />;
     });
   };
 
   return (
-    <div className="movers-up">
-      <h2>Top Gainers</h2>
-      <div className="movers-header">
-        <p className="movers-ticker">Ticker</p>
-        <p className="movers-price">Price</p>
-        <p className="moves-change">Change (%)</p>
-      </div>
-      {renderGainers(gainers)}
+    <div className="gainers">
+      <ListHeader title={"Top Gainers"} />
+      {gainers.length === 0 ? <Loader /> : renderGainers(gainers)}
     </div>
   );
 };

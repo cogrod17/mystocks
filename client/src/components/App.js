@@ -5,10 +5,11 @@ import NewUserForm from "./NewUserForm";
 import LoginForm from "./LoginForm";
 import UserProfile from "./UserProfile";
 import UpdateProfile from "./UpdateProfile";
+import LookUp from "./LookUp";
 import LandingPage from "./LandingPage";
 import Home from "./Home";
 import Footer from "./Footer";
-import WatchList from "./WatchList";
+import MyStocks from "./MyStocks";
 //import UpdateUser from "./UpdateUser";
 import "../styles/App.css";
 import axios from "axios";
@@ -64,7 +65,7 @@ class App extends React.Component {
             exact
             component={() => <NewUserForm getUserInfo={this.getUserInfo} />}
           />
-          <Route path="/watchlist" exact component={WatchList} />
+          <Route path="/mystocks" exact component={MyStocks} />
           <Route
             path="/users/update"
             edit
@@ -75,6 +76,7 @@ class App extends React.Component {
               />
             )}
           />
+          <Route path="/search" exact component={LookUp} />
           <Route
             path="/users/profile"
             exact

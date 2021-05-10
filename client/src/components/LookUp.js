@@ -1,13 +1,13 @@
 import React from "react";
 import NavBar from "./NavBar";
 
-const WatchList = () => {
+const LookUp = () => {
   return (
     <div>
       <NavBar />
-      <h1>WatchList</h1>
+      <h1>Look Up</h1>
     </div>
   );
 };
 
-export default WatchList;
+export default LookUp;

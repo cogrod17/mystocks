@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Article from "./Article";
 import axios from "axios";
+import Loader from "./Loader";
+
+//index.js:1 Warning: Can't perform a React state update on an
+//unmounted component. This is a no-op, but it indicates a memory leak
+//in your application. To fix, cancel all subscriptions and asynchronous
+//tasks in a useEffect cleanup function.
 
 //CAN ADD A NEWS CATAGORY OPTION HERE
 
@@ -24,7 +30,7 @@ const NewsFeed = () => {
       });
       setArticleList(businessNews);
     } catch (e) {
-      console.log("could not get news");
+      setArticleList(["error"]);
     }
   };
 
@@ -33,17 +39,23 @@ const NewsFeed = () => {
   }, []);
 
   const renderFeed = (articleList) => {
-    if (!articleList) return;
+    console.log("getting news");
 
-    return articleList.slice(0, 17).map((item, i) => {
-      return <Article key={i} article={item} />;
+    let count = 0;
+    if (articleList[0] === "error")
+      return <div className="loader">Could not get news</div>;
+
+    return articleList.slice(0, 10).map((item, i) => {
+      count++;
+
+      return <Article key={i} count={count} article={item} />;
     });
   };
 
   return (
     <div className="news">
-      <h1>News</h1>
-      {renderFeed(articleList)}
+      <h1 className="news-top">News</h1>
+      {articleList.length === 0 ? <Loader /> : renderFeed(articleList)}
     </div>
   );
 };
