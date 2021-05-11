@@ -12,6 +12,7 @@ import Loader from "./Loader";
 
 const NewsFeed = () => {
   const [articleList, setArticleList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const API_KEY = "c2b9odaad3i8k5kfml40";
 
@@ -31,11 +32,17 @@ const NewsFeed = () => {
       setArticleList(businessNews);
     } catch (e) {
       setArticleList(["error"]);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    getNews();
+    let mounted = true;
+    getNews().then(() => {
+      if (mounted) setLoading(false);
+    });
+
+    return () => (mounted = false);
   }, []);
 
   const renderFeed = (articleList) => {
@@ -55,7 +62,7 @@ const NewsFeed = () => {
   return (
     <div className="news">
       <h1 className="news-top">News</h1>
-      {articleList.length === 0 ? <Loader /> : renderFeed(articleList)}
+      {loading ? <Loader /> : renderFeed(articleList)}
     </div>
   );
 };

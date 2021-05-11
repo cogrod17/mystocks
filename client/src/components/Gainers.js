@@ -43,8 +43,11 @@ const Gainers = () => {
   };
 
   return (
-    <div className="gainers">
-      <ListHeader title={"Top Gainers"} />
+    <div className="list-container">
+      <ListHeader
+        title={"Top Gainers"}
+        categories={["Ticker", "Price", "Change (%)"]}
+      />
       {gainers.length === 0 ? <Loader /> : renderGainers(gainers)}
     </div>
   );

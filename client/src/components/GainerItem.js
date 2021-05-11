@@ -5,10 +5,12 @@ const GainerItem = ({ gainer }) => {
   const trimPercent = percentage.slice(1, percentage.length - 1);
 
   return (
-    <div className="gainer-item">
-      <p className="gainer-ticker">{gainer.ticker}</p>
-      <p className="gainer-price">{gainer.price}</p>
-      <p className="gainer-percent-change">{trimPercent}</p>
+    <div className="list-item">
+      <p className="listitem ticker">{gainer.ticker}</p>
+      <p className="listitem">{gainer.price}</p>
+      <p className="listitem" style={{ color: "greenyellow" }}>
+        {trimPercent}
+      </p>
     </div>
   );
 };

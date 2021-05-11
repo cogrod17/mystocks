@@ -15,6 +15,7 @@ import axios from "axios";
 
 const MarketInfo = () => {
   const [marketInfo, setMarketInfo] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   //https://twelvedata.com/
   const API_KEY = "5f75c7639947410a99d3551417a18f60";
@@ -32,15 +33,22 @@ const MarketInfo = () => {
 
       setMarketInfo(res.data);
     } catch (e) {
-      console.log(e);
-
       setMarketInfo(["error"]);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    getMarketInfo();
+    let mounted = true;
+    getMarketInfo().then(() => {
+      if (mounted) setLoading(false);
+    });
+    //console.log(sumPercentChange);
+
+    return () => (mounted = false);
   }, []);
+
+  //let sumPercentChange = 0;
 
   const renderMarketInfo = (marketInfo) => {
     if (marketInfo[0] === "error")
@@ -48,14 +56,18 @@ const MarketInfo = () => {
 
     const keys = Object.keys(marketInfo);
     return keys.map((key, i) => {
+      //sumPercentChange += marketInfo[key].percent_change;
       return <MarketIndexItem key={i} index={marketInfo[key]} />;
     });
   };
 
   return (
-    <div className="index">
-      <ListHeader title={"Markets"} />
-      {marketInfo.length === 0 ? <Loader /> : renderMarketInfo(marketInfo)}
+    <div className="list-container">
+      <ListHeader
+        title={"Markets"}
+        categories={["Symbol", "Price", "Change (%)"]}
+      />
+      {loading ? <Loader /> : renderMarketInfo(marketInfo)}
     </div>
   );
 };
