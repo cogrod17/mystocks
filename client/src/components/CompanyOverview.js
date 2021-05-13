@@ -1,13 +1,13 @@
 import React from "react";
 import NavBar from "./NavBar";
 
-const LookUp = () => {
+const CompanyOverview = () => {
   return (
     <div>
       <NavBar />
-      <h1>Look Up</h1>
+      <h1>Company Overview</h1>
     </div>
   );
 };
 
-export default LookUp;
+export default CompanyOverview;

@@ -1,53 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import NavBar from "./NavBar";
 import ListHeader from "./ListHeader";
 import StockItem from "./StockItem";
-import "../styles/MyStocks.css";
-import axios from "axios";
-
-// import Loader from "./Loader";
-
-const API_KEY = `9VTUD3XE4HKHNVBM`;
+import "../styles/Home.css";
 
 //WILL HAVE TO GET FAVORITE STOCKS PASSED DOWN AS PROPS
 
 const MyStocks = () => {
-  const [stocks, setStocks] = useState({});
-  const [loading, setLoading] = useState(true);
-  const categories = ["Symbol", "Price", "Volume", "Change ($)", "Change (%)"];
+  let stocks = ["IBM", "AAPL", "JPM"];
 
-  const getMyStocks = async () => {
-    try {
-      //https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo
-      //promise.allSettled()
-      let res = await axios.get("https://www.alphavantage.co/query?", {
-        params: {
-          function: "GLOBAL_QUOTE",
-          symbol: "IBM",
-          apikey: API_KEY,
-        },
-      });
+  const categories = ["symbol", "price", "volume", "change", "low", "high"];
 
-      const keys = Object.keys(res.data["Global Quote"]);
-      const values = Object.values(res.data["Global Quote"]);
-      let obj = {};
-      keys.map((key, i) => {
-        obj[key.split(" ")[1]] = values[i];
-      });
-      console.log({ IMB: obj });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    let mounted = true;
-    getMyStocks().then(() => {
-      if (mounted) setLoading(false);
+  const renderStockItems = (stocks) => {
+    return stocks.map((stock, i) => {
+      return <StockItem key={i} stock={stock} categories={categories} />;
     });
-
-    return () => (mounted = false);
-  }, []);
+  };
 
   return (
     <div>
@@ -55,7 +23,7 @@ const MyStocks = () => {
       <div className="my-stocks">
         <div className="list-container">
           <ListHeader title={"My Stocks"} categories={categories} />
-          <StockItem categories={categories} />
+          {renderStockItems(stocks)}
         </div>
       </div>
     </div>

@@ -1,8 +1,9 @@
 .home {
   display: flex;
   flex-direction: row;
-  padding-right: 10px;
-  padding-left: 10px;
+  margin: 0px 10px;
+
+  padding-bottom: 3rem;
 }
 
 .gainer-and-index {
@@ -10,10 +11,13 @@
   display: flex;
 }
 
+.change {
+  color: red;
+}
+
 .news {
   flex: 2;
   margin: 5px;
-  padding: 10px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   border: 2px solid whitesmoke;
@@ -24,7 +28,6 @@
 @media (max-width: 800px) {
   .home {
     flex-direction: column;
-    padding: 10px;
     padding-bottom: 3rem;
   }
 }
@@ -46,7 +49,11 @@
 }
 
 .listheader-category {
+  text-transform: uppercase;
   padding: 5px;
+  margin: 0px;
+  width: 70%;
+  justify-items: center;
 }
 
 .article {
@@ -95,9 +102,8 @@
 .list-item {
   display: grid;
   grid-auto-flow: column;
-  border-bottom: 1px white solid;
-  align-self: center;
-  justify-self: center;
+  border-bottom: white solid 1px;
+  justify-items: center;
 }
 
 .list-item:hover {
@@ -109,8 +115,7 @@
 }
 
 .listitem {
-  padding: 5px;
   margin: 0px;
-  align-self: center;
-  justify-self: center;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }

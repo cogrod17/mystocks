@@ -5,9 +5,10 @@ import NewUserForm from "./NewUserForm";
 import LoginForm from "./LoginForm";
 import UserProfile from "./UserProfile";
 import UpdateProfile from "./UpdateProfile";
-import LookUp from "./LookUp";
+import Search from "./Search";
 import LandingPage from "./LandingPage";
 import Home from "./Home";
+import CompanyOverview from "./CompanyOverview";
 import Footer from "./Footer";
 import MyStocks from "./MyStocks";
 //import UpdateUser from "./UpdateUser";
@@ -60,6 +61,7 @@ class App extends React.Component {
             exact
             component={() => <LoginForm getUserInfo={this.getUserInfo} />}
           />
+          <Route path="/companyoverview" exact component={CompanyOverview} />
           <Route
             path="/users/create"
             exact
@@ -76,7 +78,7 @@ class App extends React.Component {
               />
             )}
           />
-          <Route path="/search" exact component={LookUp} />
+          <Route path="/search" exact component={Search} />
           <Route
             path="/users/profile"
             exact
