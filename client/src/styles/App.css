@@ -5,10 +5,16 @@ html {
 h1 {
   color: white;
   text-align: center;
+  margin-top: 0px;
 }
 
 h2 {
   text-align: center;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -27,4 +33,62 @@ body {
 }
 .user-profile {
   padding-bottom: 3rem;
+}
+
+.company-overview {
+  border: black solid 1px;
+  margin: 5px 0px;
+  padding-bottom: 3rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.graph {
+  width: 100%;
+  border: red solid 1px;
+  margin-bottom: 10px;
+  height: 100%;
+  margin-top: 40px;
+}
+
+.company-info {
+  display: grid;
+  grid-template-columns: repeat(3, 33.33333%);
+  column-gap: 5%;
+  row-gap: 5%;
+  padding-left: 0.5%;
+  width: 90%;
+}
+
+@media (max-width: 700px) {
+  .company-info {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 20px;
+  }
+}
+
+.overview-section {
+  display: grid;
+  grid-auto-flow: column;
+
+  padding: 0px;
+  border-bottom: cyan 1px solid;
+}
+
+.overview-item {
+  margin: 2px;
+}
+
+.overview-title {
+  justify-self: start;
+  padding-left: 3px;
+}
+
+.overview-info {
+  justify-self: end;
+  padding-right: 3px;
+}
+
+.company-description {
+  padding: 10px;
 }

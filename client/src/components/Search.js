@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+
 import Loader from "./Loader";
 import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
@@ -38,14 +38,12 @@ const Search = () => {
     console.log("rendering results");
     return results.map((item, i) => {
       return (
-        <Link to="/companyoverview">
-          <div key={i} className="list-item results-item">
-            <div>
-              <p className="listitem results-symbol">{item["1. symbol"]}</p>
-              <p className="listitem results">{item["2. name"]}</p>
-            </div>
+        <div key={i} className="list-item results-item">
+          <div>
+            <p className="listitem results-symbol">{item["1. symbol"]}</p>
+            <p className="listitem results">{item["2. name"]}</p>
           </div>
-        </Link>
+        </div>
       );
     });
   };

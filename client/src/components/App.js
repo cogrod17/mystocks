@@ -24,6 +24,8 @@ class App extends React.Component {
     //check local storage to see if user is already signed in
     const token = JSON.parse(localStorage.getItem("token"));
 
+    console.log("app compnonent remounting");
+
     if (!token) history.push("/");
     if (token) {
       axios
@@ -33,6 +35,7 @@ class App extends React.Component {
         .then((res) => {
           res.data.token = token;
           this.setState(res.data);
+
           if (window.location.pathname === "/") history.push("/home");
         })
         .catch((e) => console.log(e));
@@ -55,19 +58,25 @@ class App extends React.Component {
       <div className="app">
         <Router history={history}>
           <Route path="/" exact component={LandingPage} />
+
           <Route path="/home" exact component={Home} />
+
           <Route
             path="/users/login"
             exact
             component={() => <LoginForm getUserInfo={this.getUserInfo} />}
           />
+
           <Route path="/companyoverview" exact component={CompanyOverview} />
+
           <Route
             path="/users/create"
             exact
             component={() => <NewUserForm getUserInfo={this.getUserInfo} />}
           />
+
           <Route path="/mystocks" exact component={MyStocks} />
+
           <Route
             path="/users/update"
             edit
@@ -78,7 +87,9 @@ class App extends React.Component {
               />
             )}
           />
+
           <Route path="/search" exact component={Search} />
+
           <Route
             path="/users/profile"
             exact
