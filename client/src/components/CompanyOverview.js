@@ -7,6 +7,7 @@ import alphaVantage from "../api/alphaVantage";
 //COMPANY WILL BE PASSES DOWN AS A PROP
 
 const CompanyOverview = () => {
+  const stock = "JPM";
   const [company, setCompany] = useState();
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const CompanyOverview = () => {
       .get("/query?", {
         params: {
           function: "OVERVIEW",
-          symbol: "JPM",
+          symbol: stock,
         },
       })
       .then((res) => {
@@ -125,7 +126,7 @@ const CompanyOverview = () => {
             </p>
           </div>
         </div>
-        <Graph />
+        <Graph stock={stock} />
         <div className="company-description">
           <h3>Company Profile</h3>
           <p>{company.Description}</p>
