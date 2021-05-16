@@ -55,7 +55,7 @@ const NewUserForm = ({ getUserInfo }) => {
             required
           />
         </div>
-        <button>Submit</button>
+        <button className="add">Submit</button>
       </form>
     </div>
   );

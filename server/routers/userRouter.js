@@ -46,7 +46,13 @@ router.get("/users/profile", auth, async (req, res) => {
 router.patch("/users/update", auth, async (req, res) => {
   //only allow some fields to be updated
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["username", "password", "email", "favQuote"];
+  const allowedUpdates = [
+    "username",
+    "password",
+    "email",
+    "favQuote",
+    "savedStocks",
+  ];
   const isValid = updates.every((key) => allowedUpdates.includes(key));
 
   if (!isValid) res.status(400).send({ error: "Invalid Updates" });
@@ -56,6 +62,7 @@ router.patch("/users/update", auth, async (req, res) => {
     await req.user.save();
     res.send(req.user);
   } catch (e) {
+    console.log(e);
     res.status(404).send(e);
   }
 });

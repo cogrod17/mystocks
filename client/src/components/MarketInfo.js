@@ -13,7 +13,7 @@ import axios from "axios";
 // message: "You have reached the API calls limit. 9 quotes requested per minute, limit is 8. You can either wait for a while or extend the limits according to your needs by selecting the appropriate plan at https://twelvedata.com/pricing"
 // status: "error"
 
-const MarketInfo = () => {
+const MarketInfo = ({ viewStock }) => {
   const [marketInfo, setMarketInfo] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,6 +29,7 @@ const MarketInfo = () => {
         },
       });
 
+      console.log(res.data);
       if (res.data.code === 429) throw new Error();
 
       setMarketInfo(res.data);
@@ -57,12 +58,18 @@ const MarketInfo = () => {
     const keys = Object.keys(marketInfo);
     return keys.map((key, i) => {
       //sumPercentChange += marketInfo[key].percent_change;
-      return <MarketIndexItem key={i} index={marketInfo[key]} />;
+      return (
+        <MarketIndexItem
+          key={i}
+          viewStock={viewStock}
+          index={marketInfo[key]}
+        />
+      );
     });
   };
 
   return (
-    <div className="list-container">
+    <div className="list-container market-info">
       <ListHeader
         title={"Markets"}
         categories={["Symbol", "Price", "Change (%)"]}

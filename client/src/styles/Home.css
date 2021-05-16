@@ -19,7 +19,7 @@
   flex: 2;
   margin: 5px;
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+
   border: 2px solid whitesmoke;
   max-height: 80vh;
   overflow: auto;
@@ -35,11 +35,15 @@
 .list-container {
   flex: 1;
   border: 2px greenyellow solid;
-  border-radius: 10px;
+
   background: rgba(0, 0, 0, 0.5);
   margin: 5px;
   height: 80vh;
   overflow: auto;
+}
+
+.market-info {
+  border: turquoise solid 2px;
 }
 
 .listheader {
@@ -108,6 +112,7 @@
 
 .list-item:hover {
   background: grey;
+  cursor: pointer;
 }
 
 .symbol {
@@ -117,5 +122,4 @@
 .listitem {
   margin: 0px;
   padding-top: 4px;
-  padding-bottom: 4px;
 }

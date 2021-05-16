@@ -11,7 +11,7 @@ import axios from "axios";
 
 //https://financialmodelingprep.com/
 
-const Gainers = () => {
+const Gainers = ({ viewStock }) => {
   const [gainers, setGainers] = useState([]);
 
   const API_KEY = "55291f85eb8b58745cc80fe4c443ba2c";
@@ -37,8 +37,8 @@ const Gainers = () => {
     if (gainers[0] === "error")
       return <div className="loader">Could not render content</div>;
 
-    return gainers.slice(0, 10).map((gainer, i) => {
-      return <GainerItem key={i} gainer={gainer} />;
+    return gainers.slice(0, 17).map((gainer, i) => {
+      return <GainerItem key={i} viewStock={viewStock} gainer={gainer} />;
     });
   };
 

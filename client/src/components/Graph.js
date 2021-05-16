@@ -3,8 +3,6 @@ import Loader from "./Loader";
 import alphaVantage from "../api/alphaVantage";
 import {
   GradientDefs,
-  VerticalGridLines,
-  HorizontalGridLines,
   Borders,
   XYPlot,
   XAxis,
@@ -40,6 +38,7 @@ const Graph = ({ stock }) => {
       if (i === timeSeries.length - 1) {
         setData(info);
       }
+      return info;
     });
   };
 
@@ -49,13 +48,12 @@ const Graph = ({ stock }) => {
       .get("/query?", {
         params: {
           function: "TIME_SERIES_DAILY_ADJUSTED",
-          symbol: stock,
+          symbol: stock.stock,
         },
       })
       .then((res) => {
         if (res.data.note) throw new Error();
         orgData(Object.entries(res.data["Time Series (Daily)"])).then(() => {
-          console.log(firstPrice < lastPrice ? "greenyellow" : "red");
           if (mounted) setLoading(false);
         });
 
@@ -111,8 +109,7 @@ const Graph = ({ stock }) => {
           }}
           data={data}
         />
-        <VerticalGridLines />
-        <HorizontalGridLines />
+
         <Borders
           style={{
             bottom: { fill: "#fff" },

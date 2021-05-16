@@ -3,7 +3,7 @@ import Loader from "./Loader";
 import { Link } from "react-router-dom";
 import alphaVantage from "../api/alphaVantage";
 
-const StockItem = ({ stock, categories }) => {
+const StockItem = ({ stock, categories, viewStock }) => {
   const [info, setInfo] = useState();
   const [color, setColor] = useState("white");
   const [loading, setLoading] = useState(true);
@@ -41,13 +41,14 @@ const StockItem = ({ stock, categories }) => {
       //setting state
       setInfo({ ...obj });
     } catch (e) {
+      console.log(e);
       setInfo("error");
     }
   };
 
   useEffect(() => {
     let mounted = true;
-    console.log("useEffect running");
+
     getQuote(stock).then(() => {
       if (mounted) setLoading(false);
     });
@@ -57,7 +58,6 @@ const StockItem = ({ stock, categories }) => {
   const renderCategories = (categories) => {
     if (info === "error") return <p className="listitem">cannot get info</p>;
 
-    console.log("render categories running " + info.symbol);
     return categories.map((item, i) => {
       let fontColor = item === "change" || item === "price" ? color : "white";
 
@@ -76,11 +76,15 @@ const StockItem = ({ stock, categories }) => {
   };
 
   return (
-    <Link to="/companyoverview">
-      <div className="list-item">
-        {loading ? <Loader /> : renderCategories(categories)}
-      </div>
-    </Link>
+    <div
+      onClick={() => {
+        console.log(stock + "clicked!");
+        viewStock(info.symbol, info.price);
+      }}
+      className="list-item"
+    >
+      {loading ? <Loader /> : renderCategories(categories)}
+    </div>
   );
 };
 

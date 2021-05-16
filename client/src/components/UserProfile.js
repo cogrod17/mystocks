@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import NavBar from "./NavBar";
 import history from "../history";
@@ -21,6 +21,8 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
     }
   };
 
+  useEffect(() => {}, [userInfo]);
+
   return (
     <div>
       <div className="user-profile">
@@ -34,12 +36,12 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
         <p>{userInfo.favQuote}</p>
         <p>{userInfo.email}</p>
         <p>Sign Out</p>
-        <button onClick={() => history.push("/users/update")}>
+        <p className="add" onClick={() => history.push("/users/update")}>
           Edit Profile
-        </button>
-        <button className="delete-button" onClick={() => setModalOpen(true)}>
+        </p>
+        <p className="delete-button add" onClick={() => setModalOpen(true)}>
           Delete Account
-        </button>
+        </p>
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+.add {
+  text-decoration: none;
+  border: 1px solid turquoise;
+  position: relative;
+  padding: 5px;
+  margin: 0px;
+  overflow: hidden;
+  color: #f4f4f4;
+  text-transform: uppercase;
+  width: 20%;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.add:hover {
+  box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
+  cursor: pointer;
+}
+
+.add:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, turquoise, transparent);
+  transition: all 650ms;
+}
+
+.add:hover:before {
+  left: 100%;
+}

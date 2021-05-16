@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const MarketIndexItem = ({ index }) => {
+const MarketIndexItem = ({ index, viewStock }) => {
   const [color, setColor] = useState("");
 
   const percent = +index.percent_change;

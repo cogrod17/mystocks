@@ -7,14 +7,14 @@ import "../styles/Home.css";
 
 //ADD SPINNERS TO THE COMPONENTS
 
-const Home = () => {
+const Home = ({ viewStock }) => {
   return (
     <div>
       <NavBar />
       <div className="home">
         <NewsFeed />
         <div className="gainer-and-index">
-          <Gainers />
+          <Gainers viewStock={viewStock} />
           <MarketInfo />
         </div>
       </div>

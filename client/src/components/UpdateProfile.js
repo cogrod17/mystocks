@@ -50,7 +50,7 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
               placeholder={`${userInfo.email}`}
             />
           </div>
-          <button>Submit</button>
+          <p className="add">Submit</p>
         </form>
       </div>
       <Footer />

@@ -18,13 +18,14 @@ import axios from "axios";
 //When refreshing from any page it sends the user to home
 
 class App extends React.Component {
-  state = {};
+  state = { user: {}, selectedStock: {} };
 
   componentDidMount() {
+    console.log("updating app state");
+    console.log(this.state);
     //check local storage to see if user is already signed in
     const token = JSON.parse(localStorage.getItem("token"));
-
-    console.log("app compnonent remounting");
+    let selectedStock = JSON.parse(localStorage.getItem("selectedStock"));
 
     if (!token) history.push("/");
     if (token) {
@@ -34,7 +35,12 @@ class App extends React.Component {
         })
         .then((res) => {
           res.data.token = token;
-          this.setState(res.data);
+          this.getUserInfo(res.data);
+          if (selectedStock) {
+            this.setState({ selectedStock });
+          }
+
+          console.log(this.state);
 
           if (window.location.pathname === "/") history.push("/home");
         })
@@ -46,11 +52,24 @@ class App extends React.Component {
   /// CAN STORE THE JSUT TOKEN IN local storage
 
   getUserInfo = (userObject) => {
-    this.setState(userObject);
+    this.setState({ user: userObject });
     console.log(this.state);
     //set token to local storage
-    if (userObject)
-      localStorage.setItem("token", JSON.stringify(this.state.token));
+    if (userObject.token) {
+      localStorage.setItem("token", JSON.stringify(this.state.user.token));
+    }
+  };
+
+  viewStock = async (stock, price) => {
+    if (!price) price = undefined;
+    this.setState({ selectedStock: { stock, price } }, () => {
+      console.log(this.state.selectedStock);
+      localStorage.setItem(
+        "selectedStock",
+        JSON.stringify(this.state.selectedStock)
+      );
+      history.push("/companyoverview");
+    });
   };
 
   render() {
@@ -59,7 +78,11 @@ class App extends React.Component {
         <Router history={history}>
           <Route path="/" exact component={LandingPage} />
 
-          <Route path="/home" exact component={Home} />
+          <Route
+            path="/home"
+            exact
+            component={() => <Home viewStock={this.viewStock} />}
+          />
 
           <Route
             path="/users/login"
@@ -67,7 +90,17 @@ class App extends React.Component {
             component={() => <LoginForm getUserInfo={this.getUserInfo} />}
           />
 
-          <Route path="/companyoverview" exact component={CompanyOverview} />
+          <Route
+            path="/companyoverview"
+            exact
+            component={() => (
+              <CompanyOverview
+                getUserInfo={this.getUserInfo}
+                user={this.state.user}
+                selectedStock={this.state.selectedStock}
+              />
+            )}
+          />
 
           <Route
             path="/users/create"
@@ -75,7 +108,16 @@ class App extends React.Component {
             component={() => <NewUserForm getUserInfo={this.getUserInfo} />}
           />
 
-          <Route path="/mystocks" exact component={MyStocks} />
+          <Route
+            path="/mystocks"
+            exact
+            component={() => (
+              <MyStocks
+                savedStocks={this.state.user.savedStocks}
+                viewStock={this.viewStock}
+              />
+            )}
+          />
 
           <Route
             path="/users/update"
@@ -83,12 +125,16 @@ class App extends React.Component {
             component={() => (
               <UpdateProfile
                 getUserInfo={this.getUserInfo}
-                userInfo={this.state}
+                userInfo={this.state.user}
               />
             )}
           />
 
-          <Route path="/search" exact component={Search} />
+          <Route
+            path="/search"
+            exact
+            component={() => <Search viewStock={this.viewStock} />}
+          />
 
           <Route
             path="/users/profile"
@@ -96,7 +142,7 @@ class App extends React.Component {
             component={() => (
               <UserProfile
                 getUserInfo={this.getUserInfo}
-                userInfo={this.state}
+                userInfo={this.state.user}
               />
             )}
           />

@@ -8,7 +8,7 @@ import alphaVantage from "../api/alphaVantage";
 
 //here["bestMatches"][0]["1. symbol"]
 
-const Search = () => {
+const Search = ({ viewStock }) => {
   const [results, setResults] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -21,7 +21,7 @@ const Search = () => {
         params: { function: "SYMBOL_SEARCH", keywords: term },
       });
       console.log(results.data.bestMatches);
-      console.log(results.data.bestMatches[0]["1. symbol"]);
+      //console.log(results.data.bestMatches[0]["1. symbol"]);
 
       setResults(results.data.bestMatches);
       setLoading(false);
@@ -38,7 +38,11 @@ const Search = () => {
     console.log("rendering results");
     return results.map((item, i) => {
       return (
-        <div key={i} className="list-item results-item">
+        <div
+          key={i}
+          onClick={() => viewStock(item["1. symbol"])}
+          className="list-item results-item"
+        >
           <div>
             <p className="listitem results-symbol">{item["1. symbol"]}</p>
             <p className="listitem results">{item["2. name"]}</p>
