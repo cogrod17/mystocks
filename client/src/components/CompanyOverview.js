@@ -36,7 +36,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
       .get("/query?", {
         params: {
           function: "OVERVIEW",
-          symbol: selectedStock.stock,
+          symbol: selectedStock.stock ? selectedStock.stock : selectedStock,
         },
       })
       .then((res) => {

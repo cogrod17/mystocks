@@ -10,13 +10,15 @@ const LandingPage = () => {
       <h1>Landing Page</h1>
       <br />
       <br />
-      <div className="ui grid centered">
-        <div className="four wide column">
-          <Link to="/users/login">Login</Link>
-        </div>
-        <div className="four wide column">
-          <Link to="/users/create">Create Account</Link>
-        </div>
+      <div>
+        <Link to="/users/login">
+          <p className="add">Login</p>
+        </Link>
+      </div>
+      <div className="four wide column">
+        <Link to="/users/create">
+          <p className="add">Create Account</p>
+        </Link>
       </div>
     </div>
   );

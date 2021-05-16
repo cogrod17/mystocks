@@ -4,6 +4,7 @@ import alphaVantage from "../api/alphaVantage";
 import {
   GradientDefs,
   Borders,
+  Crosshair,
   XYPlot,
   XAxis,
   YAxis,
@@ -15,7 +16,9 @@ const Graph = ({ stock }) => {
   const [firstPrice, setFirstPrice] = useState(0);
   const [lastPrice, setLastPrice] = useState(0);
   const [data, setData] = useState([]);
-
+  const [crosshairValues, setCrosshairValues] = useState([{ x: 0, y: 0 }]);
+  const [mouseLocation, setMouseLocation] = useState({ x: 0, y: 0 });
+  const [display, setDisplay] = useState("none");
   //{x: date, y: adjusted close}
 
   //2021-05-14
@@ -53,74 +56,109 @@ const Graph = ({ stock }) => {
       })
       .then((res) => {
         if (res.data.note) throw new Error();
+        console.log(res.data);
         orgData(Object.entries(res.data["Time Series (Daily)"])).then(() => {
           if (mounted) setLoading(false);
         });
-
-        //orgData(Object.entries(res.data["Time Series (Daily)"]));
-        //console.log(res.data["Time Series (Daily)"]);
       })
       .catch((err) => {
         console.log(err);
         setData(["error"]);
 
         if (mounted) setLoading(false);
-      }, []);
+      });
 
     return () => (mounted = false);
   }, [stock]);
 
+  //<p>Date: {crosshairValues ? crosshairValues[0].x : ""}</p>
   const renderGraph = () => {
     if (data[0] === "error") return <div>Cannot get graph</div>;
+    const { x, y } = mouseLocation;
 
     return (
-      <XYPlot
-        height={300}
-        width={900}
-        xType="time"
-        stroke={firstPrice < lastPrice ? "greenyellow" : "red"}
-        style={{ border: "cyan solid 1px" }}
+      <div
+        onMouseLeave={() => setDisplay("none")}
+        onMouseMove={(e) => {
+          setDisplay("block");
+          setMouseLocation({ x: e.clientX, y: e.clientY });
+        }}
+        className="graph"
       >
-        <GradientDefs>
-          <linearGradient id="GreenGradient" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="20%" stopColor="greenyellow" stopOpacity={0.6} />
-            <stop
-              offset="100%"
-              stopColor="rgba(0, 0, 0, 0.3)"
-              stopOpacity={0.3}
-            />
-          </linearGradient>
-          <linearGradient id="RedGradient" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="20%" stopColor="red" stopOpacity={0.6} />
-            <stop
-              offset="100%"
-              stopColor="rgba(0, 0, 0, 0.3)"
-              stopOpacity={0.3}
-            />
-          </linearGradient>
-        </GradientDefs>
-        <LineSeries
+        <div
+          className="crosshairs"
           style={{
-            fill:
-              firstPrice < lastPrice
-                ? "url(#GreenGradient)"
-                : "url(#RedGradient)",
-            strokeWidth: 2,
+            display: display,
+            top: y - 30,
+            left: x - 30,
           }}
-          data={data}
-        />
+        >
+          <p>
+            {crosshairValues
+              ? `Price: $${Number(crosshairValues[0].y).toFixed(2)}`
+              : ""}
+          </p>
+        </div>
+        <XYPlot
+          height={300}
+          width={900}
+          xType="time"
+          stroke={firstPrice < lastPrice ? "greenyellow" : "red"}
+          style={{ border: "cyan solid 1px" }}
+        >
+          <GradientDefs>
+            <linearGradient id="GreenGradient" x1="0" x2="50" y1="0" y2="50">
+              <stop offset="20%" stopColor="greenyellow" stopOpacity={0.6} />
+              <stop
+                offset="100%"
+                stopColor="rgba(0, 0, 0, 0.3)"
+                stopOpacity={0.3}
+              />
+            </linearGradient>
+            <linearGradient id="RedGradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="20%" stopColor="red" stopOpacity={0.6} />
+              <stop
+                offset="100%"
+                stopColor="rgba(0, 0, 0, 0.3)"
+                stopOpacity={0.3}
+              />
+            </linearGradient>
+          </GradientDefs>
+          <LineSeries
+            style={{
+              fill:
+                firstPrice < lastPrice
+                  ? "url(#GreenGradient)"
+                  : "url(#RedGradient)",
+              strokeWidth: 2,
+            }}
+            data={data}
+            onNearestXY={(value, { index }) => {
+              //console.log(value.y); //price
+              //console.log(value.x); //date
+              setCrosshairValues([data[index]]);
+            }}
+          />
 
-        <Borders
-          style={{
-            bottom: { fill: "#fff" },
-            left: { fill: "#fff" },
-            right: { fill: "#fff" },
-            top: { fill: "#fff" },
-          }}
-        />
-        <XAxis title="Date" />
-        <YAxis title="Price" />
-      </XYPlot>
+          <Borders
+            style={{
+              bottom: { fill: "rgba(0, 0, 0, 0.3)" },
+              left: { fill: "#fff" },
+              right: { fill: "#fff" },
+              top: { fill: "#fff" },
+            }}
+          />
+          <XAxis title="Date" />
+          <YAxis title="Price" />
+          <Crosshair
+            values={crosshairValues}
+            titleFormat={(d) => ({
+              title: "Date",
+              value: new Date(d[0].x).toLocaleDateString(),
+            })}
+          />
+        </XYPlot>
+      </div>
     );
   };
 

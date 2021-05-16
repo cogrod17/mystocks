@@ -6,6 +6,7 @@ import axios from "axios";
 
 const UserProfile = ({ userInfo, getUserInfo }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [mouseLocation, setMouseLocation] = useState({ x: 0, y: 0 });
 
   const deleteAccount = async () => {
     try {
@@ -22,9 +23,13 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
   };
 
   useEffect(() => {}, [userInfo]);
-
+  const { x, y } = mouseLocation;
   return (
-    <div>
+    <div onMouseMove={(e) => setMouseLocation({ x: e.clientX, y: e.clientY })}>
+      <div className="crosshairs" style={{ left: x, top: y + 40 }}>
+        {" "}
+        mouse coords: {x} {y}
+      </div>
       <div className="user-profile">
         <Modal
           onClose={() => setModalOpen(false)}
@@ -32,6 +37,9 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
           deleteAccount={deleteAccount}
         />
         <NavBar />
+        <h1>
+          mouse coords: {x} {y}
+        </h1>
         <h1>{userInfo.username}</h1>
         <p>{userInfo.favQuote}</p>
         <p>{userInfo.email}</p>

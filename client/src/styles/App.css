@@ -53,6 +53,19 @@ body {
   margin-top: 40px;
 }
 
+.crosshairs {
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
+  background: rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+  width: 100px;
+  height: 50px;
+}
+
+.rv-crosshair {
+  display: none;
+}
+
 .company-info {
   display: grid;
   grid-template-columns: repeat(3, 33.33333%);
@@ -112,11 +125,11 @@ body {
 
 .add:hover {
   box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
+  background: rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
 
 .add:before {
-  content: "";
   position: absolute;
   top: 0;
   left: -100%;
