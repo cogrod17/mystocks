@@ -27,7 +27,14 @@ class App extends React.Component {
     const token = JSON.parse(localStorage.getItem("token"));
     let selectedStock = JSON.parse(localStorage.getItem("selectedStock"));
 
+    if (
+      window.location.pathname === "/users/create" ||
+      window.location.pathname === "/users/login"
+    )
+      return;
+
     if (!token) history.push("/");
+
     if (token) {
       axios
         .get("http://localhost:3001/users/profile", {
@@ -52,6 +59,8 @@ class App extends React.Component {
   /// CAN STORE THE JSUT TOKEN IN local storage
 
   getUserInfo = (userObject) => {
+    if (!userObject) this.setState({ user: {}, selectedStock: {} });
+
     this.setState({ user: userObject });
     console.log(this.state);
     //set token to local storage

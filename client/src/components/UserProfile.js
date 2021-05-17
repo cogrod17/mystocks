@@ -14,9 +14,9 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
         headers: { Authorization: "Bearer " + userInfo.token },
       });
 
-      getUserInfo();
-      localStorage.removeItem("token");
+      localStorage.clear();
       window.location.pathname = "/";
+      getUserInfo();
     } catch (e) {
       console.log(e + "error in catch");
     }
