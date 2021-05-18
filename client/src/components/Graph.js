@@ -142,13 +142,13 @@ const Graph = ({ stock }) => {
 
           <Borders
             style={{
-              bottom: { fill: "rgba(0, 0, 0, 0.3)" },
+              bottom: { fill: "#fff" },
               left: { fill: "#fff" },
               right: { fill: "#fff" },
               top: { fill: "#fff" },
             }}
           />
-          <XAxis title="Date" />
+          <XAxis style={{ color: "white" }} title="Date" />
           <YAxis title="Price" />
           <Crosshair
             values={crosshairValues}

@@ -28,6 +28,7 @@ body {
 }
 
 .app {
+  background: linear-gradient(#141e30, #243b55);
   position: relative;
   min-height: 100vh;
 }
@@ -112,15 +113,27 @@ body {
 .add {
   text-decoration: none;
   border: 1px solid turquoise;
+  background: rgba(0, 0, 0, 0.3);
   position: relative;
   padding: 5px;
   margin: 0px;
+  width: 20%;
   overflow: hidden;
   color: #f4f4f4;
   text-transform: uppercase;
-  width: 20%;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.stock-btn {
+  position: absolute;
+  left: 0;
+}
+
+@media (max-width: 900px) {
+  .stock-btn {
+    position: relative;
+    width: 40%;
+  }
 }
 
 .add:hover {
@@ -148,7 +161,6 @@ body {
 .landing-page {
   display: flex;
   flex-direction: row;
-
   height: 100%;
 }
 
@@ -163,7 +175,7 @@ body {
   display: flex;
   position: relative;
   border-left: cyan solid 1px;
-
+  background: linear-gradient(#141e30, #243b55);
   flex-direction: column;
   padding-top: 150px;
   align-items: center;
@@ -191,24 +203,27 @@ body {
 
 @media (max-width: 900px) {
   .landing-page {
+    background: linear-gradient(to right, #141e30, #243b55);
     flex-direction: column-reverse;
     height: 100%;
+    overflow: hidden;
     padding-bottom: 3rem;
   }
   .landing-page-img {
     width: 900px;
-    height: 300px;
     overflow: hidden;
     border-top: cyan solid 1px;
   }
   .landing-btns {
-    margin-left: 40px;
+    margin-left: 60px;
   }
   .landing-page-content {
     flex-direction: row;
+    background: none;
     border-left: none;
     justify-items: center;
     align-self: center;
-    padding-top: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
 }

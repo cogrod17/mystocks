@@ -11,8 +11,9 @@ import alphaVantage from "../api/alphaVantage";
 
 const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   const [company, setCompany] = useState();
+  const [loading, setLoading] = useState(true);
 
-  const onSaveClick = async (e) => {
+  const onSaveClick = async () => {
     //console.log(user);
     //console.log("trying");
     try {
@@ -50,6 +51,8 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   };
 
   useEffect(() => {
+    let mounted = true;
+    //console.log(selectedStock);
     alphaVantage
       .get("/query?", {
         params: {
@@ -59,35 +62,42 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
       })
       .then((res) => {
         if (res.data.Note) throw new Error();
-        setCompany(res.data);
+        console.log(res);
+        if (mounted) {
+          setCompany(res.data);
+          setLoading(false);
+        }
         //console.log(res);
       })
       .catch((err) => {
         console.log(err);
-        setCompany("error");
-      });
 
-    //will need to add the stock to the dependency array
-    //it will be passed from app
+        if (mounted) {
+          setCompany("error");
+          setLoading(false);
+        }
+      });
+    return () => (mounted = false);
   }, [selectedStock]);
 
   const renderButton = () => {
+    if (company === "error") return <div></div>;
     if (user.savedStocks.includes(selectedStock.stock)) {
       return (
-        <p className="add" onClick={onRemoveClick}>
+        <p className="add stock-btn" onClick={onRemoveClick}>
           Remove from my stocks
         </p>
       );
     }
 
     return (
-      <p className="add" onClick={onSaveClick}>
+      <p className="add stock-btn" onClick={onSaveClick}>
         add to my stocks
       </p>
     );
   };
 
-  if (!company)
+  if (loading)
     return (
       <div>
         <NavBar />
@@ -110,6 +120,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   return (
     <div>
       <NavBar />
+
       <div className="company-overview">
         {renderButton()}
         <h1>{company.Name}</h1>
@@ -119,6 +130,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
             ? `${company.Symbol} ~ $${selectedStock.price}`
             : company.Symbol}
         </h2>
+
         <CompanyInfo company={company} />
         <Graph stock={selectedStock} />
         <div className="company-description">

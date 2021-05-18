@@ -37,6 +37,7 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
           deleteAccount={deleteAccount}
         />
         <NavBar />
+
         <h1>
           mouse coords: {x} {y}
         </h1>

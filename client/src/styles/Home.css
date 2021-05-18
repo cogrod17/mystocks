@@ -20,7 +20,7 @@
   margin: 5px;
   background: rgba(0, 0, 0, 0.5);
 
-  border: 2px solid whitesmoke;
+  border: 2px black solid;
   max-height: 80vh;
   overflow: auto;
 }
@@ -34,7 +34,7 @@
 
 .list-container {
   flex: 1;
-  border: 2px greenyellow solid;
+  border: 2px black solid;
 
   background: rgba(0, 0, 0, 0.5);
   margin: 5px;
@@ -43,7 +43,7 @@
 }
 
 .market-info {
-  border: turquoise solid 2px;
+  border: black solid 2px;
 }
 
 .listheader {
@@ -63,8 +63,13 @@
 .article {
   text-align: left;
   width: 100%;
-  border-top: blue 10px solid;
+  border-top: white 2px double;
   padding: 10px;
+}
+
+.article:hover {
+  background: grey;
+  color: whitesmoke;
 }
 
 .article-header {
@@ -79,7 +84,7 @@
 
 .article-break {
   width: 100%;
-  border: solid 1px yellowgreen;
+  border: solid 1px black;
   margin: 2%;
 }
 

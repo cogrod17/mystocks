@@ -1,7 +1,7 @@
 .search-container {
-  border: turquoise solid 2px;
+  border: black solid 0.5px;
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+
   margin: 0px 20px;
   max-height: 80vh;
   overflow: auto;

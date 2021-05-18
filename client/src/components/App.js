@@ -65,6 +65,9 @@ class App extends React.Component {
   };
 
   viewStock = async (stock, price) => {
+    console.log(stock);
+    console.log(price);
+
     if (!price) price = undefined;
     this.setState({ selectedStock: { stock, price } }, () => {
       //console.log(this.state.selectedStock);
