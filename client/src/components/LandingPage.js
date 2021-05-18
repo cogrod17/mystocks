@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 import pic from "../images/landpage-pic.jpeg";
 //import NavBar from "./NavBar";
 // import LoginForm from "./LoginForm";

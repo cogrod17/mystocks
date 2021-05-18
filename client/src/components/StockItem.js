@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Loader from "./Loader";
 
 import alphaVantage from "../api/alphaVantage";
@@ -12,74 +12,78 @@ const StockItem = ({ stock, categories, viewStock }) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  const getQuote = async (stock) => {
-    console.log("running");
-    try {
-      const res = await alphaVantage.get("/query?", {
-        params: { function: "GLOBAL_QUOTE", symbol: stock },
-      });
-      if (!res.data) throw new Error();
+  const orgData = (res) => {
+    //grabbing the keys and values and reorganizing
+    const keys = Object.keys(res.data["Global Quote"]);
+    const values = Object.values(res.data["Global Quote"]);
+    let obj = {};
+    keys.map((key, i) => {
+      return (obj[key.split(" ")[1]] = values[i]);
+    });
 
-      //grabbing the keys and values and reorganizing
-      const keys = Object.keys(res.data["Global Quote"]);
-      const values = Object.values(res.data["Global Quote"]);
-      let obj = {};
-      await keys.map((key, i) => {
-        return (obj[key.split(" ")[1]] = values[i]);
-      });
-
-      //Setting font color on info to red if it is in negatives for day
-      if (obj.change && +obj.change.slice(0, obj.change.length - 1) < 0) {
-        setColor("red");
-      }
-
-      obj.volume = addCommas(obj.volume);
-      obj.price = Number(obj.price).toFixed(2);
-
-      //setting state
-      setInfo({ ...obj });
-      return obj;
-    } catch (e) {
-      console.log(e);
-      setInfo("error");
+    //Setting font color on info to red if it is in negatives for day
+    if (obj.change && +obj.change.slice(0, obj.change.length - 1) < 0) {
+      setColor("red");
     }
+
+    obj.volume = addCommas(obj.volume);
+    obj.price = Number(obj.price).toFixed(2);
+    return obj;
   };
 
   useEffect(() => {
     let mounted = true;
+    console.log("running");
+    alphaVantage
+      .get("/query?", {
+        params: { function: "GLOBAL_QUOTE", symbol: stock },
+      })
+      .then((res) => {
+        console.log(res);
+        if (!res.data || res.data.Note) throw new Error();
 
-    getQuote(stock)
-      .then(() => {
-        if (mounted) setLoading(false);
+        let data = orgData(res);
+
+        setInfo({ ...data });
+        if (mounted) {
+          setLoading(false);
+        }
       })
       .catch((e) => {
-        console.log(e);
-        if (mounted) setLoading(false);
+        if (mounted) {
+          console.log(e);
+          setInfo("error");
+          setLoading(false);
+        }
       });
+
     return () => (mounted = false);
   }, [stock, categories]);
 
-  const renderCategories = (categories) => {
-    if (!info) return;
-    console.log("rendering");
-    if (info === "error") return <p className="listitem">cannot get info</p>;
+  const renderCategories = useCallback(
+    (categories) => {
+      if (!info) return;
 
-    return categories.map((item, i) => {
-      let fontColor = item === "change" || item === "price" ? color : "white";
+      if (info === "error") return <p className="listitem">cannot get info</p>;
 
-      return (
-        <p
-          key={i}
-          className={`listitem ${item}`}
-          style={{
-            color: `${fontColor}`,
-          }}
-        >
-          {info[categories[i]]}
-        </p>
-      );
-    });
-  };
+      return categories.map((item, i) => {
+        let fontColor = item === "change" || item === "price" ? color : "white";
+
+        return (
+          <p
+            key={i}
+            className={`listitem ${item}`}
+            style={{
+              color: `${fontColor}`,
+            }}
+          >
+            {info[categories[i]]}
+          </p>
+        );
+      });
+    },
+    [info, color]
+  );
 
   return (
     <div

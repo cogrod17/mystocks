@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import NavBar from "./NavBar";
 import ListHeader from "./ListHeader";
 import StockItem from "./StockItem";
@@ -9,21 +9,23 @@ import "../styles/Home.css";
 const MyStocks = ({ savedStocks, viewStock }) => {
   const categories = ["symbol", "price", "change", "volume", "low", "high"];
 
-  const renderStockItems = (stocks) => {
-    console.log(stocks);
-    if (stocks === undefined) return;
-    if (stocks.length === 0) return <div>You have no saved stocks</div>;
-    return stocks.map((stock, i) => {
-      return (
-        <StockItem
-          key={i}
-          viewStock={viewStock}
-          stock={stock}
-          categories={categories}
-        />
-      );
-    });
-  };
+  const renderStockItems = useCallback(
+    (stocks) => {
+      if (stocks === undefined) return;
+      if (stocks.length === 0) return <div>You have no saved stocks</div>;
+      return stocks.map((stock, i) => {
+        return (
+          <StockItem
+            key={i}
+            viewStock={viewStock}
+            stock={stock}
+            categories={categories}
+          />
+        );
+      });
+    },
+    [savedStocks, categories]
+  );
 
   return (
     <div>

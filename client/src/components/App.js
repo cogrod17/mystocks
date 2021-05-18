@@ -25,7 +25,6 @@ class App extends React.Component {
 
     //check local storage to see if user is already signed in
     const token = JSON.parse(localStorage.getItem("token"));
-    let selectedStock = JSON.parse(localStorage.getItem("selectedStock"));
 
     if (
       window.location.pathname === "/users/create" ||
@@ -43,34 +42,26 @@ class App extends React.Component {
         .then((res) => {
           res.data.token = token;
           this.getUserInfo(res.data);
-          if (selectedStock) {
-            this.setState({ selectedStock });
-          }
-
-          //console.log(this.state);
-
           if (window.location.pathname === "/") history.push("/home");
         })
         .catch((e) => console.log(e));
     }
   }
 
-  ///PUT AXIOS GET REQUEST IN APP SO YOU
-  /// CAN STORE THE JSUT TOKEN IN local storage
-
   getUserInfo = (userObject) => {
     if (!userObject) this.setState({ user: {}, selectedStock: {} });
+    let selectedStock = JSON.parse(localStorage.getItem("selectedStock"));
 
-    if (!userObject.token)
-      userObject.token = JSON.parse(localStorage.getItem("token"));
-
-    this.setState({ user: userObject });
-
-    //console.log(this.state);
-    //set token to local storage
     if (userObject.token) {
-      localStorage.setItem("token", JSON.stringify(this.state.user.token));
+      localStorage.setItem("token", JSON.stringify(userObject.token));
+    } else {
+      userObject.token = JSON.parse(localStorage.getItem("token"));
     }
+
+    this.setState({
+      user: userObject,
+      selectedStock: selectedStock ? selectedStock : {},
+    });
   };
 
   viewStock = async (stock, price) => {
