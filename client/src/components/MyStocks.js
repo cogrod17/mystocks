@@ -7,7 +7,7 @@ import "../styles/Home.css";
 //WILL HAVE TO GET FAVORITE STOCKS PASSED DOWN AS PROPS
 
 const MyStocks = ({ savedStocks, viewStock }) => {
-  const categories = ["symbol", "price", "volume", "change", "low", "high"];
+  const categories = ["symbol", "price", "change", "volume", "low", "high"];
 
   const renderStockItems = (stocks) => {
     console.log(stocks);

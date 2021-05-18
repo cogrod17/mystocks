@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Loader from "./Loader";
-import { Link } from "react-router-dom";
+
 import alphaVantage from "../api/alphaVantage";
 
 const StockItem = ({ stock, categories, viewStock }) => {
   const [info, setInfo] = useState();
-  const [color, setColor] = useState("white");
+  const [color, setColor] = useState("greenyellow");
   const [loading, setLoading] = useState(true);
 
   const addCommas = (x) => {
@@ -13,6 +13,7 @@ const StockItem = ({ stock, categories, viewStock }) => {
   };
 
   const getQuote = async (stock) => {
+    console.log("running");
     try {
       const res = await alphaVantage.get("/query?", {
         params: { function: "GLOBAL_QUOTE", symbol: stock },
@@ -27,12 +28,9 @@ const StockItem = ({ stock, categories, viewStock }) => {
         return (obj[key.split(" ")[1]] = values[i]);
       });
 
-      //Setting font color on info
+      //Setting font color on info to red if it is in negatives for day
       if (obj.change && +obj.change.slice(0, obj.change.length - 1) < 0) {
         setColor("red");
-      }
-      if (obj.change && +obj.change.slice(0, obj.change.length - 1) > 0) {
-        setColor("greenyellow");
       }
 
       obj.volume = addCommas(obj.volume);
@@ -40,6 +38,7 @@ const StockItem = ({ stock, categories, viewStock }) => {
 
       //setting state
       setInfo({ ...obj });
+      return obj;
     } catch (e) {
       console.log(e);
       setInfo("error");
@@ -49,13 +48,20 @@ const StockItem = ({ stock, categories, viewStock }) => {
   useEffect(() => {
     let mounted = true;
 
-    getQuote(stock).then(() => {
-      if (mounted) setLoading(false);
-    });
+    getQuote(stock)
+      .then(() => {
+        if (mounted) setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        if (mounted) setLoading(false);
+      });
     return () => (mounted = false);
-  }, [stock]);
+  }, [stock, categories]);
 
   const renderCategories = (categories) => {
+    if (!info) return;
+    console.log("rendering");
     if (info === "error") return <p className="listitem">cannot get info</p>;
 
     return categories.map((item, i) => {
@@ -78,7 +84,6 @@ const StockItem = ({ stock, categories, viewStock }) => {
   return (
     <div
       onClick={() => {
-        console.log(stock + "clicked!");
         viewStock(info.symbol, info.price);
       }}
       className="list-item"

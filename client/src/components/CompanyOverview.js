@@ -12,9 +12,10 @@ import alphaVantage from "../api/alphaVantage";
 const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   const [company, setCompany] = useState();
 
-  const onButtonClick = async () => {
+  const onSaveClick = async (e) => {
+    //console.log(user);
+    //console.log("trying");
     try {
-      console.log(user);
       const res = await axios.patch(
         "http://localhost:3001/users/update",
         { savedStocks: [...user.savedStocks, company.Symbol] },
@@ -22,39 +23,69 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
           headers: { Authorization: "Bearer " + user.token },
         }
       );
-      console.log(res);
+      //console.log(res);
       getUserInfo(res.data);
-      console.log(selectedStock.stock + "added to saved list!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onRemoveClick = async () => {
+    //console.log("deleting");
+    let updated = user.savedStocks.filter((stock) => stock !== company.Symbol);
+    //console.log(updated);
+
+    try {
+      const res = await axios.patch(
+        "http://localhost:3001/users/update",
+        { savedStocks: updated },
+        { headers: { Authorization: "Bearer " + user.token } }
+      );
+      // console.log(res);
+      getUserInfo(res.data);
+      //console.log("deleted");
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
-    console.log(selectedStock);
     alphaVantage
       .get("/query?", {
         params: {
           function: "OVERVIEW",
-          symbol: selectedStock.stock ? selectedStock.stock : selectedStock,
+          symbol: selectedStock.stock,
         },
       })
       .then((res) => {
         if (res.data.Note) throw new Error();
         setCompany(res.data);
-        console.log(res);
+        //console.log(res);
       })
-      .catch(
-        (err) => {
-          console.log(err);
-          setCompany("error");
-        },
-        [selectedStock]
-      );
+      .catch((err) => {
+        console.log(err);
+        setCompany("error");
+      });
 
     //will need to add the stock to the dependency array
     //it will be passed from app
-  }, []);
+  }, [selectedStock]);
+
+  const renderButton = () => {
+    if (user.savedStocks.includes(selectedStock.stock)) {
+      return (
+        <p className="add" onClick={onRemoveClick}>
+          Remove from my stocks
+        </p>
+      );
+    }
+
+    return (
+      <p className="add" onClick={onSaveClick}>
+        add to my stocks
+      </p>
+    );
+  };
 
   if (!company)
     return (
@@ -80,9 +111,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
     <div>
       <NavBar />
       <div className="company-overview">
-        <p className="add" onClick={onButtonClick}>
-          add to my stocks
-        </p>
+        {renderButton()}
         <h1>{company.Name}</h1>
 
         <h2>

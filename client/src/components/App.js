@@ -22,7 +22,7 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log("updating app state");
-    console.log(this.state);
+
     //check local storage to see if user is already signed in
     const token = JSON.parse(localStorage.getItem("token"));
     let selectedStock = JSON.parse(localStorage.getItem("selectedStock"));
@@ -47,7 +47,7 @@ class App extends React.Component {
             this.setState({ selectedStock });
           }
 
-          console.log(this.state);
+          //console.log(this.state);
 
           if (window.location.pathname === "/") history.push("/home");
         })
@@ -61,8 +61,12 @@ class App extends React.Component {
   getUserInfo = (userObject) => {
     if (!userObject) this.setState({ user: {}, selectedStock: {} });
 
+    if (!userObject.token)
+      userObject.token = JSON.parse(localStorage.getItem("token"));
+
     this.setState({ user: userObject });
-    console.log(this.state);
+
+    //console.log(this.state);
     //set token to local storage
     if (userObject.token) {
       localStorage.setItem("token", JSON.stringify(this.state.user.token));
@@ -72,7 +76,7 @@ class App extends React.Component {
   viewStock = async (stock, price) => {
     if (!price) price = undefined;
     this.setState({ selectedStock: { stock, price } }, () => {
-      console.log(this.state.selectedStock);
+      //console.log(this.state.selectedStock);
       localStorage.setItem(
         "selectedStock",
         JSON.stringify(this.state.selectedStock)
