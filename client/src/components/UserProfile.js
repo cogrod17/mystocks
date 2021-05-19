@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Modal from "./Modal";
 import NavBar from "./NavBar";
 import history from "../history";
+
 import axios from "axios";
 
 const UserProfile = ({ userInfo, getUserInfo }) => {
@@ -22,7 +23,6 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
     }
   };
 
-  useEffect(() => {}, [userInfo]);
   const { x, y } = mouseLocation;
   return (
     <div onMouseMove={(e) => setMouseLocation({ x: e.clientX, y: e.clientY })}>
@@ -32,9 +32,11 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
       </div>
       <div className="user-profile">
         <Modal
-          onClose={() => setModalOpen(false)}
+          message={"Delete Account?"}
+          type={["confirm", "delete"]}
+          setModalOpen={setModalOpen}
           modalOpen={modalOpen}
-          deleteAccount={deleteAccount}
+          action={deleteAccount}
         />
         <NavBar />
 
@@ -44,7 +46,6 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
         <h1>{userInfo.username}</h1>
         <p>{userInfo.favQuote}</p>
         <p>{userInfo.email}</p>
-        <p>Sign Out</p>
         <p className="add" onClick={() => history.push("/users/update")}>
           Edit Profile
         </p>

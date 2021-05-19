@@ -29,18 +29,33 @@ const NewsFeed = () => {
       const businessNews = news.data.filter((item) => {
         return item.category === "business";
       });
-      setArticleList(businessNews);
+
+      return businessNews;
+      //setArticleList(businessNews);
+      //setLoading(false);
     } catch (e) {
-      setArticleList(["error"]);
-      setLoading(false);
+      return ["error"];
+      // setArticleList(["error"]);
+      // setLoading(false);
     }
   };
 
   useEffect(() => {
     let mounted = true;
-    getNews().then(() => {
-      if (mounted) setLoading(false);
-    });
+    getNews()
+      .then((news) => {
+        if (mounted) {
+          setArticleList(news);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (mounted) {
+          setArticleList(err);
+          setLoading(false);
+        }
+      });
 
     return () => (mounted = false);
   }, []);

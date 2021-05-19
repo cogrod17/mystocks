@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import Graph from "./Graph";
 import CompanyInfo from "./CompanyInfo";
 import Loader from "./Loader";
+
 import axios from "axios";
 import "../styles/addbtn.css";
 import alphaVantage from "../api/alphaVantage";
@@ -84,16 +85,20 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
     if (company === "error") return <div></div>;
     if (user.savedStocks.includes(selectedStock.stock)) {
       return (
-        <p className="add stock-btn" onClick={onRemoveClick}>
-          Remove from my stocks
-        </p>
+        <div>
+          <p className="add stock-btn" onClick={onRemoveClick}>
+            Remove from my stocks
+          </p>
+        </div>
       );
     }
 
     return (
-      <p className="add stock-btn" onClick={onSaveClick}>
-        add to my stocks
-      </p>
+      <div>
+        <p className="add stock-btn" onClick={onSaveClick}>
+          add to my stocks
+        </p>
+      </div>
     );
   };
 

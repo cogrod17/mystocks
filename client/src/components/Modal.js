@@ -4,33 +4,46 @@ import React from "react";
 
 //const modalRoot = document.querySelector("#modal");
 
-const Modal = ({ modalOpen, onClose, deleteAccount }) => {
+const Modal = ({ modalOpen, setModalOpen, action, message, type }) => {
   if (!modalOpen) return null;
 
+  const renderType = () => {
+    if (type[0] === "confirm") {
+      return (
+        <div className="modal-actions">
+          <p onClick={action} className="add modal-cancel-btn">
+            {type[1]}
+          </p>
+          <p
+            onClick={() => setModalOpen(false)}
+            className="add modal-cancel-btn"
+          >
+            cancel
+          </p>
+        </div>
+      );
+    }
+
+    // if (type === "notice") {
+    //   return (
+    //     <div className="modal-actions">
+    //       <p
+    //         onClick={() => setModalOpen(false)}
+    //         className="add modal-cancel-btn"
+    //       >
+    //         Okay
+    //       </p>
+    //     </div>
+    //   );
+    // }
+  };
+
   return (
-    <div className="ui dimmer modals active">
-      <div className="ui modal active">
-        <h1 className="header">Delete Account?</h1>
-        <div className="actions">
-          <button onClick={deleteAccount} className="ui inverted red button">
-            Delete
-          </button>
-          <button onClick={onClose} className="floated right ui button cancel">
-            Cancel
-          </button>
-        </div>
+    <div className="modal-dimmer">
+      <div className="modal">
+        <h1 className="modal-header">{message}</h1>
+        {renderType()}
       </div>
-      {/* <div className="ui modal active">
-        <div className="header">
-          Are you sure you want to delete your account?
-        </div>
-        <div className="actions">
-          <button className="ui inverted red button">Delete</button>
-          <button onClick={onClose} className="ui button cancel">
-            Cancel
-          </button>
-        </div>
-      </div> */}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import LogoutBtn from "./LogoutBtn";
 import "../styles/NavBar.css";
 
 const NavBar = () => {
@@ -17,6 +18,7 @@ const NavBar = () => {
       <Link to="/users/profile" className="btn profile-btn">
         Profile
       </Link>
+      <LogoutBtn />
     </div>
   );
 };

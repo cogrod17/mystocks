@@ -51,7 +51,7 @@ const StockItem = ({ stock, categories, viewStock }) => {
       });
 
     return () => (mounted = false);
-  }, [stock, categories]);
+  }, [stock, categories, orgData]);
 
   const renderCategories = useMemo(() => {
     if (!info) return;

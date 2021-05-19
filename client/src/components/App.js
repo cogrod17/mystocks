@@ -11,7 +11,6 @@ import Home from "./Home";
 import CompanyOverview from "./CompanyOverview";
 import Footer from "./Footer";
 import MyStocks from "./MyStocks";
-//import UpdateUser from "./UpdateUser";
 import "../styles/App.css";
 import axios from "axios";
 
@@ -65,9 +64,7 @@ class App extends React.Component {
   };
 
   viewStock = async (stock, price) => {
-    console.log(stock);
-    console.log(price);
-
+    if (!stock) return;
     if (!price) price = undefined;
     this.setState({ selectedStock: { stock, price } }, () => {
       //console.log(this.state.selectedStock);
