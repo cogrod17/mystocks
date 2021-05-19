@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
 import Loader from "./Loader";
-import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
 //import SearchResults from "./SearchResults";
 import alphaVantage from "../api/alphaVantage";
@@ -53,12 +51,9 @@ const Search = ({ viewStock }) => {
   };
 
   return (
-    <div>
-      <NavBar />
-      <div className="search-container">
-        <SearchBar onSearch={onSearch} />
-        {loading ? <Loader /> : renderResults(results)}
-      </div>
+    <div className="search-container">
+      <SearchBar onSearch={onSearch} />
+      {loading ? <Loader /> : renderResults(results)}
     </div>
   );
 };

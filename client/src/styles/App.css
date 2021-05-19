@@ -167,7 +167,7 @@ body {
 .landing-page-img {
   flex: 1;
   height: 578px;
-  width: 650px;
+  width: 600px;
 }
 
 .landing-page-content {
@@ -240,10 +240,13 @@ body {
 
 .modal-dimmer {
   position: fixed;
+  padding-left: 0px;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1;
-  height: 92vh;
-  width: 100vw;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .modal {
@@ -269,7 +272,7 @@ body {
   right: 0;
   width: 10%;
   margin-right: 2%;
-  margin-top: 15px;
+  margin-top: 18px;
   padding: 0px;
   font-size: 12px;
 }

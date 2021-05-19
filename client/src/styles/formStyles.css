@@ -3,40 +3,69 @@ html {
 }
 
 .form-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
   width: 400px;
-  padding: 40px;
-  transform: translate(-50%, -50%);
+  padding: 20px;
   background: rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
-}
-.form {
-  text-align: center;
+  border: black solid 2px;
 }
 
-.form-container h1 {
-  color: #fff;
+.landing {
+  flex: 1;
+  height: 100%;
+  margin-top: 100px;
+  margin-right: 1%;
+  margin-left: 1%;
+}
+
+.form-img {
+  border-right: cyan solid 1px;
+  margin-right: 10px;
+}
+
+@media (max-width: 900px) {
+  .landing {
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
+  }
+  .form-img {
+    border-top: cyan 1px solid;
+  }
 }
 
 .form-box {
-  color: #fff;
-  margin: 17px;
+  position: relative;
 }
 
-.form-box .form-container input {
-  width: 80%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
+.form-container .form-box input {
+  width: 100%;
+  font-size: 15px;
+  font-family: "Oswald", sans-serif;
+  color: white;
   margin-bottom: 30px;
   border: none;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid turquoise;
   outline: none;
   background: transparent;
+}
+
+.form-container .form-box label {
+  position: absolute;
+  left: 0;
+  pointer-events: none;
+}
+
+.form-container .form-box input:focus ~ label,
+.form-container .form-box input:valid ~ label {
+  top: 25px;
+  left: 0;
+  color: turquoise;
+  font-size: 15px;
 }
 
 .add {

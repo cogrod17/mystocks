@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NavBar from "./NavBar";
+
 import Graph from "./Graph";
 import CompanyInfo from "./CompanyInfo";
 import Loader from "./Loader";
@@ -104,44 +104,34 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
 
   if (loading)
     return (
-      <div>
-        <NavBar />
-        <div className="company-overview">
-          <Loader />
-        </div>
+      <div className="company-overview">
+        <Loader />
       </div>
     );
 
   if (company === "error")
     return (
-      <div>
-        <NavBar />
-        <div className="company-overview">
-          <h1>Could not get company data</h1>
-        </div>
+      <div className="company-overview">
+        <h1>Could not get company data</h1>
       </div>
     );
 
   return (
-    <div>
-      <NavBar />
+    <div className="company-overview">
+      {renderButton()}
+      <h1>{company.Name}</h1>
 
-      <div className="company-overview">
-        {renderButton()}
-        <h1>{company.Name}</h1>
+      <h2>
+        {selectedStock.price
+          ? `${company.Symbol} ~ $${selectedStock.price}`
+          : company.Symbol}
+      </h2>
 
-        <h2>
-          {selectedStock.price
-            ? `${company.Symbol} ~ $${selectedStock.price}`
-            : company.Symbol}
-        </h2>
-
-        <CompanyInfo company={company} />
-        <Graph stock={selectedStock} />
-        <div className="company-description">
-          <h3>Company Profile</h3>
-          <p>{company.Description}</p>
-        </div>
+      <CompanyInfo company={company} />
+      <Graph stock={selectedStock} />
+      <div className="company-description">
+        <h3>Company Profile</h3>
+        <p>{company.Description}</p>
       </div>
     </div>
   );

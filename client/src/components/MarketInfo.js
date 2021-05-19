@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import MarketIndexItem from "./MarketIndexItem";
 import Loader from "./Loader";
 import ListHeader from "./ListHeader";
@@ -20,8 +20,7 @@ const MarketInfo = ({ viewStock }) => {
   //https://twelvedata.com/
   const API_KEY = "5f75c7639947410a99d3551417a18f60";
 
-  const getMarketInfo = async () => {
-    console.log("market axios req");
+  const getMarketInfo = useCallback(async () => {
     try {
       const res = await axios.get(`https://api.twelvedata.com/quote?`, {
         params: {
@@ -39,10 +38,9 @@ const MarketInfo = ({ viewStock }) => {
       //setMarketInfo(["error"]);
       //setLoading(false);
     }
-  };
+  }, [API_KEY]);
 
   useEffect(() => {
-    console.log("market useeffect");
     let mounted = true;
     getMarketInfo()
       .then((data) => {
@@ -61,12 +59,11 @@ const MarketInfo = ({ viewStock }) => {
     //console.log(sumPercentChange);
 
     return () => (mounted = false);
-  }, []);
+  }, [getMarketInfo]);
 
   //let sumPercentChange = 0;
 
-  const renderMarketInfo = (marketInfo) => {
-    console.log("market render");
+  const renderMarketInfo = useMemo(() => {
     if (marketInfo[0] === "error")
       return <div className="loader">Could not get market data</div>;
 
@@ -81,7 +78,7 @@ const MarketInfo = ({ viewStock }) => {
         />
       );
     });
-  };
+  }, [marketInfo, viewStock]);
 
   return (
     <div className="list-container market-info">
@@ -89,7 +86,7 @@ const MarketInfo = ({ viewStock }) => {
         title={"Markets"}
         categories={["Symbol", "Price", "Change (%)"]}
       />
-      {loading ? <Loader /> : renderMarketInfo(marketInfo)}
+      {loading ? <Loader /> : renderMarketInfo}
     </div>
   );
 };

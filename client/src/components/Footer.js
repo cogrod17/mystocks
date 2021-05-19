@@ -3,7 +3,19 @@ import { Link } from "react-router-dom";
 
 import "../styles/Footer.css";
 
-const Footer = () => {
+const Footer = ({ token }) => {
+  if (!token) {
+    return (
+      <div className="footer">
+        <ul className="footer-ul">
+          <li>
+            <a href="https://github.com/cogrod17">Github</a>
+          </li>
+        </ul>
+      </div>
+    );
+  }
+
   return (
     <div className="footer">
       <ul className="footer-ul">

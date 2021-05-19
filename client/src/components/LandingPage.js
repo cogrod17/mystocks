@@ -1,9 +1,6 @@
 import React from "react";
-
+import history from "../history";
 import pic from "../images/landpage-pic.jpeg";
-//import NavBar from "./NavBar";
-// import LoginForm from "./LoginForm";
-// import NewUserForm from "./NewUserForm";
 
 const LandingPage = () => {
   return (
@@ -14,13 +11,13 @@ const LandingPage = () => {
         <br />
         <div className="landing-btns">
           <p
-            onClick={() => (window.location.pathname = "/users/login")}
+            onClick={() => history.push("/users/login")}
             className="landing-page-btn add"
           >
             Login
           </p>
           <p
-            onClick={() => (window.location.pathname = "/users/create")}
+            onClick={() => history.push("/users/create")}
             className="landing-page-btn add"
           >
             Create Account

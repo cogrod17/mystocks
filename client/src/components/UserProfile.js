@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import NavBar from "./NavBar";
 import history from "../history";
-
 import axios from "axios";
 
 const UserProfile = ({ userInfo, getUserInfo }) => {
@@ -38,8 +36,6 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
           modalOpen={modalOpen}
           action={deleteAccount}
         />
-        <NavBar />
-
         <h1>
           mouse coords: {x} {y}
         </h1>

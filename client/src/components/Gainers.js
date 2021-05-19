@@ -4,15 +4,11 @@ import Loader from "./Loader";
 import ListHeader from "./ListHeader";
 import axios from "axios";
 
-//index.js:1 Warning: Can't perform a React state update on an
-//unmounted component. This is a no-op, but it indicates a memory leak
-//in your application. To fix, cancel all subscriptions and asynchronous
-//tasks in a useEffect cleanup function.
-
 //https://financialmodelingprep.com/
 
 const Gainers = ({ viewStock }) => {
   const [gainers, setGainers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const API_KEY = "55291f85eb8b58745cc80fe4c443ba2c";
 
@@ -22,15 +18,30 @@ const Gainers = ({ viewStock }) => {
         `https://financialmodelingprep.com/api/v3/gainers?apikey=${API_KEY}`
       );
 
-      setGainers(res.data);
+      return res.data;
     } catch (e) {
       console.log("could not get gainers");
-      setGainers(["error"]);
+      return ["error"];
     }
   };
 
   useEffect(() => {
-    getGainers();
+    let mounted = true;
+
+    getGainers()
+      .then((data) => {
+        if (mounted) {
+          setGainers(data);
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        if (mounted) {
+          setGainers(e);
+          setLoading(false);
+        }
+      });
+    return () => (mounted = false);
   }, []);
 
   const renderGainers = (gainers) => {
@@ -48,7 +59,7 @@ const Gainers = ({ viewStock }) => {
         title={"Top Gainers"}
         categories={["Ticker", "Price", "Change (%)"]}
       />
-      {gainers.length === 0 ? <Loader /> : renderGainers(gainers)}
+      {loading ? <Loader /> : renderGainers(gainers)}
     </div>
   );
 };

@@ -11,7 +11,7 @@ const Modal = ({ modalOpen, setModalOpen, action, message, type }) => {
     if (type[0] === "confirm") {
       return (
         <div className="modal-actions">
-          <p onClick={action} className="add modal-cancel-btn">
+          <p onClick={action} className="add modal-delete-btn">
             {type[1]}
           </p>
           <p

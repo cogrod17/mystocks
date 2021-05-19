@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-import history from "../history";
+
 import Modal from "./Modal";
 
-const LogoutBtn = () => {
+const LogoutBtn = ({ onLogout }) => {
   const [modalOpen, setModalOpen] = useState(false);
-
-  const onLogout = () => {
-    localStorage.clear();
-    history.push("/");
-  };
 
   return (
     <div>

@@ -9,6 +9,7 @@ import Search from "./Search";
 import LandingPage from "./LandingPage";
 import Home from "./Home";
 import CompanyOverview from "./CompanyOverview";
+import NavBar from "./NavBar";
 import Footer from "./Footer";
 import MyStocks from "./MyStocks";
 import "../styles/App.css";
@@ -31,7 +32,8 @@ class App extends React.Component {
     )
       return;
 
-    if (!token) history.push("/");
+    if (!token && window.location.pathname !== "/")
+      window.location.pathname = "/";
 
     if (token) {
       axios
@@ -41,7 +43,8 @@ class App extends React.Component {
         .then((res) => {
           res.data.token = token;
           this.getUserInfo(res.data);
-          if (window.location.pathname === "/") history.push("/home");
+          if (window.location.pathname === "/")
+            window.location.pathname = "/home";
         })
         .catch((e) => console.log(e));
     }
@@ -76,16 +79,55 @@ class App extends React.Component {
     });
   };
 
+  onLogout = () => {
+    console.log("clicked");
+    console.log(this.state.user.token);
+
+    // axios
+    //     .get("http://localhost:3001/users/profile", {
+    //       headers: { Authorization: "Bearer " + token },
+    //     })
+
+    axios
+      .post(
+        "http://localhost:3001/users/logout",
+        {},
+        {
+          headers: { Authorization: "Bearer " + this.state.user.token },
+        }
+      )
+      .then(() => {
+        localStorage.clear();
+        this.setState({ user: {}, selectedStock: {} });
+        window.location.pathname = "/";
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  showNav = () => {
+    let path = window.location.pathname;
+
+    if (path === "/" || path === "/users/login" || path === "/users/create")
+      return null;
+
+    return <NavBar onLogout={this.onLogout} />;
+  };
+
   render() {
     return (
       <div className="app">
         <Router history={history}>
+          {this.showNav()}
           <Route path="/" exact component={LandingPage} />
 
           <Route
             path="/home"
             exact
-            component={() => <Home viewStock={this.viewStock} />}
+            component={() => (
+              <Home userInfo={this.state.user} viewStock={this.viewStock} />
+            )}
           />
 
           <Route
@@ -150,7 +192,7 @@ class App extends React.Component {
               />
             )}
           />
-          <Footer />
+          <Footer token={this.state.user.token} />
         </Router>
       </div>
     );

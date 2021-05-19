@@ -5,7 +5,6 @@ import alphaVantage from "../api/alphaVantage";
 
 const StockItem = ({ stock, categories, viewStock }) => {
   const [info, setInfo] = useState();
-  const [color, setColor] = useState("greenyellow");
   const [loading, setLoading] = useState(true);
 
   const addCommas = (x) => {
@@ -28,7 +27,7 @@ const StockItem = ({ stock, categories, viewStock }) => {
 
   useEffect(() => {
     let mounted = true;
-    //console.log("running");
+    console.log("running");
     alphaVantage
       .get("/query?", {
         params: { function: "GLOBAL_QUOTE", symbol: stock },
@@ -54,17 +53,14 @@ const StockItem = ({ stock, categories, viewStock }) => {
   }, [stock, categories, orgData]);
 
   const renderCategories = useMemo(() => {
+    let color = "greenyellow";
     if (!info) return;
     if (info === "error") return <p className="listitem">cannot get info</p>;
     console.log(info);
 
-    //let data = orgData(info);
-
-    //console.log(data);
-
     //Setting font color on info to red if it is in negatives for day
     if (info.change && +info.change.slice(0, info.change.length - 1) < 0) {
-      setColor("red");
+      color = "red";
     }
 
     return categories.map((item, i) => {
@@ -82,7 +78,7 @@ const StockItem = ({ stock, categories, viewStock }) => {
         </p>
       );
     });
-  }, [categories, info, color]);
+  }, [categories, info]);
 
   return (
     <div
