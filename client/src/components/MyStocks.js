@@ -26,7 +26,7 @@ const MyStocks = ({ savedStocks, viewStock }) => {
   };
 
   return (
-    <div className="my-stocks">
+    <div className="home">
       <div className="list-container">
         <ListHeader title={"My Stocks"} categories={categories} />
         {renderStockItems(savedStocks)}
