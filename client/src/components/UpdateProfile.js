@@ -5,28 +5,24 @@ import axios from "axios";
 import "../styles/formStyles.css";
 
 const UpdateProfile = ({ userInfo, getUserInfo }) => {
-  const [newUsername, setNewUsername] = useState(userInfo.username);
-  const [newEmail, setNewEmail] = useState(userInfo.email);
-  const [newPassword, setNewPassword] = useState(null);
+  let [newUsername, setNewUsername] = useState(userInfo.username);
+  let [newEmail, setNewEmail] = useState(userInfo.email);
+  let [newPassword, setNewPassword] = useState(null);
   const [confirmNewPassword, setConfirmNewPassword] = useState(null);
   const [message, setMessage] = useState(null);
 
   const onUpdate = async (e) => {
     e.preventDefault();
 
-    if (newUsername.length < 1) setNewUsername(userInfo.username);
-    if (newEmail.length < 1) setNewEmail(userInfo.email);
-
-    if (newPassword && newPassword.length === 0) setNewPassword(null);
-    ///it is not setting the new password to null
+    if (newUsername.length === 0) newUsername = userInfo.username;
+    if (newEmail.length === 0) newEmail = userInfo.username;
+    if (newPassword && newPassword.length === 0) newPassword = null;
 
     let sendUpdates = newPassword
       ? { username: newUsername, email: newEmail, password: newPassword }
       : { username: newUsername, email: newEmail };
     //AXIOS REQ HERE
     try {
-      console.log(newPassword.length);
-
       if (newPassword && newPassword < 7) throw new Error();
       if (newPassword !== confirmNewPassword) throw new Error();
       const res = await axios.patch(
@@ -36,7 +32,7 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
           headers: { Authorization: "Bearer " + userInfo.token },
         }
       );
-      console.log(res.data);
+
       getUserInfo(res.data);
       history.push("/users/profile");
     } catch (e) {
