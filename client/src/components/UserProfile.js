@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import history from "../history";
 import axios from "axios";
-import pic from "../images/MiamiSkyline.jpeg";
+import pic from "../images/skyline.jpg";
 
 const UserProfile = ({ userInfo, getUserInfo }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -48,8 +48,9 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
           </p>
         </div>
       </div>
+      <div className="clock">19:00:00</div>
       <div className="profile-pic"></div>
-      <div className="user-profile-img">
+      <div className="profile-background-img-container">
         <img
           className="profile-background-img"
           src={pic}

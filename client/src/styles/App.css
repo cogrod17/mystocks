@@ -263,6 +263,11 @@ body {
   background: rgba(0, 0, 0);
 }
 
+.mystocks {
+  margin: 0px 10px;
+  padding-bottom: 3rem;
+}
+
 .logout-icon {
   position: absolute;
   border: black solid 1px;
@@ -275,14 +280,13 @@ body {
   font-size: 12px;
 }
 
-.user-profile-img {
+.profile-background-img-container {
   display: flex;
-
   position: absolute;
   padding-bottom: 3rem;
-
   bottom: 0;
   width: 100%;
+
   top: 200px;
   overflow: hidden;
 }
@@ -291,11 +295,12 @@ body {
   display: flex;
   background: rgba(0, 0, 0, 0.4);
   border: black solid 1px;
-
+  margin-right: 5px;
   margin-top: 20px;
   height: 100%;
-  margin-left: 30%;
-  margin-right: 5%;
+  max-width: 450px;
+  margin-left: 10%;
+  padding-left: 9%;
   padding-bottom: 10px;
 }
 
@@ -308,8 +313,7 @@ body {
   display: flex;
 
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .profile-add {
@@ -318,28 +322,28 @@ body {
   width: 70%;
 }
 
+.profile-add:hover {
+  font-size: 12px;
+}
+
 .profile-pic {
   position: absolute;
   left: 0;
-  top: 100px;
+  top: 30px;
   z-index: 1;
   width: 200px;
   height: 200px;
-  margin-left: 25px;
+  margin-left: 1%;
   border-radius: 50%;
   border: black solid 2px;
   background: rgba(250, 250, 250, 0.9);
 }
 
 @media (max-width: 700px) {
-  .user-profile-img {
-    margin-top: 75px;
-  }
-  .profile-content {
-    margin-left: 5%;
-  }
   .profile-pic {
-    top: 200px;
+    top: 55px;
+    width: 150px;
+    height: 150px;
   }
 }
 .profile-background-img {
@@ -347,4 +351,20 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.clock {
+  display: flex;
+  display: none;
+  position: absolute;
+  margin-right: 5px;
+  background: rgba(0, 0, 0, 0.4);
+  border: black solid 1px;
+  width: 300px;
+  height: 104.5px;
+  right: 0px;
+  top: 74px;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  color: cyan;
 }
