@@ -32,9 +32,6 @@ body {
   position: relative;
   min-height: 100vh;
 }
-.user-profile {
-  padding-bottom: 3rem;
-}
 
 .company-overview {
   border: black solid 1px;
@@ -137,19 +134,10 @@ body {
 }
 
 .add:hover {
+  font-size: 16px;
   box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
   background: rgba(0, 0, 0, 0.3);
   cursor: pointer;
-}
-
-.add:before {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, turquoise, transparent);
-  transition: all 650ms;
 }
 
 .landing-page-btn {
@@ -164,10 +152,15 @@ body {
   height: 100%;
 }
 
-.landing-page-img {
+.landing-page-img-container {
   flex: 1;
-  height: 578px;
-  width: 600px;
+  display: flex;
+}
+
+.landing-page-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .landing-page-content {
@@ -209,11 +202,13 @@ body {
     overflow: hidden;
     padding-bottom: 3rem;
   }
-  .landing-page-img {
-    width: 900px;
-    overflow: hidden;
+  .landing-page-img-container {
+    width: 100%;
+
+    display: flex;
     border-top: cyan solid 1px;
   }
+
   .landing-btns {
     margin-left: 60px;
   }
@@ -256,8 +251,10 @@ body {
   border: black 1px solid;
   z-index: 999;
   height: 150px;
-  margin-right: 200px;
-  margin-left: 200px;
+  margin-right: auto;
+  margin-left: auto;
+  min-width: 200px;
+  max-width: 300px;
   top: 150px;
   left: 0;
   right: 0;
@@ -275,4 +272,78 @@ body {
   margin-top: 18px;
   padding: 0px;
   font-size: 12px;
+}
+
+.user-profile-img {
+  display: flex;
+
+  position: absolute;
+  padding-bottom: 3rem;
+
+  bottom: 0;
+  width: 100%;
+  top: 200px;
+  overflow: hidden;
+}
+
+.profile-content {
+  display: flex;
+  background: rgba(0, 0, 0, 0.4);
+  border: black solid 1px;
+
+  margin-top: 20px;
+  height: 100%;
+  margin-left: 30%;
+  margin-right: 1%;
+  padding-bottom: 10px;
+}
+
+.profile-info {
+  flex: 2;
+}
+
+.profile-btns {
+  flex: 1;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-add {
+  flex: 1;
+  border: cyan solid 1px;
+  width: 70%;
+}
+
+.profile-pic {
+  position: absolute;
+  left: 0;
+  top: 100px;
+  z-index: 1;
+  width: 200px;
+  height: 200px;
+  margin-left: 25px;
+  border-radius: 50%;
+  border: black solid 2px;
+  background: rgba(250, 250, 250, 0.9);
+}
+
+@media (max-width: 700px) {
+  .user-profile-img {
+    margin-top: 75px;
+  }
+  .profile-content {
+    margin-left: 5%;
+  }
+  .profile-pic {
+    top: 200px;
+  }
+}
+.profile-background-img {
+  border: black solid 1px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

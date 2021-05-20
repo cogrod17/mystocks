@@ -5,7 +5,9 @@ import pic from "../images/landpage-pic.jpeg";
 const LandingPage = () => {
   return (
     <div className="landing-page">
-      <img className="landing-page-img" src={pic} alt={"landingPageImage"} />
+      <div className="landing-page-img-container">
+        <img className="landing-page-img" src={pic} alt={"landingPageImage"} />
+      </div>
       <div className="landing-page-content">
         <h1 className="landing-title">Up My Stock</h1>
         <br />

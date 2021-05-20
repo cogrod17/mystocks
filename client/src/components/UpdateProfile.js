@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import history from "../history";
 import axios from "axios";
 import "../styles/formStyles.css";
@@ -23,6 +22,8 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
       : { username: newUsername, email: newEmail };
     //AXIOS REQ HERE
     try {
+      console.log(newPassword);
+      console.log(confirmNewPassword);
       if (newPassword && newPassword < 7) throw new Error();
       if (newPassword !== confirmNewPassword) throw new Error();
       const res = await axios.patch(
@@ -73,9 +74,9 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
           />
           <label>Confirm new password</label>
         </div>
-        <p onClick={onUpdate} className="add">
+        <button onClick={onUpdate} className="add">
           Submit
-        </p>
+        </button>
         <p>{message}</p>
       </form>
     </div>
