@@ -17,7 +17,7 @@ h1 {
 }
 
 .btn {
-  color: #999;
+  color: white;
   background: rgba(0, 0, 0, 0.5);
   padding: 10px 20px;
   font-size: 12px;
@@ -29,6 +29,6 @@ h1 {
 .btn:hover {
   border: none;
   background: rgba(0, 0, 0, 0.4);
-  background: #fff;
+  color: cyan;
   padding: 20px 20px;
 }

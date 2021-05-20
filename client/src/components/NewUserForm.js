@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import history from "../history";
 import pic from "../images/landpage-pic.jpeg";
 import axios from "axios";
 
@@ -8,6 +9,7 @@ const NewUserForm = ({ getUserInfo }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -20,11 +22,15 @@ const NewUserForm = ({ getUserInfo }) => {
       });
 
       const { user } = res.data;
+
+      history.push("/home");
       user.token = res.data.token;
       getUserInfo(user);
-      window.location.pathname = "/users/profile";
     } catch (e) {
       console.log(e);
+      setErrorMsg(
+        "Could not create account. Is your password at least 7 characters?"
+      );
     }
   };
 
@@ -63,6 +69,7 @@ const NewUserForm = ({ getUserInfo }) => {
             />
           </div>
           <button className="add">Submit</button>
+          <p>{errorMsg}</p>
         </form>
       </div>
     </div>

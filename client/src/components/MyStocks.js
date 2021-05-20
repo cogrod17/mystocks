@@ -9,8 +9,6 @@ import "../styles/Home.css";
 const MyStocks = ({ savedStocks, viewStock }) => {
   const categories = ["symbol", "price", "change", "volume", "low", "high"];
 
-  if (!savedStocks) return (window.location.pathname = "/");
-
   const renderStockItems = (stocks) => {
     console.log("rendering stock items in MYSTOCKS");
     if (stocks === undefined) return;

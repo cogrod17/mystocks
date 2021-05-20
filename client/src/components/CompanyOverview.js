@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-
 import Graph from "./Graph";
 import CompanyInfo from "./CompanyInfo";
 import Loader from "./Loader";
-
+import history from "../history";
 import axios from "axios";
-import "../styles/addbtn.css";
 import alphaVantage from "../api/alphaVantage";
+import "../styles/addbtn.css";
 
 //COMPANY WILL BE PASSES DOWN AS A PROP
 
@@ -14,7 +13,8 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   const [company, setCompany] = useState();
   const [loading, setLoading] = useState(true);
 
-  const onSaveClick = async () => {
+  const onSaveClick = async (e) => {
+    e.preventDefault();
     //console.log(user);
     //console.log("trying");
     try {
@@ -25,8 +25,9 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
           headers: { Authorization: "Bearer " + user.token },
         }
       );
-      //console.log(res);
+
       getUserInfo(res.data);
+      history.push("/mystocks");
     } catch (e) {
       console.log(e);
     }
@@ -34,6 +35,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
 
   const onRemoveClick = async () => {
     //console.log("deleting");
+
     let updated = user.savedStocks.filter((stock) => stock !== company.Symbol);
     //console.log(updated);
 
@@ -44,8 +46,10 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
         { headers: { Authorization: "Bearer " + user.token } }
       );
       // console.log(res);
+
       getUserInfo(res.data);
       //console.log("deleted");
+      history.push("/mystocks");
     } catch (e) {
       console.log(e);
     }
@@ -82,6 +86,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   }, [selectedStock]);
 
   const renderButton = () => {
+    console.log("render butons");
     if (company === "error") return <div></div>;
     if (user.savedStocks.includes(selectedStock.stock)) {
       return (

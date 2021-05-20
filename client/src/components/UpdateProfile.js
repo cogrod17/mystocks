@@ -13,13 +13,21 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
 
   const onUpdate = async (e) => {
     e.preventDefault();
-    console.log(newUsername);
-    console.log(newEmail);
+
+    if (newUsername.length < 1) setNewUsername(userInfo.username);
+    if (newEmail.length < 1) setNewEmail(userInfo.email);
+
+    if (newPassword && newPassword.length === 0) setNewPassword(null);
+    ///it is not setting the new password to null
+
     let sendUpdates = newPassword
       ? { username: newUsername, email: newEmail, password: newPassword }
       : { username: newUsername, email: newEmail };
     //AXIOS REQ HERE
     try {
+      console.log(newPassword.length);
+
+      if (newPassword && newPassword < 7) throw new Error();
       if (newPassword !== confirmNewPassword) throw new Error();
       const res = await axios.patch(
         "http://localhost:3001/users/update",
@@ -50,12 +58,21 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
           <label>New email</label>
         </div>
         <div className="form-box">
-          <input onChange={(e) => setNewPassword(e.target.value)} type="text" />
+          <input
+            onChange={(e) => {
+              if (e.target.value.length === 0) setNewPassword(null);
+              setNewPassword(e.target.value);
+            }}
+            type="text"
+          />
           <label>New password (must be 7 characters)</label>
         </div>
         <div className="form-box">
           <input
-            onChange={(e) => setConfirmNewPassword(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.length === 0) setConfirmNewPassword(null);
+              setConfirmNewPassword(e.target.value);
+            }}
             type="text"
           />
           <label>Confirm new password</label>

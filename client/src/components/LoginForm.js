@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import history from "../history";
 import pic from "../images/landpage-pic.jpeg";
 import "../styles/formStyles.css";
 
@@ -18,9 +19,9 @@ const LoginForm = ({ getUserInfo }) => {
       });
       const { user, token } = res.data;
 
-      await getUserInfo({ ...user, token });
+      history.push("/home");
+      getUserInfo({ ...user, token });
       //this programmatically sends user to profile
-      window.location.pathname = "/users/profile";
     } catch (e) {
       setErrorMessage("Incorrect username or password");
     }

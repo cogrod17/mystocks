@@ -106,20 +106,20 @@ class App extends React.Component {
       });
   };
 
-  showNav = () => {
-    let path = window.location.pathname;
+  // showNav = () => {
+  //   let path = window.location.pathname;
 
-    if (path === "/" || path === "/users/login" || path === "/users/create")
-      return null;
+  //   if (path === "/" || path === "/users/login" || path === "/users/create")
+  //     return null;
 
-    return <NavBar onLogout={this.onLogout} />;
-  };
+  //   return <NavBar token={this.state.user.token} onLogout={this.onLogout} />;
+  // };
 
   render() {
     return (
       <div className="app">
         <Router history={history}>
-          {this.showNav()}
+          <NavBar token={this.state.user.token} onLogout={this.onLogout} />
           <Route path="/" exact component={LandingPage} />
 
           <Route

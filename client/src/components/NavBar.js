@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
 import "../styles/NavBar.css";
 
-const NavBar = ({ onLogout }) => {
+const NavBar = ({ token, onLogout }) => {
+  if (!token) return null;
+
   return (
     <div className="navbar">
       <Link to="/home" className="btn home-btn">
