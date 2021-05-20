@@ -29,12 +29,13 @@ const LoginForm = ({ getUserInfo }) => {
 
   return (
     <div className="landing-page">
-      <img
-        className="landing-page-img form-img"
-        src={pic}
-        alt={"landingPageImage"}
-      />
-
+      <div className="landing-page-img-container">
+        <img
+          className="landing-page-img form-img"
+          src={pic}
+          alt={"landingPageImage"}
+        />
+      </div>
       <div className="form-container landing">
         <h1>Login</h1>
         <form onSubmit={onSubmit} className="form">
