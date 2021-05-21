@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ProfilePic from "./ProfilePic";
 import Modal from "./Modal";
 import history from "../history";
 import axios from "axios";
@@ -49,7 +50,8 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
         </div>
       </div>
       <div className="clock">19:00:00</div>
-      <div className="profile-pic"></div>
+
+      <ProfilePic userInfo={userInfo} />
       <div className="profile-background-img-container">
         <img
           className="profile-background-img"

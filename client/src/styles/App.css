@@ -328,6 +328,11 @@ body {
 
 .profile-pic {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2px;
   left: 0;
   top: 30px;
   z-index: 1;

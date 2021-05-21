@@ -24,7 +24,7 @@ const MarketInfo = ({ viewStock }) => {
     try {
       const res = await axios.get(`https://api.twelvedata.com/quote?`, {
         params: {
-          symbol: "SPX,DJI,NDX,RUA,AGG,BIG",
+          symbol: "SPX,DJI,NDX,RUA,AGG,BIG,NKY",
           apikey: API_KEY,
         },
       });
