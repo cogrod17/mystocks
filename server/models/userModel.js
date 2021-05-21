@@ -33,6 +33,12 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+userSchema.virtual("img", {
+  ref: "Image",
+  localField: "_id",
+  foreignField: "owner",
+});
+
 userSchema.methods.giveAuthToken = async function () {
   //this is attached to the User instance
   //generates token using user _id

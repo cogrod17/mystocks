@@ -8,6 +8,11 @@ const imageSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User", //model name
+  },
 });
 
 const Image = mongoose.model("Image", imageSchema);
