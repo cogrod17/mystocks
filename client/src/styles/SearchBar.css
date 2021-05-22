@@ -3,6 +3,7 @@
   background: rgba(0, 0, 0, 0.5);
   margin: 7px 15px;
   overflow: auto;
+  padding-bottom: 3rem;
 }
 
 .search {
@@ -44,10 +45,10 @@
 }
 
 .results-item {
-  border-top: white solid 1px;
-  background: rgba(0, 0, 0);
+  border-top: black solid 1px;
+  background: rgba(0, 0, 0, 0.3);
   padding: 10px;
-  margin-bottom: 0px;
+  margin-bottom: 2px;
 }
 
 .results {

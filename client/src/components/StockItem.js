@@ -80,6 +80,14 @@ const StockItem = ({ stock, categories, viewStock }) => {
     });
   }, [categories, info]);
 
+  if (loading) {
+    return (
+      <div className="list-item">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div
       onClick={() => {
@@ -87,7 +95,7 @@ const StockItem = ({ stock, categories, viewStock }) => {
       }}
       className="list-item"
     >
-      {loading ? <Loader /> : renderCategories}
+      {renderCategories}
     </div>
   );
 };

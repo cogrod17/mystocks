@@ -8,7 +8,7 @@ import {
   XYPlot,
   XAxis,
   YAxis,
-  LineSeries,
+  AreaSeries,
 } from "react-vis";
 
 const Graph = ({ stock }) => {
@@ -16,10 +16,29 @@ const Graph = ({ stock }) => {
   const [firstPrice, setFirstPrice] = useState(0);
   const [lastPrice, setLastPrice] = useState(0);
   const [data, setData] = useState([]);
-  const [crosshairValues, setCrosshairValues] = useState([{ x: 0, y: 0 }]);
+  const [crosshairValues, setCrosshairValues] = useState([{ x: 0, y: 0 }]); //price
+  const [date, setDate] = useState();
   const [mouseLocation, setMouseLocation] = useState({ x: 0, y: 0 });
   const [display, setDisplay] = useState("none");
   //{x: date, y: adjusted close}
+
+  const borderStyles = {
+    bottom: { fill: "#fff" },
+    left: { fill: "#fff" },
+    right: { fill: "#fff" },
+    top: { fill: "#fff" },
+  };
+
+  const axisStyle = {
+    ticks: {
+      fontSize: "14px",
+      color: "#333",
+    },
+    title: {
+      fontSize: "16px",
+      color: "#333",
+    },
+  };
 
   //2021-05-14
   const orgData = async (timeSeries) => {
@@ -29,7 +48,6 @@ const Graph = ({ stock }) => {
     setFirstPrice(
       Number(timeSeries[timeSeries.length - 1][1]["5. adjusted close"])
     );
-
     let info = [];
     return timeSeries.map((date, i) => {
       let xy = {
@@ -71,26 +89,28 @@ const Graph = ({ stock }) => {
     return () => (mounted = false);
   }, [stock]);
 
-  //<p>Date: {crosshairValues ? crosshairValues[0].x : ""}</p>
-  const renderGraph = () => {
-    if (data[0] === "error") return <div>Cannot get graph</div>;
-    const { x, y } = mouseLocation;
+  const getDate = (d) => {
+    let date = new Date(d);
+    setDate(
+      [date.getMonth() + 1, date.getDate(), date.getFullYear()].join("-")
+    );
+  };
 
+  const getXYValues = (value, { index }) => {
+    getDate(value.x);
+    setCrosshairValues([data[index]]);
+  };
+
+  const renderCrosshairs = () => {
+    const { x, y } = mouseLocation;
     return (
-      <div
-        onMouseLeave={() => setDisplay("none")}
-        onMouseMove={(e) => {
-          setDisplay("block");
-          setMouseLocation({ x: e.clientX, y: e.clientY });
-        }}
-        className="graph"
-      >
+      <div>
         <div
           className="crosshairs"
           style={{
             display: display,
-            top: y - 30,
-            left: x - 30,
+            top: y - 40,
+            left: x - 60,
           }}
         >
           <p>
@@ -98,8 +118,30 @@ const Graph = ({ stock }) => {
               ? `Price: $${Number(crosshairValues[0].y).toFixed(2)}`
               : ""}
           </p>
+          <p>{`Date: ${date}`}</p>
         </div>
+      </div>
+    );
+  };
+
+  const watchMouse = (e) => {
+    setDisplay("block");
+    setMouseLocation({ x: e.clientX, y: e.clientY });
+  };
+
+  //<p>Date: {crosshairValues ? crosshairValues[0].x : ""}</p>
+  const renderGraph = () => {
+    if (data[0] === "error") return <div>Cannot get graph</div>;
+
+    return (
+      <div
+        onMouseLeave={() => setDisplay("none")}
+        onMouseMove={(e) => watchMouse(e)}
+        className="graph"
+      >
+        {renderCrosshairs()}
         <XYPlot
+          yPadding={17}
           height={300}
           width={900}
           xType="time"
@@ -107,10 +149,14 @@ const Graph = ({ stock }) => {
           style={{ border: "cyan solid 1px" }}
         >
           <GradientDefs>
-            <linearGradient id="GreenGradient" x1="0" x2="50" y1="0" y2="50">
-              <stop offset="20%" stopColor="greenyellow" stopOpacity={0.6} />
+            <linearGradient id="GreenGradient" x1="0" x2="0" y1="0" y2="5">
               <stop
-                offset="100%"
+                offset="20%"
+                stopColor="rgba(94, 255, 0, 0.8)"
+                stopOpacity={0.6}
+              />
+              <stop
+                offset="10%"
                 stopColor="rgba(0, 0, 0, 0.3)"
                 stopOpacity={0.3}
               />
@@ -124,7 +170,7 @@ const Graph = ({ stock }) => {
               />
             </linearGradient>
           </GradientDefs>
-          <LineSeries
+          <AreaSeries
             style={{
               fill:
                 firstPrice < lastPrice
@@ -133,30 +179,12 @@ const Graph = ({ stock }) => {
               strokeWidth: 2,
             }}
             data={data}
-            onNearestXY={(value, { index }) => {
-              //console.log(value.y); //price
-              //console.log(value.x); //date
-              setCrosshairValues([data[index]]);
-            }}
+            onNearestXY={getXYValues}
           />
-
-          <Borders
-            style={{
-              bottom: { fill: "#fff" },
-              left: { fill: "#fff" },
-              right: { fill: "#fff" },
-              top: { fill: "#fff" },
-            }}
-          />
-          <XAxis style={{ color: "white" }} title="Date" />
-          <YAxis title="Price" />
-          <Crosshair
-            values={crosshairValues}
-            titleFormat={(d) => ({
-              title: "Date",
-              value: new Date(d[0].x).toLocaleDateString(),
-            })}
-          />
+          <Borders style={borderStyles} />
+          <XAxis style={axisStyle} />
+          <YAxis style={axisStyle} />
+          <Crosshair values={crosshairValues} />
         </XYPlot>
       </div>
     );
