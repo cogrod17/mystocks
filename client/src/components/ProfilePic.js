@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import Loader from "./Loader";
+import Modal from "./Modal";
 import axios from "axios";
 
 const ProfilePic = ({ userInfo }) => {
   const [file, setFile] = useState(null);
   const [image, setImage] = useState();
+  const [loading, setLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // "/uploads/2021-05-21T14:35:04.941ZCole B. Ogrodnick.png"
 
@@ -13,6 +17,7 @@ const ProfilePic = ({ userInfo }) => {
   };
 
   const onUpload = async (e) => {
+    setLoading(true);
     const data = new FormData();
     await data.append("file", file);
 
@@ -22,39 +27,60 @@ const ProfilePic = ({ userInfo }) => {
           Authorization: "Bearer " + userInfo.token,
         },
       });
-      console.log(res.data);
-      //setImage(res.data);
+
+      setImage(res.data);
+      setLoading(false);
     } catch (e) {
       console.log(e);
+      setLoading(false);
+      setModalOpen(true);
     }
   };
 
   useEffect(() => {
-    let mounted = true;
+    if (image || !userInfo.token) return;
 
+    let mounted = true;
+    console.log("running");
     axios
       .get("http://localhost:3001/image", {
         headers: { Authorization: "Bearer " + userInfo.token },
       })
       .then((res) => {
-        setImage(res.data);
+        if (mounted) {
+          setImage(res.data);
+          setLoading(false);
+        }
       })
-      .catch((e) => console.log(e));
-
-    return () => (mounted = false);
-  }, [userInfo.token]);
+      .catch((e) => {
+        setLoading(false);
+      });
+  }, [userInfo.token, image]);
 
   if (image) {
-    console.log(image);
     return (
-      <div className="profile-pic">
-        <img src={image} alt="profile pic" />
+      <div className="profile-pic-container">
+        <img className="profile-pic" src={image} alt="profile pic" />
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="profile-pic-container">
+        <Loader />
       </div>
     );
   }
 
   return (
-    <div className="profile-pic">
+    <div className="profile-pic-container">
+      <Modal
+        message={"Cannot upload photo"}
+        type={["notice"]}
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+      />
       <form onSubmit={onUpload}>
         <input
           onChange={(e) => onChangeHandler(e)}

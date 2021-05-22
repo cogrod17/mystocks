@@ -24,18 +24,19 @@ const Modal = ({ modalOpen, setModalOpen, action, message, type }) => {
       );
     }
 
-    // if (type === "notice") {
-    //   return (
-    //     <div className="modal-actions">
-    //       <p
-    //         onClick={() => setModalOpen(false)}
-    //         className="add modal-cancel-btn"
-    //       >
-    //         Okay
-    //       </p>
-    //     </div>
-    //   );
-    // }
+    if (type[0] === "notice") {
+      return (
+        <div className="modal-actions">
+          <p
+            style={{ border: "cyan solid 1px" }}
+            onClick={() => setModalOpen(false)}
+            className="add modal-cancel-btn"
+          >
+            Okay
+          </p>
+        </div>
+      );
+    }
   };
 
   return (

@@ -60,7 +60,7 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
               if (e.target.value.length === 0) setNewPassword(null);
               setNewPassword(e.target.value);
             }}
-            type="text"
+            type="password"
           />
           <label>New password (must be 7 characters)</label>
         </div>
@@ -70,7 +70,7 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
               if (e.target.value.length === 0) setConfirmNewPassword(null);
               setConfirmNewPassword(e.target.value);
             }}
-            type="text"
+            type="password"
           />
           <label>Confirm new password</label>
         </div>

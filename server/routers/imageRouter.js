@@ -1,10 +1,9 @@
 const express = require("express");
 const multer = require("multer");
-const fs = require("fs");
+
 const auth = require("../middleware/auth");
 const imageRouter = express.Router();
 const Image = require("../models/imageModel");
-const path = require("path");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -31,10 +30,10 @@ imageRouter.post("/upload", auth, upload, async (req, res) => {
       },
       owner: _id,
     });
-    //console.log(img);
+    console.log(img.name);
     await img.save();
 
-    res.status(200).send(img);
+    res.status(200).send("/uploads/" + img.name);
   } catch (e) {
     console.log(e);
     res.status(500).send(e);

@@ -50,7 +50,7 @@ const LoginForm = ({ getUserInfo }) => {
           <div className="form-box">
             <input
               onChange={(e) => setPassword(e.target.value)}
-              type="text"
+              type="password"
               placeholder="Password"
               required
             />

@@ -23,7 +23,7 @@ const Footer = ({ token }) => {
           <Link to="/users/profile">Profile</Link>
         </li>
         <li>
-          <a href="https://github.com/cogrod17">Github</a>
+          <a href="https://github.com/cogrod17/mystocks">Github</a>
         </li>
         <li>
           <Link to="/home">Home</Link>
