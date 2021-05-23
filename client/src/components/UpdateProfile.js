@@ -20,12 +20,11 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
     let sendUpdates = newPassword
       ? { username: newUsername, email: newEmail, password: newPassword }
       : { username: newUsername, email: newEmail };
-    //AXIOS REQ HERE
+
     try {
-      console.log(newPassword);
-      console.log(confirmNewPassword);
       if (newPassword && newPassword < 7) throw new Error();
       if (newPassword !== confirmNewPassword) throw new Error();
+
       const res = await axios.patch(
         "http://localhost:3001/users/update",
         sendUpdates,
@@ -37,7 +36,6 @@ const UpdateProfile = ({ userInfo, getUserInfo }) => {
       getUserInfo(res.data);
       history.push("/users/profile");
     } catch (e) {
-      console.log(e);
       setMessage("There was an error updating");
     }
   };

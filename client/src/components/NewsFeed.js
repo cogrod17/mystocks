@@ -46,7 +46,6 @@ const NewsFeed = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (mounted) {
           setArticleList(err);
           setLoading(false);

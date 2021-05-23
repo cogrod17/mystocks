@@ -50,7 +50,6 @@ const MarketInfo = ({ viewStock }) => {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (mounted) {
           setMarketInfo(err);
           setLoading(false);

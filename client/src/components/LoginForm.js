@@ -21,7 +21,6 @@ const LoginForm = ({ getUserInfo }) => {
 
       history.push("/home");
       getUserInfo({ ...user, token });
-      //this programmatically sends user to profile
     } catch (e) {
       setErrorMessage("Incorrect username or password");
     }

@@ -8,15 +8,12 @@ const Search = ({ viewStock }) => {
   const [loading, setLoading] = useState(false);
 
   const onSearch = async (term) => {
-    console.log("searching for " + term);
     setLoading(true);
     try {
       //AXIOS REQUEST HERE
       const results = await alphaVantage.get("/query?", {
         params: { function: "SYMBOL_SEARCH", keywords: term },
       });
-
-      //console.log(results.data.bestMatches[0]["1. symbol"]);
 
       setResults(results.data.bestMatches);
       setLoading(false);

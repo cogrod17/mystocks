@@ -9,8 +9,6 @@ const ProfilePic = ({ userInfo }) => {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // "/uploads/2021-05-21T14:35:04.941ZCole B. Ogrodnick.png"
-
   const onChangeHandler = (e) => {
     setFile(e.target.files[0]);
   };
@@ -37,9 +35,8 @@ const ProfilePic = ({ userInfo }) => {
 
   useEffect(() => {
     if (image || !userInfo.token) return;
-
     let mounted = true;
-    console.log("running");
+
     axios
       .get("http://localhost:3001/image", {
         headers: { Authorization: "Bearer " + userInfo.token },

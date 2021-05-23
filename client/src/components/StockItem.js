@@ -27,13 +27,12 @@ const StockItem = ({ stock, categories, viewStock }) => {
 
   useEffect(() => {
     let mounted = true;
-    console.log("running");
+
     alphaVantage
       .get("/query?", {
         params: { function: "GLOBAL_QUOTE", symbol: stock },
       })
       .then((res) => {
-        //onsole.log(res);
         if (!res.data || res.data.Note) throw new Error();
 
         if (mounted) {
@@ -56,7 +55,6 @@ const StockItem = ({ stock, categories, viewStock }) => {
     let color = "greenyellow";
     if (!info) return;
     if (info === "error") return <p className="listitem">cannot get info</p>;
-    console.log(info);
 
     //Setting font color on info to red if it is in negatives for day
     if (info.change && +info.change.slice(0, info.change.length - 1) < 0) {

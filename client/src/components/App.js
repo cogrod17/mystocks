@@ -21,8 +21,6 @@ class App extends React.Component {
   state = { user: {}, selectedStock: {} };
 
   componentDidMount() {
-    console.log("updating app state");
-
     //check local storage to see if user is already signed in
     const token = JSON.parse(localStorage.getItem("token"));
 
@@ -79,41 +77,19 @@ class App extends React.Component {
     });
   };
 
-  onLogout = () => {
-    console.log("clicked");
-    console.log(this.state.user.token);
+  onLogout = async () => {
+    await axios.post(
+      "http://localhost:3001/users/logout",
+      {},
+      {
+        headers: { Authorization: "Bearer " + this.state.user.token },
+      }
+    );
 
-    // axios
-    //     .get("http://localhost:3001/users/profile", {
-    //       headers: { Authorization: "Bearer " + token },
-    //     })
-
-    axios
-      .post(
-        "http://localhost:3001/users/logout",
-        {},
-        {
-          headers: { Authorization: "Bearer " + this.state.user.token },
-        }
-      )
-      .then(() => {
-        localStorage.clear();
-        this.setState({ user: {}, selectedStock: {} });
-        window.location.pathname = "/";
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    localStorage.clear();
+    this.setState({ user: {}, selectedStock: {} });
+    window.location.pathname = "/";
   };
-
-  // showNav = () => {
-  //   let path = window.location.pathname;
-
-  //   if (path === "/" || path === "/users/login" || path === "/users/create")
-  //     return null;
-
-  //   return <NavBar token={this.state.user.token} onLogout={this.onLogout} />;
-  // };
 
   render() {
     return (

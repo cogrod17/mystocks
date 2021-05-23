@@ -27,7 +27,6 @@ const NewUserForm = ({ getUserInfo }) => {
       user.token = res.data.token;
       getUserInfo(user);
     } catch (e) {
-      console.log(e);
       setErrorMsg(
         "Could not create account. Is your password at least 7 characters?"
       );

@@ -14,8 +14,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
 
   const onSaveClick = async (e) => {
     e.preventDefault();
-    //console.log(user);
-    //console.log("trying");
+
     try {
       const res = await axios.patch(
         "http://localhost:3001/users/update",
@@ -33,10 +32,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   };
 
   const onRemoveClick = async () => {
-    //console.log("deleting");
-
     let updated = user.savedStocks.filter((stock) => stock !== company.Symbol);
-    //console.log(updated);
 
     try {
       const res = await axios.patch(
@@ -44,10 +40,8 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
         { savedStocks: updated },
         { headers: { Authorization: "Bearer " + user.token } }
       );
-      // console.log(res);
 
       getUserInfo(res.data);
-      //console.log("deleted");
       history.push("/mystocks");
     } catch (e) {
       console.log(e);
@@ -57,7 +51,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   useEffect(() => {
     if (!selectedStock.stock) return;
     let mounted = true;
-    console.log("use effect company overview");
+
     alphaVantage
       .get("/query?", {
         params: {
@@ -72,7 +66,6 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
           setCompany(res.data);
           setLoading(false);
         }
-        //console.log(res);
       })
       .catch((err) => {
         console.log(err);

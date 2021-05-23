@@ -9,17 +9,13 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const deleteAccount = async () => {
-    try {
-      await axios.delete("http://localhost:3001/users/profile", {
-        headers: { Authorization: "Bearer " + userInfo.token },
-      });
+    await axios.delete("http://localhost:3001/users/profile", {
+      headers: { Authorization: "Bearer " + userInfo.token },
+    });
 
-      localStorage.clear();
-      window.location.pathname = "/";
-      getUserInfo();
-    } catch (e) {
-      console.log(e + "error in catch");
-    }
+    localStorage.clear();
+    window.location.pathname = "/";
+    getUserInfo();
   };
 
   return (
@@ -31,6 +27,7 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
         modalOpen={modalOpen}
         action={deleteAccount}
       />
+
       <div className="profile-content">
         <div className="profile-info">
           <h1>{userInfo.username}</h1>
@@ -52,6 +49,7 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
       <div className="clock">19:00:00</div>
 
       <ProfilePic userInfo={userInfo} />
+
       <div className="profile-background-img-container">
         <img
           className="profile-background-img"

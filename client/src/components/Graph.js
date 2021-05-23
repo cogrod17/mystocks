@@ -20,7 +20,6 @@ const Graph = ({ stock }) => {
   const [date, setDate] = useState();
   const [mouseLocation, setMouseLocation] = useState({ x: 0, y: 0 });
   const [display, setDisplay] = useState("none");
-  //{x: date, y: adjusted close}
 
   const borderStyles = {
     bottom: { fill: "#fff" },
@@ -46,6 +45,7 @@ const Graph = ({ stock }) => {
     setFirstPrice(
       Number(timeSeries[timeSeries.length - 1][1]["5. adjusted close"])
     );
+
     let info = [];
     return timeSeries.map((date, i) => {
       let xy = {
@@ -73,21 +73,19 @@ const Graph = ({ stock }) => {
       })
       .then((res) => {
         if (res.data.note) throw new Error();
-        console.log(res.data);
         orgData(Object.entries(res.data["Time Series (Daily)"])).then(() => {
           if (mounted) setLoading(false);
         });
       })
       .catch((err) => {
-        console.log(err);
         setData(["error"]);
-
         if (mounted) setLoading(false);
       });
 
     return () => (mounted = false);
   }, [stock]);
 
+  //formatting date
   const getDate = (d) => {
     let date = new Date(d);
     setDate(
@@ -128,7 +126,6 @@ const Graph = ({ stock }) => {
     setMouseLocation({ x: e.clientX, y: e.clientY });
   };
 
-  //<p>Date: {crosshairValues ? crosshairValues[0].x : ""}</p>
   const renderGraph = () => {
     if (data[0] === "error") return <div>Cannot get graph</div>;
 
