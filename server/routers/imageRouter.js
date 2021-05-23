@@ -19,7 +19,6 @@ const upload = multer({ storage }).single("file");
 imageRouter.post("/upload", auth, upload, async (req, res) => {
   let imgFile = req.file;
   let { _id } = req.user;
-  console.log(req.file);
 
   try {
     const img = await new Image({
@@ -30,7 +29,7 @@ imageRouter.post("/upload", auth, upload, async (req, res) => {
       },
       owner: _id,
     });
-    console.log(img.name);
+
     await img.save();
 
     res.status(200).send("/uploads/" + img.name);

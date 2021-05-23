@@ -10,7 +10,6 @@ const MyStocks = ({ savedStocks, viewStock }) => {
   const categories = ["symbol", "price", "change", "volume", "low", "high"];
 
   const renderStockItems = (stocks) => {
-    console.log("rendering stock items in MYSTOCKS");
     if (stocks === undefined) return;
     if (stocks.length === 0) return <div>You have no saved stocks</div>;
     return stocks.map((stock, i) => {

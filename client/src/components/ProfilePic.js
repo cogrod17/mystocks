@@ -12,7 +12,6 @@ const ProfilePic = ({ userInfo }) => {
   // "/uploads/2021-05-21T14:35:04.941ZCole B. Ogrodnick.png"
 
   const onChangeHandler = (e) => {
-    console.log(e.target.files[0]);
     setFile(e.target.files[0]);
   };
 
@@ -31,7 +30,6 @@ const ProfilePic = ({ userInfo }) => {
       setImage(res.data);
       setLoading(false);
     } catch (e) {
-      console.log(e);
       setLoading(false);
       setModalOpen(true);
     }
@@ -88,7 +86,7 @@ const ProfilePic = ({ userInfo }) => {
           name="file"
           className="profile-pic-input"
         />
-        <button type="button" onClick={onUpload}>
+        <button className="add" type="button" onClick={onUpload}>
           Upload
         </button>
       </form>

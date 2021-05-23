@@ -20,7 +20,6 @@ const Gainers = ({ viewStock }) => {
 
       return res.data;
     } catch (e) {
-      console.log("could not get gainers");
       return ["error"];
     }
   };

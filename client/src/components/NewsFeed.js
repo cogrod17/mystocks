@@ -31,12 +31,8 @@ const NewsFeed = () => {
       });
 
       return businessNews;
-      //setArticleList(businessNews);
-      //setLoading(false);
     } catch (e) {
       return ["error"];
-      // setArticleList(["error"]);
-      // setLoading(false);
     }
   };
 
@@ -61,8 +57,6 @@ const NewsFeed = () => {
   }, []);
 
   const renderFeed = (articleList) => {
-    console.log("getting news");
-
     let count = 0;
     if (articleList[0] === "error")
       return <div className="loader">Could not get news</div>;

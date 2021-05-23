@@ -5,7 +5,6 @@ import Loader from "./Loader";
 import history from "../history";
 import axios from "axios";
 import alphaVantage from "../api/alphaVantage";
-import "../styles/addbtn.css";
 
 //COMPANY WILL BE PASSES DOWN AS A PROP
 
@@ -56,8 +55,9 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   };
 
   useEffect(() => {
+    if (!selectedStock.stock) return;
     let mounted = true;
-    //console.log(selectedStock);
+    console.log("use effect company overview");
     alphaVantage
       .get("/query?", {
         params: {
@@ -67,7 +67,7 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
       })
       .then((res) => {
         if (res.data.Note) throw new Error();
-        console.log(res);
+
         if (mounted) {
           setCompany(res.data);
           setLoading(false);
@@ -86,7 +86,6 @@ const CompanyOverview = ({ getUserInfo, selectedStock, user }) => {
   }, [selectedStock]);
 
   const renderButton = () => {
-    console.log("render butons");
     if (company === "error") return <div></div>;
     if (user.savedStocks.includes(selectedStock.stock)) {
       return (

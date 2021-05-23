@@ -143,6 +143,21 @@ body {
   cursor: pointer;
 }
 
+.add:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, turquoise, transparent);
+  transition: all 650ms;
+}
+
+.add:hover:before {
+  left: 100%;
+}
+
 .landing-page-btn {
   width: 200px;
   margin: 10px;
@@ -331,6 +346,7 @@ body {
 
 .profile-pic-container {
   position: absolute;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -358,16 +374,6 @@ body {
   object-fit: cover;
 }
 
-@media (max-width: 750px) {
-  .profile-pic-container {
-    top: 55px;
-    width: 150px;
-    height: 150px;
-  }
-  .profile-info {
-    font-size: 85%;
-  }
-}
 .profile-background-img {
   border-top: black solid 1px;
   width: 100%;
@@ -389,4 +395,28 @@ body {
   align-items: center;
   font-size: 50px;
   color: cyan;
+}
+
+.profile-pic-input {
+  display: absolute;
+  flex-direction: column;
+  margin-left: 80px;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+@media (max-width: 750px) {
+  .profile-pic-container {
+    top: 55px;
+    width: 150px;
+    height: 150px;
+  }
+  .profile-info {
+    font-size: 85%;
+  }
+
+  .profile-pic-input {
+    font-size: 10px;
+    margin-left: 50px;
+  }
 }

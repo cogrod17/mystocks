@@ -42,8 +42,6 @@ const Graph = ({ stock }) => {
 
   //2021-05-14
   const orgData = async (timeSeries) => {
-    console.log("organizing");
-
     setLastPrice(Number(timeSeries[0][1]["5. adjusted close"]));
     setFirstPrice(
       Number(timeSeries[timeSeries.length - 1][1]["5. adjusted close"])
@@ -65,6 +63,7 @@ const Graph = ({ stock }) => {
 
   useEffect(() => {
     let mounted = true;
+
     alphaVantage
       .get("/query?", {
         params: {
