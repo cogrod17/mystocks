@@ -28,6 +28,7 @@ const ProfilePic = ({ userInfo }) => {
       setImage(res.data);
       setLoading(false);
     } catch (e) {
+      console.log(e);
       setLoading(false);
       setModalOpen(true);
     }
@@ -36,7 +37,6 @@ const ProfilePic = ({ userInfo }) => {
   useEffect(() => {
     if (image || !userInfo.token) return;
     let mounted = true;
-
     axios
       .get("http://localhost:3001/image", {
         headers: { Authorization: "Bearer " + userInfo.token },
@@ -55,7 +55,11 @@ const ProfilePic = ({ userInfo }) => {
   if (image) {
     return (
       <div className="profile-pic-container">
-        <img className="profile-pic" src={image} alt="profile pic" />
+        <img
+          className="profile-pic"
+          src={`data:image/png;base64,${image}`}
+          alt="profile pic"
+        />
       </div>
     );
   }

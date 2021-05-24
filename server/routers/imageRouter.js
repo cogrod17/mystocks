@@ -1,16 +1,15 @@
 const express = require("express");
 const multer = require("multer");
-
 const auth = require("../middleware/auth");
 const imageRouter = express.Router();
 const Image = require("../models/imageModel");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "../client/public/uploads");
+const storage = multer.memoryStorage({
+  limits: {
+    fileSize: 1000000,
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + file.originalname);
+    cb(null, file.originalname);
   },
 });
 
@@ -18,13 +17,14 @@ const upload = multer({ storage }).single("file");
 
 imageRouter.post("/upload", auth, upload, async (req, res) => {
   let imgFile = req.file;
+
   let { _id } = req.user;
 
   try {
     const img = await new Image({
       name: imgFile.filename,
       img: {
-        data: "/uploads/" + imgFile.filename,
+        data: imgFile.buffer.toString("base64"),
         contentType: imgFile.mimetype,
       },
       owner: _id,
@@ -32,9 +32,8 @@ imageRouter.post("/upload", auth, upload, async (req, res) => {
 
     await img.save();
 
-    res.status(200).send("/uploads/" + img.name);
+    res.status(200).send(img.img.data);
   } catch (e) {
-    console.log(e);
     res.status(500).send(e);
   }
 });
@@ -47,12 +46,8 @@ imageRouter.get("/image", auth, async (req, res) => {
     });
 
     if (!img) throw new Error();
-    //console.log(img.data.toString());
-    let { data } = img;
 
-    res.send(data);
-
-    //res.sendFile(path.join(_dirname + "/" + img.name));
+    res.send(img.data);
   } catch (e) {
     res.status(404).send();
   }
