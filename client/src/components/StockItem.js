@@ -21,8 +21,9 @@ const StockItem = (props) => {
   let [data] = datas.slice(-1);
 
   useEffect(() => {
+    if (data && !data.e) return;
     getGlobalQuote(ticker);
-  }, [ticker, getGlobalQuote]);
+  }, [ticker, getGlobalQuote, data]);
 
   if (!data)
     return (
@@ -39,13 +40,7 @@ const StockItem = (props) => {
         item === "change" || item === "price" ? data.color : "white";
 
       return (
-        <p
-          key={i}
-          className={`listitem ${item}`}
-          style={{
-            color: fontColor,
-          }}
-        >
+        <p key={i} className={`listitem ${item}`} style={{ color: fontColor }}>
           {data[categories[i]]}
         </p>
       );

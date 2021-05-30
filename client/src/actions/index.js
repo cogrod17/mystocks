@@ -1,6 +1,5 @@
 import history from "../history";
 import { alphaVantage, finPrep, finHub, server } from "../api";
-import { clearAsyncError } from "redux-form";
 
 export const getUserInfo = (userObject = null) => {
   return {
@@ -347,7 +346,6 @@ const orgGlobalData = (data) => {
 
 export const getGlobalQuote = (stock) => async (dispatch) => {
   try {
-    console.log("running");
     const res = await alphaVantage.get("/query?", {
       params: { function: "GLOBAL_QUOTE", symbol: stock },
     });

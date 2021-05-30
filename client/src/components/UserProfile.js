@@ -9,12 +9,12 @@ import pic from "../images/skyline.jpg";
 import { connect } from "react-redux";
 import { getUserInfo } from "../actions";
 
-const UserProfile = ({ user, getUserInfo }) => {
+const UserProfile = ({ user, getUserInfo, token }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const deleteAccount = async () => {
     await axios.delete("http://localhost:3001/users/profile", {
-      headers: { Authorization: "Bearer " + user.token },
+      headers: { Authorization: "Bearer " + token },
     });
 
     localStorage.clear();
