@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Loader from "./Loader";
+import { alphaVantage } from "../api";
 
-import alphaVantage from "../api/alphaVantage";
+//redux
+import { connect } from "react-redux";
+import { selectStock } from "../actions";
 
-const StockItem = ({ stock, categories, viewStock }) => {
+const StockItem = ({ stock, categories, selectStock }) => {
   const [info, setInfo] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -89,7 +92,7 @@ const StockItem = ({ stock, categories, viewStock }) => {
   return (
     <div
       onClick={() => {
-        viewStock(info.symbol, info.price);
+        selectStock(info.symbol, info.price);
       }}
       className="list-item"
     >
@@ -98,4 +101,8 @@ const StockItem = ({ stock, categories, viewStock }) => {
   );
 };
 
-export default StockItem;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps, { selectStock })(StockItem);

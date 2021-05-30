@@ -5,12 +5,16 @@ import history from "../history";
 import axios from "axios";
 import pic from "../images/skyline.jpg";
 
-const UserProfile = ({ userInfo, getUserInfo }) => {
+//redux
+import { connect } from "react-redux";
+import { getUserInfo } from "../actions";
+
+const UserProfile = ({ user, getUserInfo }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const deleteAccount = async () => {
     await axios.delete("http://localhost:3001/users/profile", {
-      headers: { Authorization: "Bearer " + userInfo.token },
+      headers: { Authorization: "Bearer " + user.token },
     });
 
     localStorage.clear();
@@ -30,8 +34,8 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
 
       <div className="profile-content">
         <div className="profile-info">
-          <h1>{userInfo.username}</h1>
-          <h3>{userInfo.email}</h3>
+          <h1>{user.username}</h1>
+          <h3>{user.email}</h3>
         </div>
         <div className="profile-btns">
           <p
@@ -46,10 +50,7 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
           </p>
         </div>
       </div>
-      <div className="clock">19:00:00</div>
-
-      <ProfilePic userInfo={userInfo} />
-
+      <ProfilePic userInfo={user} />
       <div className="profile-background-img-container">
         <img
           className="profile-background-img"
@@ -61,4 +62,8 @@ const UserProfile = ({ userInfo, getUserInfo }) => {
   );
 };
 
-export default UserProfile;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps, { getUserInfo })(UserProfile);

@@ -2,7 +2,12 @@ import React from "react";
 import history from "../history";
 import pic from "../images/landpage-pic.jpeg";
 
-const LandingPage = () => {
+//redux
+import { connect } from "react-redux";
+
+const LandingPage = ({ token }) => {
+  if (token) history.push("/home");
+
   return (
     <div className="landing-page">
       <div className="landing-page-img-container">
@@ -30,4 +35,6 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps)(LandingPage);

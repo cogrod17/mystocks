@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-
 import Modal from "./Modal";
+
+//redux
+import { connect } from "react-redux";
+import { onLogout } from "../actions";
 
 const LogoutBtn = ({ onLogout }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,4 +24,6 @@ const LogoutBtn = ({ onLogout }) => {
   );
 };
 
-export default LogoutBtn;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps, { onLogout })(LogoutBtn);

@@ -1,9 +1,5 @@
 import React from "react";
 
-//import ReactDOM from "react-dom";
-
-//const modalRoot = document.querySelector("#modal");
-
 const Modal = ({ modalOpen, setModalOpen, action, message, type }) => {
   if (!modalOpen) return null;
 

@@ -3,7 +3,10 @@ import Loader from "./Loader";
 import Modal from "./Modal";
 import axios from "axios";
 
-const ProfilePic = ({ userInfo }) => {
+//redux
+import { connect } from "react-redux";
+
+const ProfilePic = ({ token }) => {
   const [file, setFile] = useState(null);
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(true);
@@ -21,7 +24,7 @@ const ProfilePic = ({ userInfo }) => {
     try {
       const res = await axios.post("http://localhost:3001/upload", data, {
         headers: {
-          Authorization: "Bearer " + userInfo.token,
+          Authorization: "Bearer " + token,
         },
       });
 
@@ -35,11 +38,11 @@ const ProfilePic = ({ userInfo }) => {
   };
 
   useEffect(() => {
-    if (image || !userInfo.token) return;
+    if (image || !token) return;
     let mounted = true;
     axios
       .get("http://localhost:3001/image", {
-        headers: { Authorization: "Bearer " + userInfo.token },
+        headers: { Authorization: "Bearer " + token },
       })
       .then((res) => {
         if (mounted) {
@@ -50,7 +53,7 @@ const ProfilePic = ({ userInfo }) => {
       .catch((e) => {
         setLoading(false);
       });
-  }, [userInfo.token, image]);
+  }, [token, image]);
 
   if (image) {
     return (
@@ -95,4 +98,8 @@ const ProfilePic = ({ userInfo }) => {
   );
 };
 
-export default ProfilePic;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps)(ProfilePic);

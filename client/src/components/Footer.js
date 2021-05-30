@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import "../styles/Footer.css";
+
+//redux
+import { connect } from "react-redux";
 
 const Footer = ({ token }) => {
   if (!token) {
@@ -33,4 +35,8 @@ const Footer = ({ token }) => {
   );
 };
 
-export default Footer;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps)(Footer);

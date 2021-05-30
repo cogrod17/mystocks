@@ -1,7 +1,5 @@
 import React from "react";
 
-//ADD ON CLICK PROPERTY THAT OPENS UP THE CONTENTS
-
 const Article = ({ article }) => {
   return (
     <div className="article">

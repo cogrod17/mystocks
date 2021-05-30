@@ -1,36 +1,22 @@
 import React, { useState } from "react";
 import history from "../history";
 import pic from "../images/landpage-pic.jpeg";
-import axios from "axios";
-
 import "../styles/formStyles.css";
 
-const NewUserForm = ({ getUserInfo }) => {
+//redux
+import { connect } from "react-redux";
+import { createUser } from "../actions";
+
+const NewUserForm = ({ createUser, token, error }) => {
+  if (token) history.push("/home");
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState(null);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const res = await axios.post("http://localhost:3001/users/create", {
-        username: username,
-        email: email,
-        password: password,
-      });
-
-      const { user } = res.data;
-
-      history.push("/home");
-      user.token = res.data.token;
-      getUserInfo(user);
-    } catch (e) {
-      setErrorMsg(
-        "Could not create account. Is your password at least 7 characters?"
-      );
-    }
+    createUser(username, email, password);
   };
 
   return (
@@ -70,11 +56,15 @@ const NewUserForm = ({ getUserInfo }) => {
             />
           </div>
           <button className="add">Submit</button>
-          <p>{errorMsg}</p>
+          <p>{error && error.from === "create" ? error.msg : null}</p>
         </form>
       </div>
     </div>
   );
 };
 
-export default NewUserForm;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps, { createUser })(NewUserForm);

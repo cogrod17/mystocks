@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "../styles/SearchBar.css";
 
+import { connect } from "react-redux";
+import { onSearch } from "../actions";
+
 const SearchBar = ({ onSearch }) => {
   const [term, setTerm] = useState("");
 
@@ -23,4 +26,6 @@ const SearchBar = ({ onSearch }) => {
   );
 };
 
-export default SearchBar;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps, { onSearch })(SearchBar);

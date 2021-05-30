@@ -1,19 +1,16 @@
 import React from "react";
-
 import NewsFeed from "./NewsFeed";
-import Gainers from "./Gainers";
-import MarketInfo from "./MarketInfo";
+import Actives from "./Actives";
+import Sectors from "./Sectors";
 import "../styles/Home.css";
 
-//ADD SPINNERS TO THE COMPONENTS
-
-const Home = ({ viewStock }) => {
+const Home = () => {
   return (
     <div className="home">
       <NewsFeed />
       <div className="gainer-and-index">
-        <Gainers viewStock={viewStock} />
-        <MarketInfo />
+        <Actives />
+        <Sectors />
       </div>
     </div>
   );

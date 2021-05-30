@@ -1,7 +1,7 @@
 import React from "react";
 
 const ListHeader = ({ title, categories }) => {
-  const renderCategories = (categories) => {
+  const renderCategories = () => {
     return categories.map((category, i) => {
       return (
         <p key={i} className="listheader-category">
@@ -14,7 +14,7 @@ const ListHeader = ({ title, categories }) => {
   return (
     <div>
       <h1>{title}</h1>
-      <div className="listheader">{renderCategories(categories)}</div>
+      <div className="listheader">{renderCategories()}</div>
     </div>
   );
 };

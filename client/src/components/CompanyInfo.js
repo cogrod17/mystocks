@@ -1,4 +1,7 @@
 import React from "react";
+import InfoSection from "./InfoSection";
+
+import { connect } from "react-redux";
 
 const CompanyInfo = ({ company }) => {
   const addCommas = (x) => {
@@ -14,70 +17,37 @@ const CompanyInfo = ({ company }) => {
 
   return (
     <div className="company-info">
-      <div className="overview-section">
-        <p className="overview-item overview-title">Sector:</p>
-        <p className="overview-item overview-info">{company.Sector}</p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">Market Cap:</p>
-        <p className="overview-item overview-info">
-          {addCommas(+company.MarketCapitalization)}
-        </p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">P/E ratio</p>
-        <p className="overview-item overview-info">{company.PERatio}</p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">Book Value</p>
-        <p className="overview-item overview-info">{company.BookValue}</p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">Yield</p>
-        <p className="overview-item overview-info">
-          {(Number(company.DividendYield) * 100).toFixed(2)}
-        </p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">EPS</p>
-        <p className="overview-item overview-info">{company.EPS}</p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">Profit Margin</p>
-        <p className="overview-item overview-info">{company.ProfitMargin}</p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">Price/Book</p>
-        <p className="overview-item overview-info">
-          {company.PriceToBookRatio}
-        </p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">Beta</p>
-        <p className="overview-item overview-info">
-          {(+company.Beta).toFixed(2)}
-        </p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">52w High</p>
-        <p className="overview-item overview-info">
-          {Number(company["52WeekHigh"]).toFixed(2)}
-        </p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">52w Low</p>
-        <p className="overview-item overview-info">
-          {Number(company["52WeekLow"]).toFixed(2)}
-        </p>
-      </div>
-      <div className="overview-section">
-        <p className="overview-item overview-title">Shares Outstanding</p>
-        <p className="overview-item overview-info">
-          {addCommas(+company.SharesOutstanding)}
-        </p>
-      </div>
+      <InfoSection title={"Sector"} info={company.Sector} />
+      <InfoSection
+        title={"Market Cap"}
+        info={addCommas(+company.MarketCapitalization)}
+      />
+      <InfoSection title={"P/E Ratio"} info={company.PERatio} />
+      <InfoSection title={"Book Value"} info={company.BookValue} />
+      <InfoSection
+        title={"Yield"}
+        info={(Number(company.DividendYield) * 100).toFixed(2)}
+      />
+      <InfoSection title={"EPS"} info={company.EPS} />
+      <InfoSection title={"Profit Margin"} info={company.ProfitMargin} />
+      <InfoSection title={"Price/Book"} info={company.PriceToBookRatio} />
+      <InfoSection title={"Beta"} info={(+company.Beta).toFixed(2)} />
+      <InfoSection
+        title={"52w High"}
+        info={Number(company["52WeekHigh"]).toFixed(2)}
+      />
+      <InfoSection
+        title={"52w Low"}
+        info={Number(company["52WeekLow"]).toFixed(2)}
+      />
+      <InfoSection
+        title={"Shares Outstanding"}
+        info={addCommas(+company.SharesOutstanding)}
+      />
     </div>
   );
 };
 
-export default CompanyInfo;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps)(CompanyInfo);

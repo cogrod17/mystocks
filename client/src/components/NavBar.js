@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
 import "../styles/NavBar.css";
 
-const NavBar = ({ token, onLogout }) => {
+///redux
+import { connect } from "react-redux";
+
+const NavBar = ({ token }) => {
   if (!token) return null;
 
   return (
@@ -20,9 +23,13 @@ const NavBar = ({ token, onLogout }) => {
       <Link to="/users/profile" className="btn profile-btn">
         Profile
       </Link>
-      <LogoutBtn onLogout={onLogout} />
+      <LogoutBtn />
     </div>
   );
 };
 
-export default NavBar;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps)(NavBar);

@@ -13,166 +13,42 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 import MyStocks from "./MyStocks";
 import "../styles/App.css";
-import axios from "axios";
 
-//When refreshing from any page it sends the user to home
+//REDUX
+import { connect } from "react-redux";
+import { selectStock, signInWithToken } from "../actions";
 
 class App extends React.Component {
-  state = { user: {}, selectedStock: {} };
-
   componentDidMount() {
-    //check local storage to see if user is already signed in
     const token = JSON.parse(localStorage.getItem("token"));
-
-    if (
-      window.location.pathname === "/users/create" ||
-      window.location.pathname === "/users/login"
-    )
-      return;
-
-    if (!token && window.location.pathname !== "/")
-      window.location.pathname = "/";
-
-    if (token) {
-      axios
-        .get("http://localhost:3001/users/profile", {
-          headers: { Authorization: "Bearer " + token },
-        })
-        .then((res) => {
-          res.data.token = token;
-          this.getUserInfo(res.data);
-          if (window.location.pathname === "/")
-            window.location.pathname = "/home";
-        })
-        .catch((e) => console.log(e));
-    }
+    if (!token && window.location.pathname !== "/") history.push("/");
+    if (token) this.props.signInWithToken(token);
   }
-
-  getUserInfo = (userObject) => {
-    if (!userObject) this.setState({ user: {}, selectedStock: {} });
-    let selectedStock = JSON.parse(localStorage.getItem("selectedStock"));
-
-    if (userObject.token) {
-      localStorage.setItem("token", JSON.stringify(userObject.token));
-    } else {
-      userObject.token = JSON.parse(localStorage.getItem("token"));
-    }
-
-    this.setState({
-      user: userObject,
-      selectedStock: selectedStock ? selectedStock : {},
-    });
-  };
-
-  viewStock = async (stock, price) => {
-    if (!stock) return;
-    if (!price) price = undefined;
-    this.setState({ selectedStock: { stock, price } }, () => {
-      //console.log(this.state.selectedStock);
-      localStorage.setItem(
-        "selectedStock",
-        JSON.stringify(this.state.selectedStock)
-      );
-      history.push("/companyoverview");
-    });
-  };
-
-  onLogout = async () => {
-    await axios.post(
-      "http://localhost:3001/users/logout",
-      {},
-      {
-        headers: { Authorization: "Bearer " + this.state.user.token },
-      }
-    );
-
-    localStorage.clear();
-    this.setState({ user: {}, selectedStock: {} });
-    window.location.pathname = "/";
-  };
 
   render() {
     return (
       <div className="app">
         <Router history={history}>
-          <NavBar token={this.state.user.token} onLogout={this.onLogout} />
+          <NavBar />
           <Route path="/" exact component={LandingPage} />
-
-          <Route
-            path="/home"
-            exact
-            component={() => (
-              <Home userInfo={this.state.user} viewStock={this.viewStock} />
-            )}
-          />
-
-          <Route
-            path="/users/login"
-            exact
-            component={() => <LoginForm getUserInfo={this.getUserInfo} />}
-          />
-
-          <Route
-            path="/companyoverview"
-            exact
-            component={() => (
-              <CompanyOverview
-                getUserInfo={this.getUserInfo}
-                user={this.state.user}
-                selectedStock={this.state.selectedStock}
-              />
-            )}
-          />
-
-          <Route
-            path="/users/create"
-            exact
-            component={() => <NewUserForm getUserInfo={this.getUserInfo} />}
-          />
-
-          <Route
-            path="/mystocks"
-            exact
-            component={() => (
-              <MyStocks
-                savedStocks={this.state.user.savedStocks}
-                viewStock={this.viewStock}
-              />
-            )}
-          />
-
-          <Route
-            path="/users/update"
-            edit
-            component={() => (
-              <UpdateProfile
-                getUserInfo={this.getUserInfo}
-                userInfo={this.state.user}
-              />
-            )}
-          />
-
-          <Route
-            path="/search"
-            exact
-            component={() => <Search viewStock={this.viewStock} />}
-          />
-
-          <Route
-            path="/users/profile"
-            exact
-            component={() => (
-              <UserProfile
-                getUserInfo={this.getUserInfo}
-                userInfo={this.state.user}
-              />
-            )}
-          />
-          <Footer token={this.state.user.token} />
+          <Route path="/home" exact component={Home} />
+          <Route path="/users/login" exact component={LoginForm} />
+          <Route path="/companyoverview" exact component={CompanyOverview} />
+          <Route path="/users/create" exact component={NewUserForm} />
+          <Route path="/mystocks" exact component={MyStocks} />
+          <Route path="/users/update" exact component={UpdateProfile} />
+          <Route path="/search" exact component={Search} />
+          <Route path="/users/profile" exact component={UserProfile} />
+          <Footer />
         </Router>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps, {
+  signInWithToken,
+  selectStock,
+})(App);

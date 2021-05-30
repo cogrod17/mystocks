@@ -1,84 +1,72 @@
-import React, { useState } from "react";
-import history from "../history";
-import axios from "axios";
+import React from "react";
 import "../styles/formStyles.css";
 
-const UpdateProfile = ({ userInfo, getUserInfo }) => {
-  let [newUsername, setNewUsername] = useState(userInfo.username);
-  let [newEmail, setNewEmail] = useState(userInfo.email);
-  let [newPassword, setNewPassword] = useState(null);
-  const [confirmNewPassword, setConfirmNewPassword] = useState(null);
-  const [message, setMessage] = useState(null);
+//redux
+import { connect } from "react-redux";
+import { Field, reduxForm } from "redux-form";
+import { onUserUpdate } from "../actions";
 
-  const onUpdate = async (e) => {
-    e.preventDefault();
+const UpdateProfile = (props) => {
+  const { onUserUpdate, handleSubmit } = props;
 
-    if (newUsername.length === 0) newUsername = userInfo.username;
-    if (newEmail.length === 0) newEmail = userInfo.username;
-    if (newPassword && newPassword.length === 0) newPassword = null;
+  const onUpdate = (formValues) => {
+    onUserUpdate(formValues);
+  };
 
-    let sendUpdates = newPassword
-      ? { username: newUsername, email: newEmail, password: newPassword }
-      : { username: newUsername, email: newEmail };
-
-    try {
-      if (newPassword && newPassword < 7) throw new Error();
-      if (newPassword !== confirmNewPassword) throw new Error();
-
-      const res = await axios.patch(
-        "http://localhost:3001/users/update",
-        sendUpdates,
-        {
-          headers: { Authorization: "Bearer " + userInfo.token },
-        }
-      );
-
-      getUserInfo(res.data);
-      history.push("/users/profile");
-    } catch (e) {
-      setMessage("There was an error updating");
+  const renderError = ({ error }) => {
+    if (error) {
+      return <p style={{ padding: "0", margin: "0" }}>{error}</p>;
     }
+  };
+
+  const renderInput = ({ input, label, meta }) => {
+    return (
+      <div className="form-box">
+        <input {...input} />
+        <label>{label}</label>
+        {renderError(meta)}
+      </div>
+    );
   };
 
   return (
     <div className="form-container">
       <h1>Update profile</h1>
-      <form onSubmit={onUpdate} className="form">
-        <div className="form-box">
-          <input onChange={(e) => setNewUsername(e.target.value)} type="text" />
-          <label>New username</label>
-        </div>
-        <div className="form-box">
-          <input onChange={(e) => setNewEmail(e.target.value)} type="text" />
-          <label>New email</label>
-        </div>
-        <div className="form-box">
-          <input
-            onChange={(e) => {
-              if (e.target.value.length === 0) setNewPassword(null);
-              setNewPassword(e.target.value);
-            }}
-            type="password"
-          />
-          <label>New password (must be 7 characters)</label>
-        </div>
-        <div className="form-box">
-          <input
-            onChange={(e) => {
-              if (e.target.value.length === 0) setConfirmNewPassword(null);
-              setConfirmNewPassword(e.target.value);
-            }}
-            type="password"
-          />
-          <label>Confirm new password</label>
-        </div>
-        <button onClick={onUpdate} className="add">
-          Submit
-        </button>
-        <p>{message}</p>
+      <form onSubmit={handleSubmit(onUpdate)} className="form">
+        <Field name="username" component={renderInput} label="New username" />
+        <Field name="email" component={renderInput} label="New email" />
+        <Field name="password" component={renderInput} label="New password" />
+        <Field
+          name="confirmPassword"
+          component={renderInput}
+          label="Confirm new password"
+        />
+        <button className="add">Submit</button>
       </form>
     </div>
   );
 };
 
-export default UpdateProfile;
+const validate = (formValues) => {
+  const { password, confirmPassword } = formValues;
+  const error = {};
+
+  if (password && password.length < 7)
+    error.confirmPassword = "password must be at least 7 characters";
+
+  if (password !== confirmPassword)
+    error.confirmPassword = `passwords don't match`;
+
+  if (password && !confirmPassword)
+    error.confirmPassword = "confirm new password";
+
+  return error;
+};
+
+const mapStateToProps = (state) => {
+  return state;
+};
+
+const connectState = connect(mapStateToProps, { onUserUpdate })(UpdateProfile);
+
+export default reduxForm({ form: "update_form", validate })(connectState);
