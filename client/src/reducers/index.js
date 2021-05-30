@@ -9,6 +9,7 @@ import { activesReducer } from "./activesReducer";
 import { companyReducer } from "./companyReducer";
 import { seriesReducer } from "./seriesReducer";
 import { resultsReducer } from "./resultsReducers";
+import { globalQuoteReducer } from "./globalQuoteReducer";
 import { reducer as formReducer } from "redux-form";
 
 export default combineReducers({
@@ -22,5 +23,6 @@ export default combineReducers({
   company: companyReducer,
   seriesData: seriesReducer,
   searchResults: resultsReducer,
+  globalQuotes: globalQuoteReducer,
   form: formReducer,
 });

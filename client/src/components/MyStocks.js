@@ -14,8 +14,8 @@ const MyStocks = ({ user }) => {
     if (!savedStocks || savedStocks.length === 0)
       return <div>You have no saved stocks</div>;
 
-    return savedStocks.map((stock, i) => {
-      return <StockItem key={i} stock={stock} categories={categories} />;
+    return savedStocks.map((ticker, i) => {
+      return <StockItem key={i} ticker={ticker} categories={categories} />;
     });
   };
 

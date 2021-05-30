@@ -1,5 +1,6 @@
 import history from "../history";
 import { alphaVantage, finPrep, finHub, server } from "../api";
+import { clearAsyncError } from "redux-form";
 
 export const getUserInfo = (userObject = null) => {
   return {
@@ -313,5 +314,50 @@ export const deleteUser = () => async (dispatch, getState) => {
     dispatch({ type: "DELETE_USER", payload: {} });
   } catch (error) {
     dispatch({ type: "DELETE_USER_ERROR", payload: error });
+  }
+};
+
+///////////////////////////////////////////
+///////////////////////////////////////////
+
+const orgGlobalData = (data) => {
+  console.log("ORGANIZING");
+  let obj = {};
+  const entries = Object.entries(data["Global Quote"]);
+
+  entries.map((entry, i) => {
+    return (obj[entry[0].split(" ")[1]] = entry[1]);
+  });
+  obj.price = Number(obj.price).toFixed(2);
+
+  if (Number(obj.change.slice(0, -1)) < 0) {
+    obj.color = "red";
+  } else {
+    obj.color = "greenyellow";
+  }
+
+  return {
+    type: "GLOBAL_QUOTE",
+    payload: obj,
+  };
+};
+
+///////////////////////////////////////////
+///////////////////////////////////////////
+
+export const getGlobalQuote = (stock) => async (dispatch) => {
+  try {
+    console.log("running");
+    const res = await alphaVantage.get("/query?", {
+      params: { function: "GLOBAL_QUOTE", symbol: stock },
+    });
+    if (res.data.Note) throw new Error();
+
+    dispatch(orgGlobalData(res.data));
+  } catch (error) {
+    dispatch({
+      type: "GLOBAL_QUOTE_ERROR",
+      payload: { symbol: stock, e: "error" },
+    });
   }
 };
