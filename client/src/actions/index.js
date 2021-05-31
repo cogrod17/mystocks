@@ -320,11 +320,9 @@ export const deleteUser = () => async (dispatch, getState) => {
 ///////////////////////////////////////////
 
 const orgGlobalData = (data) => {
-  console.log("ORGANIZING");
   let obj = {};
-  const entries = Object.entries(data["Global Quote"]);
 
-  entries.map((entry, i) => {
+  data.map((entry, i) => {
     return (obj[entry[0].split(" ")[1]] = entry[1]);
   });
   obj.price = Number(obj.price).toFixed(2);
@@ -351,7 +349,9 @@ export const getGlobalQuote = (stock) => async (dispatch) => {
     });
     if (res.data.Note) throw new Error();
 
-    dispatch(orgGlobalData(res.data));
+    const entries = Object.entries(res.data["Global Quote"]);
+
+    dispatch(orgGlobalData(entries));
   } catch (error) {
     dispatch({
       type: "GLOBAL_QUOTE_ERROR",

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Loader from "./Loader";
+import StockData from "./StockData";
 
 //redux
 import { connect } from "react-redux";
@@ -14,14 +15,14 @@ const StockItem = (props) => {
     globalQuotes,
   } = props;
 
-  ///find the right stock data
-  let datas = globalQuotes.filter((d, i) => {
-    return d.symbol === ticker;
+  //check reducer to see if the quote has
+  //already been fetched without an error
+  let [data] = globalQuotes.filter((d, i) => {
+    return d.symbol === ticker && !d.e;
   });
-  let [data] = datas.slice(-1);
 
   useEffect(() => {
-    if (data && !data.e) return;
+    if (data && data.length !== 0) return;
     getGlobalQuote(ticker);
   }, [ticker, getGlobalQuote, data]);
 
@@ -32,21 +33,6 @@ const StockItem = (props) => {
       </div>
     );
 
-  const renderCategories = () => {
-    if (data.e) return <p className="listitem">cannot get info</p>;
-
-    return categories.map((item, i) => {
-      let fontColor =
-        item === "change" || item === "price" ? data.color : "white";
-
-      return (
-        <p key={i} className={`listitem ${item}`} style={{ color: fontColor }}>
-          {data[categories[i]]}
-        </p>
-      );
-    });
-  };
-
   return (
     <div
       onClick={() => {
@@ -54,7 +40,7 @@ const StockItem = (props) => {
       }}
       className="list-item"
     >
-      {renderCategories()}
+      <StockData categories={categories} data={data} />
     </div>
   );
 };
