@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import SectorItem from "./SectorItem";
-import Loader from "./Loader";
-import ListHeader from "./ListHeader";
+import Loader from "../reusables/Loader";
+import ListHeader from "../reusables/ListHeader";
 
 //redux
 import { connect } from "react-redux";
-import { getSectors } from "../actions";
+import { getSectors } from "../../actions";
 
 const Sectors = ({ getSectors, sectors }) => {
   useEffect(() => {
@@ -13,8 +13,9 @@ const Sectors = ({ getSectors, sectors }) => {
   }, [getSectors]);
 
   const renderSectors = () => {
-    if (!sectors || sectors === ["error"])
+    if (!sectors || sectors === ["error"]) {
       return <div className="loader">Could not get sector data</div>;
+    }
 
     return sectors.map((sector, i) => {
       return <SectorItem key={i} sector={sector} />;

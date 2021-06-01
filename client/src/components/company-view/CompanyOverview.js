@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import GraphContainer from "./GraphContainer";
+import GraphContainer from "./graph/GraphContainer";
 import CompanyInfo from "./CompanyInfo";
 import AddRemoveBtn from "./AddRemoveBtn";
-import Loader from "./Loader";
+import Loader from "../reusables/Loader";
 
 //redux
-import { getUserInfo, getCompany, saveStock } from "../actions";
+import { getUserInfo, getCompany, saveStock } from "../../actions";
 import { connect } from "react-redux";
 
 const CompanyOverview = ({ getCompany, company }) => {

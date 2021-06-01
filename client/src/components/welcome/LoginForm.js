@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import history from "../history";
-import pic from "../images/landpage-pic.jpeg";
-import "../styles/formStyles.css";
+import history from "../../history";
+import pic from "../../images/landpage-pic.jpeg";
+import "../../styles/formStyles.css";
 
 //redux
 import { connect } from "react-redux";
-import { logIn } from "../actions";
+import { logIn } from "../../actions";
 
 const LoginForm = ({ logIn, error, token }) => {
   if (token) history.push("/home");

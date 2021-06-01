@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import "../styles/SearchBar.css";
+import "../../styles/SearchBar.css";
 
 import { connect } from "react-redux";
-import { onSearch } from "../actions";
+import { onSearch } from "../../actions";
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = (props) => {
+  const { onSearch } = props;
   const [term, setTerm] = useState("");
 
   const onSubmit = (e) => {

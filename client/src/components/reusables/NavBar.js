@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
-import "../styles/NavBar.css";
+import "../../styles/NavBar.css";
 
 ///redux
 import { connect } from "react-redux";

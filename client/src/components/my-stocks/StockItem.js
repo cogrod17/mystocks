@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import Loader from "./Loader";
+import Loader from "../reusables/Loader";
 import StockData from "./StockData";
 
 //redux
 import { connect } from "react-redux";
-import { selectStock, getGlobalQuote } from "../actions";
+import { selectStock, getGlobalQuote } from "../../actions";
 
 const StockItem = (props) => {
   const {

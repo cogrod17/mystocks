@@ -1,7 +1,7 @@
 import React from "react";
-import ListHeader from "./ListHeader";
+import ListHeader from "../reusables/ListHeader";
 import StockItem from "./StockItem";
-import "../styles/Home.css";
+import "../../styles/Home.css";
 
 //redux
 import { connect } from "react-redux";

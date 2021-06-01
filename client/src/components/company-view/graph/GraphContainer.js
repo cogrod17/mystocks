@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import Graph from "./Graph";
-import Loader from "./Loader";
+import Loader from "../../reusables/Loader";
 
 //rdux
 import { connect } from "react-redux";
-import { getTimeSeries } from "../actions";
+import { getTimeSeries } from "../../../actions";
 
 const GraphContainer = ({ getTimeSeries, seriesData }) => {
   useEffect(() => {

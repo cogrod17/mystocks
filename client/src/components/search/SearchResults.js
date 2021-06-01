@@ -1,8 +1,8 @@
 import React from "react";
-import Loader from "./Loader";
+import Loader from "../reusables/Loader";
 
 import { connect } from "react-redux";
-import { selectStock } from "../actions";
+import { selectStock } from "../../actions";
 
 const SearchResults = ({ selectStock, searchResults }) => {
   if (!searchResults) return null;

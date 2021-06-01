@@ -3,7 +3,7 @@ import Modal from "./Modal";
 
 //redux
 import { connect } from "react-redux";
-import { onLogout } from "../actions";
+import { onLogout } from "../../actions";
 
 const LogoutBtn = ({ onLogout }) => {
   const [modalOpen, setModalOpen] = useState(false);

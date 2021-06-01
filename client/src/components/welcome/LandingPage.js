@@ -1,6 +1,6 @@
 import React from "react";
-import history from "../history";
-import pic from "../images/landpage-pic.jpeg";
+import history from "../../history";
+import pic from "../../images/landpage-pic.jpeg";
 
 //redux
 import { connect } from "react-redux";

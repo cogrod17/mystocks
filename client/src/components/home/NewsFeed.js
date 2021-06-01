@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import Article from "./Article";
-import Loader from "./Loader";
+import Loader from "../reusables/Loader";
 
 //redux
 import { connect } from "react-redux";
-import { getNews } from "../actions";
+import { getNews } from "../../actions";
 
 const NewsFeed = ({ getNews, newsFeed }) => {
   useEffect(() => {

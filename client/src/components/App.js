@@ -1,17 +1,17 @@
 import React from "react";
 import { Router, Route } from "react-router-dom";
 import history from "../history";
-import NewUserForm from "./NewUserForm";
-import LoginForm from "./LoginForm";
-import UserProfile from "./UserProfile";
-import UpdateProfile from "./UpdateProfile";
-import Search from "./Search";
-import LandingPage from "./LandingPage";
-import Home from "./Home";
-import CompanyOverview from "./CompanyOverview";
-import NavBar from "./NavBar";
-import Footer from "./Footer";
-import MyStocks from "./MyStocks";
+import NewUserForm from "./welcome/NewUserForm";
+import LoginForm from "./welcome/LoginForm";
+import UserProfile from "./profile/UserProfile";
+import UpdateProfile from "./profile/UpdateProfile";
+import Search from "./search/Search";
+import LandingPage from "./welcome/LandingPage";
+import Home from "./home/Home";
+import CompanyOverview from "./company-view/CompanyOverview";
+import NavBar from "./reusables/NavBar";
+import Footer from "./reusables/Footer";
+import MyStocks from "./my-stocks/MyStocks";
 import "../styles/App.css";
 
 //REDUX

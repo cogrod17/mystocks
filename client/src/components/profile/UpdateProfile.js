@@ -1,20 +1,20 @@
 import React from "react";
-import "../styles/formStyles.css";
+import "../../styles/formStyles.css";
 
-//redux
-import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { onUserUpdate } from "../actions";
+import { connect } from "react-redux";
+import { onUserUpdate } from "../../actions";
 
 const UpdateProfile = (props) => {
   const { onUserUpdate, handleSubmit } = props;
 
   const onUpdate = (formValues) => {
+    console.log(formValues);
     onUserUpdate(formValues);
   };
 
-  const renderError = ({ error }) => {
-    if (error) {
+  const renderError = ({ error, touched }) => {
+    if (error && touched) {
       return <p style={{ padding: "0", margin: "0" }}>{error}</p>;
     }
   };
@@ -22,7 +22,7 @@ const UpdateProfile = (props) => {
   const renderInput = ({ input, label, meta }) => {
     return (
       <div className="form-box">
-        <input {...input} />
+        <input {...input} autoComplete="off" />
         <label>{label}</label>
         {renderError(meta)}
       </div>
@@ -41,32 +41,32 @@ const UpdateProfile = (props) => {
           component={renderInput}
           label="Confirm new password"
         />
-        <button className="add">Submit</button>
+        <button type="submit" className="add">
+          Submit
+        </button>
       </form>
     </div>
   );
 };
 
-const validate = (formValues) => {
-  const { password, confirmPassword } = formValues;
-  const error = {};
+// const validate = (formValues) => {
+//   const { password, confirmPassword } = formValues;
+//   const error = {};
 
-  if (password && password.length < 7)
-    error.confirmPassword = "password must be at least 7 characters";
+//   if (password && password.length < 7)
+//     error.confirmPassword = "password must be at least 7 characters";
 
-  if (password !== confirmPassword)
-    error.confirmPassword = `passwords don't match`;
+//   if (password !== confirmPassword)
+//     error.confirmPassword = `passwords don't match`;
 
-  if (password && !confirmPassword)
-    error.confirmPassword = "confirm new password";
+//   if (password && !confirmPassword)
+//     error.confirmPassword = "confirm new password";
 
-  return error;
-};
+//   return error;
+// };
 
-const mapStateToProps = (state) => {
-  return state;
-};
+const connectForm = reduxForm({ form: "update_form" })(UpdateProfile);
 
-const connectState = connect(mapStateToProps, { onUserUpdate })(UpdateProfile);
+const mapStateToProps = (state) => state;
 
-export default reduxForm({ form: "update_form", validate })(connectState);
+export default connect(mapStateToProps, { onUserUpdate })(connectForm);

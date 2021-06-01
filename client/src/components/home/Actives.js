@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import ActivesItem from "./ActivesItem";
-import Loader from "./Loader";
-import ListHeader from "./ListHeader";
+import Loader from "../reusables/Loader";
+import ListHeader from "../reusables/ListHeader";
 
 //redux
 import { connect } from "react-redux";
-import { getActives } from "../actions";
+import { getActives } from "../../actions";
 
 const Actives = ({ getActives, actives }) => {
   useEffect(() => {

@@ -2,7 +2,7 @@ import React from "react";
 import NewsFeed from "./NewsFeed";
 import Actives from "./Actives";
 import Sectors from "./Sectors";
-import "../styles/Home.css";
+import "../../styles/Home.css";
 
 const Home = () => {
   return (

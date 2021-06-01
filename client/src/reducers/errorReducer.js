@@ -10,6 +10,8 @@ export const errorReducer = (error = null, action) => {
       };
     case "TOGGLE_STOCK_ERROR":
       return { from: "AddRemoveButton", msg: "Cannot perform action" };
+    case "DELETE_USER_ERROR":
+      return { from: "delete", msg: "Cannot delete" };
     default:
       return error;
   }

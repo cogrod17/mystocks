@@ -262,28 +262,6 @@ export const getTimeSeries = () => async (dispatch, getState) => {
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-export const onUserUpdate = (updates) => async (dispatch, getState) => {
-  const { token } = getState();
-  console.log(`called`);
-  throw new Error();
-
-  delete updates.confirmPassword;
-
-  try {
-    const res = await server.patch("/users/update", updates, {
-      headers: { Authorization: "Bearer " + token },
-    });
-
-    dispatch(getUserInfo(res.data));
-    history.push("/users/profile");
-  } catch (error) {
-    dispatch({ type: "USER_UPDATE_ERROR", payload: error });
-  }
-};
-
-///////////////////////////////////////////
-///////////////////////////////////////////
-
 export const onSearch = (term) => async (dispatch) => {
   dispatch({ type: "SEARCH_LOADING", payload: "loading" });
   try {
@@ -357,5 +335,89 @@ export const getGlobalQuote = (stock) => async (dispatch) => {
       type: "GLOBAL_QUOTE_ERROR",
       payload: { symbol: stock, e: "error" },
     });
+  }
+};
+
+///////////////////////////////////////////
+///////////////////////////////////////////
+
+export const deleteAccount = () => async (dispatch, getState) => {
+  const { token } = getState;
+  try {
+    await server.delete("/users/profile", {
+      headers: { Authorization: "Bearer " + token },
+    });
+
+    localStorage.clear();
+    history.push("/");
+    dispatch({ type: "DELETE_USER", payload: {} });
+  } catch (error) {
+    dispatch({ type: "DELETE_USER_ERROR", payload: error });
+  }
+};
+
+///////////////////////////////////////////
+///////////////////////////////////////////
+/*
+export const onUpload = (file) => async (dispatch, getState) => {
+  const { token } = getState();
+
+  dispatch({ type: "PIC_LOADING", payload: "loading" });
+
+  const data = new FormData();
+  await data.append("file", file);
+
+  try {
+    const res = await server.post("/upload", data, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    dispatch({ type: "IMAGE", payload: res.data });
+  } catch (error) {
+    dispatch({ type: "IMAGE_ERROR", payload: error });
+  }
+};
+
+///////////////////////////////////////////
+///////////////////////////////////////////
+
+export const getProfilePic = () => async (dispatch, getState) => {
+  const { token } = getState();
+  console.log("running");
+
+  try {
+    const res = await server.get("/image", {
+      headers: { Authorization: "Bearer " + token },
+    });
+
+    console.log(res);
+    dispatch({ type: "IMAGE", payload: res.data });
+  } catch (error) {
+    dispatch({ type: "IMAGE_ERROR", payload: error });
+  }
+};
+*/
+///////////////////////////////////////////
+///////////////////////////////////////////
+
+export const onUserUpdate = (updates) => async (dispatch, getState) => {
+  const { token } = getState();
+  console.log(`called`);
+  console.log(updates);
+  throw new Error();
+
+  delete updates.confirmPassword;
+
+  try {
+    const res = await server.patch("/users/update", updates, {
+      headers: { Authorization: "Bearer " + token },
+    });
+
+    dispatch(getUserInfo(res.data));
+    history.push("/users/profile");
+  } catch (error) {
+    dispatch({ type: "USER_UPDATE_ERROR", payload: error });
   }
 };
