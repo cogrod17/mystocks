@@ -13,7 +13,7 @@ const Actives = ({ getActives, actives }) => {
   }, [getActives]);
 
   const renderActives = () => {
-    if (!actives || actives[0] === "error")
+    if (!actives || actives["Error Message"])
       return <div className="loader">There was an error!</div>;
 
     return actives.slice(0, 17).map((active, i) => {

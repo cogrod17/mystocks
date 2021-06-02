@@ -144,6 +144,10 @@
   font-size: 115%;
 }
 
+.symbol-sector {
+  justify-self: left;
+}
+
 .listitem {
   margin: 0px;
   padding-top: 4px;

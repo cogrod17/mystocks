@@ -13,7 +13,6 @@ const Sectors = ({ getSectors, sectors }) => {
   }, [getSectors]);
 
   const renderSectors = () => {
-    console.log(sectors);
     if (sectors["Error Message"] || !sectors) {
       return <div className="loader">Could not get sector data</div>;
     }

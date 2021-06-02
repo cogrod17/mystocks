@@ -10,7 +10,7 @@ const SectorItem = ({ sector }) => {
 
   return (
     <div className="list-item two">
-      <p className="listitem symbol">{sector.sector}</p>
+      <p className="listitem symbol-sector">{sector.sector}</p>
       <p className="listitem change" style={{ color: color }}>
         {`${Number(trimPercent).toFixed(2)}%`}
       </p>
