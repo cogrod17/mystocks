@@ -9,9 +9,9 @@ const SectorItem = ({ sector }) => {
   let color = trimPercent[0] === "-" ? "red" : "greenyellow";
 
   return (
-    <div className="list-item">
+    <div className="list-item two">
       <p className="listitem symbol">{sector.sector}</p>
-      <p className="listitem" style={{ color: color }}>
+      <p className="listitem change" style={{ color: color }}>
         {`${Number(trimPercent).toFixed(2)}%`}
       </p>
     </div>

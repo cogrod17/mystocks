@@ -38,7 +38,7 @@ const StockItem = (props) => {
       onClick={() => {
         selectStock(ticker, data.price);
       }}
-      className="list-item"
+      className="list-item mystock"
     >
       <StockData categories={categories} data={data} />
     </div>

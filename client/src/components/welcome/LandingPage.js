@@ -1,6 +1,6 @@
 import React from "react";
 import history from "../../history";
-import pic from "../../images/landpage-pic.jpeg";
+import Image from "./Image";
 
 //redux
 import { connect } from "react-redux";
@@ -10,9 +10,7 @@ const LandingPage = ({ token }) => {
 
   return (
     <div className="landing-page">
-      <div className="landing-page-img-container">
-        <img className="landing-page-img" src={pic} alt={"landingPageImage"} />
-      </div>
+      <Image />
       <div className="landing-page-content">
         <h1 className="landing-title">Up My Stock</h1>
         <br />
@@ -28,7 +26,7 @@ const LandingPage = ({ token }) => {
             className="landing-page-btn add"
           >
             Create Account
-          </p>{" "}
+          </p>
         </div>
       </div>
     </div>

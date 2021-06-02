@@ -15,11 +15,11 @@ const ActiveItem = ({ active, selectStock }) => {
   return (
     <div
       onClick={() => selectStock(active.ticker, active.price)}
-      className="list-item"
+      className="list-item three"
     >
       <p className="listitem symbol">{active.ticker}</p>
-      <p className="listitem">{active.price}</p>
-      <p className="listitem" style={{ color }}>
+      <p className="listitem active-price">{active.price}</p>
+      <p className="listitem change" style={{ color }}>
         {percent}
       </p>
     </div>

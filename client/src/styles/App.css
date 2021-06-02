@@ -186,7 +186,6 @@ body {
   flex: 1;
   display: flex;
   position: relative;
-  border-left: cyan solid 1px;
   background: linear-gradient(#141e30, #243b55);
   flex-direction: column;
   padding-top: 150px;
@@ -223,7 +222,6 @@ body {
   }
   .landing-page-img-container {
     width: 100%;
-
     display: flex;
     border-top: cyan solid 1px;
   }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import history from "../../history";
-import pic from "../../images/landpage-pic.jpeg";
+import Image from "./Image";
 import "../../styles/formStyles.css";
 
 //redux
@@ -15,16 +15,10 @@ const LoginForm = ({ logIn, error, token }) => {
 
   return (
     <div className="landing-page">
-      <div className="landing-page-img-container">
-        <img
-          className="landing-page-img form-img"
-          src={pic}
-          alt={"landingPageImage"}
-        />
-      </div>
+      <Image />
       <div className="form-container landing">
         <h1>Login</h1>
-        <form onSubmit={logIn(email, password)} className="form">
+        <form onSubmit={() => logIn(email, password)} className="form">
           <div className="form-box">
             <input
               onChange={(e) => setEmail(e.target.value)}
@@ -41,7 +35,15 @@ const LoginForm = ({ logIn, error, token }) => {
               required
             />
           </div>
-          <button className="add">Submit</button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              logIn(email, password);
+            }}
+            className="add"
+          >
+            Submit
+          </button>
           <p>{error && error.from === "login" ? error.msg : null}</p>
         </form>
       </div>

@@ -53,9 +53,10 @@ export const logIn = (email, password) => async (dispatch) => {
       email: email,
       password: password,
     });
+    console.log("hello");
     const { user, token } = res.data;
-    dispatch(getUserInfo(user));
-    dispatch(getToken(token));
+    await dispatch(getUserInfo(user));
+    await dispatch(getToken(token));
     history.push("/home");
   } catch (error) {
     dispatch({ type: "LOGIN_ERROR", payload: error });

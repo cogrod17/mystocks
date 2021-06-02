@@ -25,7 +25,7 @@ const Actives = ({ getActives, actives }) => {
     <div className="list-container">
       <ListHeader
         title={"Most Active"}
-        categories={["Ticker", "Price", "Change (%)"]}
+        categories={["Ticker", "Price", "Change"]}
       />
       {actives ? renderActives() : <Loader />}
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import history from "../../history";
-import pic from "../../images/landpage-pic.jpeg";
+import Image from "./Image";
 import "../../styles/formStyles.css";
 
 //redux
@@ -21,13 +21,7 @@ const NewUserForm = ({ createUser, token, error }) => {
 
   return (
     <div className="landing-page">
-      <div className="landing-page-img-container">
-        <img
-          className="landing-page-img form-img"
-          src={pic}
-          alt={"landingPageImage"}
-        />
-      </div>
+      <Image />
       <div className="form-container landing">
         <h1>Create Profile</h1>
         <form onSubmit={onSubmit} className="form">

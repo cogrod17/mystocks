@@ -21,14 +21,10 @@ html {
   border: black solid 2px;
 }
 
-.form-img {
-  border-right: cyan solid 1px;
-  margin-right: 10px;
-}
-
 .landing-page-img-container {
   flex: 1;
   height: 578px;
+  border-right: cyan solid 1px;
 }
 
 .landing-page-img {
@@ -51,9 +47,6 @@ html {
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 20px;
-  }
-  .form-img {
-    border-top: cyan 1px solid;
   }
 }
 

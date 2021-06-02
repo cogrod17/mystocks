@@ -13,7 +13,8 @@ const Sectors = ({ getSectors, sectors }) => {
   }, [getSectors]);
 
   const renderSectors = () => {
-    if (!sectors || sectors === ["error"]) {
+    console.log(sectors);
+    if (sectors["Error Message"] || !sectors) {
       return <div className="loader">Could not get sector data</div>;
     }
 
@@ -24,7 +25,7 @@ const Sectors = ({ getSectors, sectors }) => {
 
   return (
     <div className="list-container market-info">
-      <ListHeader title={"Sectors"} categories={["Sector", "Change (%)"]} />
+      <ListHeader title={"Sectors"} categories={["Sector", "Change"]} />
       {sectors ? renderSectors() : <Loader />}
     </div>
   );

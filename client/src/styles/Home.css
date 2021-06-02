@@ -53,11 +53,23 @@
 }
 
 .listheader-category {
+  align-self: left;
+  justify-self: left;
+  padding-left: 20%;
   text-transform: uppercase;
-  padding: 5px;
   margin: 0px;
-  width: 70%;
-  justify-items: center;
+}
+@media (min-width: 750px) {
+  .listheader-category {
+    padding-left: 30%;
+  }
+}
+
+.mystock {
+  display: grid;
+  grid-template-columns: repeat(6, 16.6667%);
+  margin: 0;
+  justify-self: right;
 }
 
 .article {
@@ -120,11 +132,24 @@
   cursor: pointer;
 }
 
+.two {
+  grid-template-columns: 80% 20%;
+}
+
+.three {
+  grid-template-columns: repeat(3, 33.3333%);
+}
+
 .symbol {
-  font-size: 125%;
+  font-size: 115%;
 }
 
 .listitem {
   margin: 0px;
   padding-top: 4px;
+}
+
+.active-price {
+  justify-self: center;
+  align-self: center;
 }

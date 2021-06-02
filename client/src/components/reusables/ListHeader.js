@@ -4,7 +4,7 @@ const ListHeader = ({ title, categories }) => {
   const renderCategories = () => {
     return categories.map((category, i) => {
       return (
-        <p key={i} className="listheader-category">
+        <p key={i} className={`listheader-category`}>
           {category}
         </p>
       );
