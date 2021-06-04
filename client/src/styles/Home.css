@@ -76,7 +76,7 @@
   text-align: left;
   width: 100%;
   border-top: white 2px double;
-  padding: 10px;
+  padding: 10px 0;
 }
 
 .article:hover {
@@ -145,6 +145,7 @@
 }
 
 .symbol-sector {
+  font-size: 115%;
   justify-self: left;
 }
 

@@ -1,26 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import ProfilePic from "./ProfilePic";
-import Modal from "../reusables/Modal";
+
 import history from "../../history";
-import pic from "../../images/skyline.jpg";
+import pic1 from "../../images/skyline1.jpg";
+import pic2 from "../../images/skyline2.jpg";
+import pic3 from "../../images/skyline3.jpg";
 
 //redux
 import { connect } from "react-redux";
-import { deleteAccount } from "../../actions";
+import { deleteAccount, openModal } from "../../actions";
 
-const UserProfile = ({ user, deleteAccount }) => {
-  const [modalOpen, setModalOpen] = useState(false);
+const UserProfile = ({ user, deleteAccount, openModal }) => {
+  let randomPic = () => {
+    let hash = { 1: pic1, 2: pic2, 3: pic3 };
+    return hash[Math.floor(Math.random() * 3) + 1];
+  };
 
   return (
     <div className="user-profile">
-      <Modal
-        message={"Delete Account?"}
-        type={["confirm", "delete"]}
-        setModalOpen={setModalOpen}
-        modalOpen={modalOpen}
-        action={deleteAccount}
-      />
-
       <div className="profile-content">
         <div className="profile-info">
           <h1>{user.username}</h1>
@@ -34,7 +31,12 @@ const UserProfile = ({ user, deleteAccount }) => {
             Edit Profile
           </p>
           <br />
-          <p className="add profile-add" onClick={() => setModalOpen(true)}>
+          <p
+            className="add profile-add"
+            onClick={() =>
+              openModal("Delete Account?", "delete", deleteAccount)
+            }
+          >
             Delete Account
           </p>
         </div>
@@ -45,7 +47,7 @@ const UserProfile = ({ user, deleteAccount }) => {
       <div className="profile-background-img-container">
         <img
           className="profile-background-img"
-          src={pic}
+          src={randomPic()}
           alt={"profile-background"}
         />
       </div>
@@ -57,4 +59,6 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default connect(mapStateToProps, { deleteAccount })(UserProfile);
+export default connect(mapStateToProps, { deleteAccount, openModal })(
+  UserProfile
+);

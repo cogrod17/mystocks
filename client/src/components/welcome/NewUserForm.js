@@ -7,7 +7,7 @@ import "../../styles/formStyles.css";
 import { connect } from "react-redux";
 import { createUser } from "../../actions";
 
-const NewUserForm = ({ createUser, token, error }) => {
+const NewUserForm = ({ createUser, token }) => {
   if (token) history.push("/home");
 
   const [username, setUsername] = useState("");
@@ -50,15 +50,12 @@ const NewUserForm = ({ createUser, token, error }) => {
             />
           </div>
           <button className="add">Submit</button>
-          <p>{error && error.from === "create" ? error.msg : null}</p>
         </form>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return state;
-};
+const mapStateToProps = (state) => state;
 
 export default connect(mapStateToProps, { createUser })(NewUserForm);

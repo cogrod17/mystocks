@@ -7,7 +7,7 @@ import "../../styles/formStyles.css";
 import { connect } from "react-redux";
 import { logIn } from "../../actions";
 
-const LoginForm = ({ logIn, error, token }) => {
+const LoginForm = ({ logIn, token }) => {
   if (token) history.push("/home");
 
   const [email, setEmail] = useState("");
@@ -44,7 +44,6 @@ const LoginForm = ({ logIn, error, token }) => {
           >
             Submit
           </button>
-          <p>{error && error.from === "login" ? error.msg : null}</p>
         </form>
       </div>
     </div>

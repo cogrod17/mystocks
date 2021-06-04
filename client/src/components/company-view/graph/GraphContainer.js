@@ -14,7 +14,18 @@ const GraphContainer = ({ getTimeSeries, seriesData }) => {
   if (seriesData === ["error"])
     return <div className="graph">Cannot get graph</div>;
 
-  return <div className="graph">{seriesData ? <Graph /> : <Loader />}</div>;
+  if (!seriesData)
+    return (
+      <div className="graph">
+        <Loader />
+      </div>
+    );
+
+  return (
+    <div className="graph">
+      <Graph />
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {

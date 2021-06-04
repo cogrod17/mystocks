@@ -16,7 +16,7 @@ const Actives = ({ getActives, actives }) => {
     if (!actives || actives["Error Message"])
       return <div className="loader">There was an error!</div>;
 
-    return actives.slice(0, 17).map((active, i) => {
+    return actives.map((active, i) => {
       return <ActivesItem key={i} active={active} />;
     });
   };

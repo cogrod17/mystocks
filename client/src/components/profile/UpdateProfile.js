@@ -1,32 +1,28 @@
 import React from "react";
 import "../../styles/formStyles.css";
-
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { onUserUpdate } from "../../actions";
 
-const UpdateProfile = (props) => {
-  const { onUserUpdate, handleSubmit } = props;
+const renderError = ({ error, touched }) => {
+  if (error && touched) {
+    return <p style={{ padding: "0", margin: "0" }}>{error}</p>;
+  }
+};
 
+const renderInput = ({ input, label, meta }) => {
+  return (
+    <div className="form-box">
+      <input {...input} autoComplete="off" type="text" />
+      <label>{label}</label>
+      {renderError(meta)}
+    </div>
+  );
+};
+
+const UpdateProfile = ({ onUserUpdate, handleSubmit }) => {
   const onUpdate = (formValues) => {
-    console.log(formValues);
     onUserUpdate(formValues);
-  };
-
-  const renderError = ({ error, touched }) => {
-    if (error && touched) {
-      return <p style={{ padding: "0", margin: "0" }}>{error}</p>;
-    }
-  };
-
-  const renderInput = ({ input, label, meta }) => {
-    return (
-      <div className="form-box">
-        <input {...input} autoComplete="off" />
-        <label>{label}</label>
-        {renderError(meta)}
-      </div>
-    );
   };
 
   return (
@@ -49,23 +45,23 @@ const UpdateProfile = (props) => {
   );
 };
 
-// const validate = (formValues) => {
-//   const { password, confirmPassword } = formValues;
-//   const error = {};
+const validate = (formValues) => {
+  const { password, confirmPassword } = formValues;
+  const error = {};
 
-//   if (password && password.length < 7)
-//     error.confirmPassword = "password must be at least 7 characters";
+  if (password && password.length < 7)
+    error.confirmPassword = "password must be at least 7 characters";
 
-//   if (password !== confirmPassword)
-//     error.confirmPassword = `passwords don't match`;
+  if (password !== confirmPassword)
+    error.confirmPassword = `passwords don't match`;
 
-//   if (password && !confirmPassword)
-//     error.confirmPassword = "confirm new password";
+  if (password && !confirmPassword)
+    error.confirmPassword = "confirm new password";
 
-//   return error;
-// };
+  return error;
+};
 
-const connectForm = reduxForm({ form: "update_form" })(UpdateProfile);
+const connectForm = reduxForm({ form: "update_form", validate })(UpdateProfile);
 
 const mapStateToProps = (state) => state;
 

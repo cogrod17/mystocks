@@ -12,6 +12,7 @@ import CompanyOverview from "./company-view/CompanyOverview";
 import NavBar from "./reusables/NavBar";
 import Footer from "./reusables/Footer";
 import MyStocks from "./my-stocks/MyStocks";
+import Modal from "./reusables/Modal";
 import "../styles/App.css";
 
 //REDUX
@@ -30,6 +31,7 @@ class App extends React.Component {
       <div className="app">
         <Router history={history}>
           <NavBar />
+          <Modal />
           <Route path="/" exact component={LandingPage} />
           <Route path="/home" exact component={Home} />
           <Route path="/users/login" exact component={LoginForm} />

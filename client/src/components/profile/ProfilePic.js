@@ -33,7 +33,7 @@ const ProfilePic = ({ token }) => {
   };
 
   useEffect(() => {
-    if (image) return;
+    if (image || !token) return;
     let mounted = true;
     server
       .get("/image", {
