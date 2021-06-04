@@ -59,7 +59,7 @@ export const logIn = (email, password) => async (dispatch) => {
     await dispatch(getToken(token));
     history.push("/home");
   } catch (error) {
-    dispatch({ type: "LOGIN_ERROR", payload: error });
+    dispatch(openModal("incorrect username or password", "notice"));
   }
 };
 
@@ -83,6 +83,12 @@ export const createUser = (username, email, password) => async (dispatch) => {
 
     history.push("/home");
   } catch (error) {
+    dispatch(
+      openModal(
+        "Could not create account, is your password at least 7 characters?",
+        "notice"
+      )
+    );
     dispatch({ type: "CREATE_ERROR", payload: error });
   }
 };
@@ -186,9 +192,10 @@ export const saveStock = () => async (dispatch, getState) => {
         headers: { Authorization: "Bearer " + token },
       }
     );
-
+    dispatch(openModal("Added to My Stocks!", "notice"));
     dispatch(getUserInfo(res.data));
   } catch (error) {
+    dispatch(openModal("Could not add to My Stocks", "notice"));
     dispatch({ type: "TOGGLE_STOCK_ERROR", payload: error });
   }
 };
@@ -207,9 +214,10 @@ export const removeStock = () => async (dispatch, getState) => {
       { savedStocks: updated },
       { headers: { Authorization: "Bearer " + token } }
     );
-
+    dispatch(openModal("Removed from My Stocks", "notice"));
     dispatch(getUserInfo(res.data));
   } catch (error) {
+    dispatch(openModal("Could not remove from My Stocks", "notice"));
     dispatch({ type: "TOGGLE_STOCK_ERROR", payload: error });
   }
 };
@@ -279,25 +287,6 @@ export const onSearch = (term) => async (dispatch) => {
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-export const deleteUser = () => async (dispatch, getState) => {
-  const { token } = getState();
-
-  try {
-    await server.delete("/users/profile", {
-      headers: { Authorization: "Bearer " + token },
-    });
-
-    localStorage.clear();
-    history.push("/");
-    dispatch({ type: "DELETE_USER", payload: {} });
-  } catch (error) {
-    dispatch({ type: "DELETE_USER_ERROR", payload: error });
-  }
-};
-
-///////////////////////////////////////////
-///////////////////////////////////////////
-
 const orgGlobalData = (data) => {
   let obj = {};
 
@@ -353,8 +342,28 @@ export const deleteAccount = () => async (dispatch, getState) => {
     history.push("/");
     dispatch({ type: "DELETE_USER", payload: {} });
   } catch (error) {
-    dispatch({ type: "DELETE_USER_ERROR", payload: error });
+    dispatch(openModal("Could not delete", "notice"));
   }
+};
+
+///////////////////////////////////////////
+///////////////////////////////////////////
+
+export const openModal = (message, type, action = null) => {
+  return {
+    type: "OPEN_MODAL",
+    payload: { message, type, action },
+  };
+};
+
+///////////////////////////////////////////
+///////////////////////////////////////////
+
+export const closeModal = () => {
+  return {
+    type: "CLOSE_MODAL",
+    payload: null,
+  };
 };
 
 ///////////////////////////////////////////
@@ -384,6 +393,11 @@ export const onUpload = (file) => async (dispatch, getState) => {
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
+
+
+///////////////////////////////////////////
+///////////////////////////////////////////
+
 export const getProfilePic = () => async (dispatch, getState) => {
   const { token } = getState();
   console.log("running");
@@ -407,7 +421,6 @@ export const onUserUpdate = (updates) => async (dispatch, getState) => {
   const { token } = getState();
   console.log(`called`);
   console.log(updates);
-  throw new Error();
 
   delete updates.confirmPassword;
 
@@ -419,6 +432,6 @@ export const onUserUpdate = (updates) => async (dispatch, getState) => {
     dispatch(getUserInfo(res.data));
     history.push("/users/profile");
   } catch (error) {
-    dispatch({ type: "USER_UPDATE_ERROR", payload: error });
+    dispatch(openModal("Could not update", "notice"));
   }
 };
